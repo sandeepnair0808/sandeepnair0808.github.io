@@ -1,193 +1,256 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sandeep Nair | Power Systems Tools & PSS/E Automation</title>
 
-  <!-- Primary SEO -->
-  <meta name="description" content="Sandeep Nair – Siemens PTI PSS/E expert in load flow, grid modeling, Python automation, and transmission planning tools."/>
-  <meta name="keywords" content="Sandeep Nair, PSSE, PSS/E, Siemens PTI, power system simulation, contingency analysis, load flow tools, dynamic studies, short circuit calculator, voltage profile explorer, network model viewer, power system engineer, grid studies, transmission planning, python automation"/>
-  <meta name="author" content="Sandeep Nair"/>
-
-  <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="Sandeep Nair | Power Systems Tools & PSS/E Automation"/>
-  <meta property="og:description" content="Free, cutting-edge PSS/E tools & automation research for power system engineers worldwide."/>
-  <meta property="og:image" content="preview.jpg"/>
-  <meta property="og:url" content="https://gridbynair.com"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-
-  <!-- Favicons/Fonts -->
-  <link rel="icon" href="favicon.ico"/>
+  <!-- SEO Meta -->
+  <meta name="description" content="Sandeep Nair – Siemens PTI PSS/E expert in load flow, grid modeling, Python automation, and transmission planning tools.">
+  <meta name="keywords" content="Sandeep Nair, PSSE, PSS/E, Siemens PTI, power system simulation, contingency analysis, load flow tools, dynamic studies, short circuit calculator, voltage profile explorer, network model viewer, power system engineer, grid studies, transmission planning, python automation">
+  <meta name="author" content="Sandeep Nair">
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root { --primary:#0a66c2; --primary-700:#004182; --secondary:#34a853; --bg:#f9fbfd; --text:#333; --muted:#666; --card:#fff; --border:#e6e9ef; }
-    [data-theme="dark"]{ --bg:#0f1115; --text:#e8e9ed; --muted:#a0a3ab; --card:#161a21; --border:#242b36; --primary:#5aa1ff; --primary-700:#2c6cd3; --secondary:#2fbf71; }
-    html,body{height:100%}
-    body{ margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
-    header{ background:var(--primary); color:#fff; text-align:center; padding:60px 20px; }
-    header h1{ margin:0; font-size:2.6rem; letter-spacing:.5px }
-    header p{ margin:8px 0 0; font-size:1.1rem }
-    nav{ position:sticky; top:0; z-index:100; background:var(--card); border-bottom:1px solid var(--border); padding:14px 0; text-align:center; backdrop-filter:saturate(180%) blur(6px); }
-    nav a{ color:var(--primary); text-decoration:none; margin:0 16px; font-weight:600; }
-    nav a:hover{ color:var(--primary-700) }
-    .container{ max-width:1000px; margin:32px auto; padding:24px; background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.05); animation:fadeIn .6s ease; }
-    h2{ margin:0 0 10px }
-    .lead{ color:var(--muted); margin:0 0 18px }
-    .buttons{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:18px; }
-    .buttons a{ display:flex; align-items:center; justify-content:center; gap:8px; background:var(--primary); color:#fff; text-decoration:none; padding:12px 14px; border-radius:10px; font-weight:600; border:1px solid transparent; transition:transform .15s, background .2s; }
-    .buttons a:hover{ background:var(--primary-700); transform:translateY(-2px) }
-    .buttons a.secondary{ background:transparent; color:var(--text); border-color:var(--border); }
-    .buttons a.secondary:hover{ border-color:var(--primary); color:var(--primary) }
-    footer{ text-align:center; padding:24px; color:var(--muted); border-top:1px solid var(--border); margin-top:48px; background:var(--card); }
-    .floating-contact,#gpay-button{ position:fixed; right:20px; padding:10px 16px; border-radius:28px; font-weight:700; font-size:.92rem; z-index:10000; cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.18); border:none; transition:transform .15s, box-shadow .2s; }
-    .floating-contact{ bottom:300px; background:var(--primary); color:#fff; text-decoration:none; }
-    .floating-contact:hover,#gpay-button:hover{ transform:translateY(-1px); box-shadow:0 10px 24px rgba(0,0,0,.22); }
-    #gpay-button{ bottom:240px; background:var(--secondary); color:#fff; }
-    #qr-popup{ display:none; position:fixed; bottom:100px; right:20px; z-index:10001; background:var(--card); color:var(--text); border:1px solid var(--border); border-radius:12px; padding:16px; width:280px; box-shadow:0 16px 36px rgba(0,0,0,.25); animation:fadeInUp .25s ease; }
-    #qr-popup img{ width:220px; height:220px; display:block; margin:8px auto; border-radius:8px; border:1px solid var(--border); }
-    #qr-popup button{ width:100%; margin-top:10px; background:var(--primary); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; }
-    #mascot-wrapper{ position:fixed; bottom:20px; right:20px; width:160px; z-index:9999; }
-    #mascot{ width:100%; cursor:pointer; transition:transform .2s }
-    #mascot:hover{ transform:scale(1.04) }
-    .eye,.eyelid{ position:absolute; width:10px; height:10px; border-radius:50%; }
-    .eye{ background:#000 }
-    .left-eye{ top:50px; left:60px } .right-eye{ top:50px; left:78px }
-    .eyelid{ background:var(--bg); opacity:0 }
-    .eyelid.left{ top:50px; left:60px } .eyelid.right{ top:50px; left:78px }
-    .eyelid.blink{ animation:blink 1s ease-in-out }
-    #mascot.explode{ animation:explode .8s ease-out forwards }
-    #speech-bubble{ position:fixed; bottom:350px; right:30px; z-index:10001; background:var(--card); color:var(--text); border:1px solid var(--border); padding:10px 14px; border-radius:12px; font-size:.92rem; box-shadow:0 6px 16px rgba(0,0,0,.15); display:none; animation:fadeIn .3s ease; }
-    #theme-toggle{ position:fixed; top:16px; right:16px; z-index:10002; background:var(--card); color:var(--text); border:1px solid var(--border); padding:8px 10px; border-radius:10px; cursor:pointer; font-weight:700; }
-    #login-overlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.84); z-index:10050; backdrop-filter: blur(2px); }
-    #login-box{ width:min(92vw, 360px); background:#111827; color:#e5e7eb; border:1px solid #1f2937; border-radius:14px; padding:22px; box-shadow: 0 24px 64px rgba(0,0,0,.45); }
-    #login-box h2{ margin:0 0 8px; font-size:1.25rem; }
-    .login-desc{ margin:0 0 12px; color:#9ca3af; }
-    .input{ width:100%; padding:11px 12px; border-radius:10px; background:#0b1220; color:#e5e7eb; border:1px solid #223; outline:none; }
-    .input:focus{ border-color:#4f46e5; box-shadow:0 0 0 3px rgba(79,70,229,.25); }
-    .btn{ width:100%; margin-top:12px; padding:11px 12px; border-radius:10px; border:none; cursor:pointer; font-weight:700; background:#2563eb; color:#fff; }
-    .btn.secondary{ background:#374151; }
-    .small{ font-size:.85rem; color:#9ca3af; margin-top:12px; text-align:center; }
-    .small a{ color:#93c5fd; text-decoration:none; }
-    @keyframes blink{0%,100%{opacity:0; transform:scaleY(0);}50%{opacity:1; transform:scaleY(1);}}
-    @keyframes explode{0%{transform:scale(1) rotate(0); opacity:1;}50%{transform:scale(1.8) rotate(180deg); opacity:.5;}100%{transform:scale(0) rotate(360deg); opacity:0;}}
-    @keyframes fadeIn{from{opacity:0} to{opacity:1}}
-    @keyframes fadeInUp{from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:translateY(0)}}
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: #f9fbfd;
+      color: #333;
+    }
+    header {
+      background-color: #0a66c2;
+      padding: 40px 20px;
+      color: white;
+      text-align: center;
+    }
+    nav {
+      text-align: center;
+      padding: 16px 0;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a {
+      color: #0a66c2;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .buttons a {
+      background: #0a66c2;
+      color: white;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    footer {
+      text-align: center;
+      padding: 24px;
+      background: #f1f3f5;
+      font-size: 0.95rem;
+      color: #666;
+      margin-top: 60px;
+    }
+    .floating-contact {
+      position: fixed;
+      bottom: 300px;
+      right: 20px;
+      background: #0a66c2;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+      z-index: 10000;
+    }
+    #gpay-button {
+      position: fixed;
+      bottom: 240px;
+      right: 20px;
+      background: #34a853;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      z-index: 10000;
+      border: none;
+      cursor: pointer;
+    }
+    #qr-popup {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      z-index: 10001;
+      max-width: 260px;
+      text-align: center;
+    }
+    #qr-popup img {
+      width: 200px;
+      height: 200px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    #qr-popup button {
+      margin-top: 10px;
+      background: #0a66c2;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #mascot-wrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 160px;
+      z-index: 9999;
+    }
+    #mascot {
+      width: 100%;
+      cursor: pointer;
+    }
+    .eye, .eyelid {
+      pointer-events: auto;
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .eye {
+      background: black;
+      z-index: 10001;
+    }
+    .left-eye { top: 50px; left: 60px; }
+    .right-eye { top: 50px; left: 78px; }
+    .eyelid {
+      background: #f9fbfd;
+      z-index: 10002;
+      opacity: 0;
+    }
+    .eyelid.left { top: 50px; left: 60px; }
+    .eyelid.right { top: 50px; left: 78px; }
+    .eyelid.blink {
+      animation: blink 1s ease-in-out;
+    }
+    @keyframes blink {
+      0% { opacity: 0; transform: scaleY(0); }
+      50% { opacity: 1; transform: scaleY(1); }
+      100% { opacity: 0; transform: scaleY(0); }
+    }
+    #mascot.explode {
+      animation: explode 0.8s ease-out forwards;
+    }
+    @keyframes explode {
+      0% { transform: scale(1) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.8) rotate(180deg); opacity: 0.5; }
+      100% { transform: scale(0) rotate(360deg); opacity: 0; }
+    }
+    #speech-bubble {
+      position: fixed;
+      bottom: 350px;
+      right: 30px;
+      background: #fff;
+      color: #333;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      display: none;
+      z-index: 10001;
+    }
   </style>
 </head>
 <body>
-  <button id="theme-toggle" aria-label="Toggle dark mode">🌙 Dark</button>
-
-  <header role="banner">
+  <header>
     <h1>Sandeep Nair</h1>
     <p>Transmission Planner | PSS/E | Python Automation</p>
   </header>
-
-  <nav aria-label="Main navigation">
+  <nav>
     <a href="#">Home</a>
-    <a href="resume.pdf" download target="_blank" rel="noopener">📄 Resume</a>
-    <a href="#">PSS/E Inside Python Guide</a>
+    <a href="resume.pdf" download target="_blank">📄 Download Resume</a>
+
+    <a href="#">PSS/E Inside Python : Guide</a>
     <a href="#">Downloads</a>
   </nav>
-
-  <main class="container" id="protected-content" hidden>
+  <div class="container">
     <h2>Welcome</h2>
-    <p class="lead">This is the world’s most useful Transmission Planner hub—field-tested calculators, PSS/E helpers, and Python automation. Bookmark it.</p>
+    <p>
+      I'm Sandeep Nair, a power systems engineer specializing in Siemens PTI PSS/E, Python-based automation, and transmission planning. I build tools and workflows for load flow simulations, contingency analysis, transformer loading, dynamic stability studies, and renewable integration.
+    </p>
+  <div class="buttons">
+  <a href="loadflow-converter.html">Load Flow Converter</a>
+  <a href="short-circuit-tool.html">Short Circuit Tool</a>
+  <a href="voltage-profile.html">Voltage Profile Explorer</a>
+  <a href="contingency-explainer.html">Contingency Analysis</a>
+  <a href="transformer-loading.html">Transformer Loading</a>
+  <a href="line-impedance-tool.html">Line Impedance Visualizer</a>
+  <a href="drive-mapping.html">Drive Mapping</a>
+  <a href="network-viewer.html">Network Viewer</a>
+  <a href="experimental-tools.html">Experimental Tools</a>
+</div>
 
-    <div class="buttons" role="list">
-      <!-- Core tools -->
-      <a href="loadflow-converter.html" role="listitem">⚙️ Load Flow Converter</a>
-      <a href="short-circuit-tool.html" role="listitem">🧮 Short Circuit Tool</a>
-      <a href="voltage-profile.html" role="listitem">📈 Voltage Profile Explorer</a>
-      <a href="contingency-explainer.html" role="listitem">🧩 Contingency Analysis</a>
-      <a href="transformer-loading.html" role="listitem">🔌 Transformer Loading</a>
-      <a href="line-impedance-tool.html" role="listitem">🧭 Line Impedance Visualizer</a>
-      <a href="drive-mapping.html" role="listitem">🗂️ Drive Mapping</a>
-      <a href="network-viewer.html" role="listitem">🌐 Network Viewer</a>
-      <a href="experimental-tools.html" role="listitem">🧪 Experimental Tools</a>
-
-      <!-- Interesting additional tools (link your HTMLs later) -->
-      <a href="psse-template-builder.html" class="secondary" role="listitem">📦 PSS/E Case Template Builder</a>
-      <a href="n-1-screener.html" class="secondary" role="listitem">🛡️ N-1 / N-1-1 Screener</a>
-      <a href="thermal-rating-helper.html" class="secondary" role="listitem">🌡️ Thermal Rating Helper</a>
-      <a href="dynamic-study-starter.html" class="secondary" role="listitem">🧭 Dynamic Study Starter</a>
-      <a href="fault-level-map.html" class="secondary" role="listitem">🗺️ Fault Level Map</a>
-      <a href="relaying-checker.html" class="secondary" role="listitem">⏱️ Relaying Settings Checker</a>
-      <a href="renewable-interconnect-kit.html" class="secondary" role="listitem">🌞 Renewable Interconnect Kit</a>
-      <a href="sld-auto-drafter.html" class="secondary" role="listitem">🧷 SLD Auto‑Drafter</a>
-      <a href="study-report-writer.html" class="secondary" role="listitem">📝 Study Report Writer</a>
-    </div>
-  </main>
-
+  </div>
   <footer>
-    &copy; 2025 Sandeep Nair · gridbynair.com<br/>
+    &copy; 2025 Sandeep Nair · gridbynair.com<br>
     💡 Donations help build free tools for power system engineers worldwide.
   </footer>
 
   <!-- Contact -->
-  <a href="mailto:nairsandeep0808@gmail.com" class="floating-contact" aria-label="Contact via email">✉️ Contact</a>
+  <a href="mailto:sandeep.nair@1898andco.com" class="floating-contact">✉️ Contact</a>
 
   <!-- GPay Button -->
-  <button id="gpay-button" aria-label="Donate with GPay">Donations</button>
+ #<button id="gpay-button">Donations</button>
 
   <!-- QR Popup -->
-  <div id="qr-popup" role="dialog" aria-labelledby="donate-title" aria-modal="true" aria-hidden="true">
-    <h4 id="donate-title">Scan to Donate</h4>
-    <img src="gpay.jpeg" alt="Google Pay QR Code">
-    <p>Support power system tools &amp; automation research by Sandeep.</p>
-    <button type="button" id="qr-close">Close</button>
+  <div id="qr-popup">
+    <h4>Scan to Donate</h4>
+    <img src="gpay.jpeg" alt="GPay QR">
+    <p>Support power system tools & automation research by Sandeep.</p>
+    <button onclick="document.getElementById('qr-popup').style.display='none'">Close</button>
   </div>
 
   <!-- Mascot -->
-  <div id="mascot-wrapper" aria-hidden="true">
+  <div id="mascot-wrapper">
     <img id="mascot" src="villain.png" alt="Mascot">
     <div class="eye left-eye"></div>
     <div class="eye right-eye"></div>
     <div class="eyelid left eyelid-left"></div>
     <div class="eyelid right eyelid-right"></div>
   </div>
-  <div id="speech-bubble" role="status">Need help? Click me 💥</div>
+  <div id="speech-bubble">Need help? Click me 💥</div>
 
-  <!-- Login Overlay -->
-  <section id="login-overlay" aria-labelledby="login-title" role="dialog" aria-modal="true">
-    <div id="login-box">
-      <h2 id="login-title">🔐 Member Access</h2>
-      <p class="login-desc">Enter the password to unlock the toolkit.</p>
-      <input id="password-input" class="input" type="password" inputmode="text" autocomplete="current-password" placeholder="Password"/>
-      <button class="btn" id="login-btn" type="button">Unlock</button>
-      <button class="btn secondary" id="view-contact" type="button">No access? Contact</button>
-      <div class="small">
-        Prefer Teams? If you're from a company, reach out over <strong>Microsoft Teams</strong> (include context & company name).
-      </div>
-      <div class="small">Email: <a href="mailto:nairsandeep0808@gmail.com">nairsandeep0808@gmail.com</a></div>
-    </div>
-  </section>
-
+  <!-- Scripts -->
   <script>
-    // THEME: system-aware + persistent
-    (function initTheme(){
-      const root = document.documentElement;
-      const stored = localStorage.getItem('theme');
-      const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const start = stored || (systemDark ? 'dark' : 'light');
-      root.setAttribute('data-theme', start);
-      const tBtn = document.getElementById('theme-toggle');
-      tBtn.textContent = start === 'dark' ? '☀️ Light' : '🌙 Dark';
-      tBtn.addEventListener('click', () => {
-        const current = root.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        tBtn.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
-      });
-    })();
-
-    // DONATION: GPay & QR fallback
-    const gbtn = document.getElementById('gpay-button');
-    const qr = document.getElementById('qr-popup');
-    const qrClose = document.getElementById('qr-close');
-    gbtn.addEventListener('click', async () => {
+    // GPay + QR fallback
+    document.getElementById('gpay-button').addEventListener('click', async () => {
       try {
         const supportedInstruments = [{
           supportedMethods: 'https://tez.google.com/pay',
@@ -203,87 +266,72 @@
             gstIn: 'NA'
           }
         }];
-        const details = { total: { label: 'Donation', amount: { currency: 'INR', value: '500.00' } } };
+        const details = {
+          total: { label: 'Donation', amount: { currency: 'INR', value: '500.00' } }
+        };
         const request = new PaymentRequest(supportedInstruments, details);
         if (await request.canMakePayment()) {
           const response = await request.show();
           await response.complete('success');
           alert('✅ Thank you for your ₹500 support!');
-        } else { qr.style.display = 'block'; qr.setAttribute('aria-hidden','false'); }
-      } catch { qr.style.display = 'block'; qr.setAttribute('aria-hidden','false'); }
-    });
-    qrClose.addEventListener('click', ()=>{ qr.style.display='none'; qr.setAttribute('aria-hidden','true'); });
-
-    // MASCOT FX
-    (function mascotFX(){
-      const mascot = document.getElementById('mascot');
-      const speech = document.getElementById('speech-bubble');
-      const eyes = document.querySelectorAll('.eye');
-      const leftLid = document.querySelector('.eyelid-left');
-      const rightLid = document.querySelector('.eyelid-right');
-      const tips = [
-        '⚡ Try Load Flow Converter!',
-        '🔋 Use Voltage Explorer!',
-        '🛡 N-1 screener catches weak links.',
-        '🧮 Short Circuit tool is precise.',
-        '🐍 Python automation saves hours.'
-      ];
-      let idx = 0;
-      document.addEventListener('mousemove', (e) => {
-        eyes.forEach(eye => {
-          const rect = eye.getBoundingClientRect();
-          const eyeX = rect.left + rect.width / 2;
-          const eyeY = rect.top + rect.height / 2;
-          const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-          const offset = 4;
-          eye.style.transform = `translate(${Math.cos(angle)*offset}px, ${Math.sin(angle)*offset}px)`;
-        });
-      });
-      setInterval(() => {
-        leftLid.classList.add('blink');
-        rightLid.classList.add('blink');
-        setTimeout(() => { leftLid.classList.remove('blink'); rightLid.classList.remove('blink'); }, 1000);
-      }, 4000);
-      mascot.addEventListener('click', () => {
-        mascot.classList.add('explode');
-        speech.style.display = 'none';
-        setTimeout(() => mascot.style.display = 'none', 800);
-        setTimeout(() => { mascot.style.display = 'block'; mascot.classList.remove('explode'); }, 5000);
-      });
-      setInterval(() => { speech.textContent = tips[idx]; speech.style.display = 'block'; idx = (idx + 1) % tips.length; }, 15000);
-    })();
-
-    // AUTH: Fixed password "Grid"
-    const UNLOCK_FLAG = 'gridbynair_unlocked';
-    const overlay = document.getElementById('login-overlay');
-    const protectedContent = document.getElementById('protected-content');
-    const loginBtn = document.getElementById('login-btn');
-    const contactBtn = document.getElementById('view-contact');
-    const passInput = document.getElementById('password-input');
-
-    if (sessionStorage.getItem(UNLOCK_FLAG) === '1') {
-      overlay.style.display = 'none';
-      protectedContent.hidden = false;
-    }
-
-    function tryLogin(){
-      const val = passInput.value || '';
-      if (val === 'Grid') {
-        sessionStorage.setItem(UNLOCK_FLAG,'1');
-        overlay.style.display = 'none';
-        protectedContent.hidden = false;
-        protectedContent.scrollIntoView({behavior:'smooth'});
-      } else {
-        alert('❌ Incorrect password. Click "No access? Contact" to request access.');
+        } else {
+          document.getElementById('qr-popup').style.display = 'block';
+        }
+      } catch (err) {
+        document.getElementById('qr-popup').style.display = 'block';
       }
-    }
+    });
 
-    loginBtn.addEventListener('click', tryLogin);
-    passInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') tryLogin(); });
-    contactBtn.addEventListener('click', ()=>{ window.location.href = 'mailto:nairsandeep0808@gmail.com?subject=Access%20Request%20for%20Transmission%20Tools'; });
+    // Mascot animations
+    const mascot = document.getElementById('mascot');
+    const speechBubble = document.getElementById('speech-bubble');
+    const eyes = document.querySelectorAll('.eye');
+    const leftLid = document.querySelector('.eyelid-left');
+    const rightLid = document.querySelector('.eyelid-right');
+    const tips = [
+      "Try Load Flow Converter!",
+      "Use Voltage Explorer!",
+      "Contingency tool helps find weak links.",
+      "Short Circuit Calculator is powerful!",
+      "Python automation boosts productivity!"
+    ];
+    let tipIndex = 0;
 
-    // Focus handling
-    passInput.focus();
+    document.addEventListener('mousemove', (e) => {
+      eyes.forEach(eye => {
+        const rect = eye.getBoundingClientRect();
+        const eyeX = rect.left + rect.width / 2;
+        const eyeY = rect.top + rect.height / 2;
+        const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+        const offset = 4;
+        eye.style.transform = `translate(${Math.cos(angle)*offset}px, ${Math.sin(angle)*offset}px)`;
+      });
+    });
+
+    setInterval(() => {
+      leftLid.classList.add('blink');
+      rightLid.classList.add('blink');
+      setTimeout(() => {
+        leftLid.classList.remove('blink');
+        rightLid.classList.remove('blink');
+      }, 1000);
+    }, 4000);
+
+    mascot.addEventListener('click', () => {
+      mascot.classList.add('explode');
+      speechBubble.style.display = 'none';
+      setTimeout(() => mascot.style.display = 'none', 800);
+      setTimeout(() => {
+        mascot.style.display = 'block';
+        mascot.classList.remove('explode');
+      }, 5000);
+    });
+
+    setInterval(() => {
+      speechBubble.textContent = tips[tipIndex];
+      speechBubble.style.display = 'block';
+      tipIndex = (tipIndex + 1) % tips.length;
+    }, 15000);
   </script>
 </body>
 </html>
