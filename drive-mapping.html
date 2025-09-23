@@ -57,21 +57,21 @@
   </p>
 
   <h2>Example Command</h2>
-  <pre>net use Z: \\e98euc\shared_docs</pre>
+  <pre>net use Z: \\Dept_BusinessLine\shared_docs</pre>
 
   <h2>How It Works</h2>
   <ul>
     <li><strong><code>net use</code></strong> — The Windows command to connect, remove, or list shared drives or printers.</li>
     <li><strong><code>Z:</code></strong> — The local drive letter you want to assign to the shared resource.</li>
-    <li><strong><code>\\e98euc\shared_docs</code></strong> — The UNC (Universal Naming Convention) path of the shared folder.</li>
+    <li><strong><code>\\Dept_BusinessLine\shared_docs</code></strong> — The UNC (Universal Naming Convention) path of the shared folder.</li>
   </ul>
 
   <h2>Behind the Scenes</h2>
   <p>When you run the command:</p>
-  <pre>net use Z: \\e98euc\shared_docs</pre>
+  <pre>net use Z: \\Dept_BusinessLine\shared_docs</pre>
   <p>This happens:</p>
   <ol>
-    <li>Windows reaches out to the server <code>e98euc</code> over the SMB protocol (usually port 445).</li>
+    <li>Windows reaches out to the server <code>Dept_BusinessLine</code> over the SMB protocol (usually port 445).</li>
     <li>It checks that the folder <code>shared_docs</code> is shared and accessible.</li>
     <li>It assigns the shared folder to the drive letter <code>Z:</code> on your machine.</li>
     <li>Now you can access it like any local drive: via File Explorer or <code>Z:\</code> in CMD/PowerShell.</li>
@@ -79,11 +79,11 @@
 
   <h2>Authentication</h2>
   <p>If the share requires credentials, you can specify them:</p>
-  <pre>net use Z: \\e98euc\shared_docs /user:DOMAIN\username yourpassword</pre>
+  <pre>net use Z: \\Dept_BusinessLine\shared_docs /user:DOMAIN\username yourpassword</pre>
 
   <h2>Persistent Mapping</h2>
   <p>To automatically reconnect this drive after restart:</p>
-  <pre>net use Z: \\e98euc\shared_docs /persistent:yes</pre>
+  <pre>net use Z: \\Dept_BusinessLine\shared_docs /persistent:yes</pre>
   <p>To remove it:</p>
   <pre>net use Z: /delete</pre>
 
