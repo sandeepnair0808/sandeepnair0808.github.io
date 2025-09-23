@@ -42,7 +42,6 @@
   </style>
 </head>
 <body>
-
 <div class="container">
   <nav>
     <a href="index.html">&larr; Home</a>
@@ -51,7 +50,10 @@
   <h1>Mapping a Network Drive Using <code>net use</code></h1>
 
   <p>
-    Mapping a network drive allows you to assign a local drive letter (like <code>R:</code>) to a shared folder on another computer or server on your network. This enables easy access to shared resources such as project files, analysis reports, or configuration data.
+    Mapping a network drive allows you to assign a local drive letter (like <code>R:</code>) 
+    to a shared folder on another computer or server on your network. 
+    This enables easy access to shared resources such as project files, 
+    analysis reports, or configuration data.
   </p>
 
   <h2>Example Command</h2>
@@ -76,18 +78,29 @@
   </ol>
 
   <h2>Authentication</h2>
-  <p>
-    If the share requires credentials, you can specify them:
-  </p>
+  <p>If the share requires credentials, you can specify them:</p>
   <pre>net use R: \\e98euc\bts_analysis /user:DOMAIN\username yourpassword</pre>
 
   <h2>Persistent Mapping</h2>
-  <p>
-    To automatically reconnect this drive after restart:
-  </p>
+  <p>To automatically reconnect this drive after restart:</p>
   <pre>net use R: \\e98euc\bts_analysis /persistent:yes</pre>
   <p>To remove it:</p>
   <pre>net use R: /delete</pre>
+
+  <h2>Dummy Drive Examples</h2>
+  <p>Here are some sample mappings you can try in a lab or demo environment:</p>
+  <pre>
+net use Z: \\testserver\shared_docs
+net use Y: \\fileserver\project_data
+net use X: \\demo_machine\reports /user:DEMO\labuser labpass123
+net use Q: \\192.168.1.50\public /persistent:yes
+  </pre>
+  <ul>
+    <li><code>Z:</code> → Maps to <code>shared_docs</code> on <code>testserver</code>.</li>
+    <li><code>Y:</code> → Maps to <code>project_data</code> on <code>fileserver</code>.</li>
+    <li><code>X:</code> → Uses credentials to connect to <code>reports</code> on <code>demo_machine</code>.</li>
+    <li><code>Q:</code> → Connects to a public share on a local IP and makes it persistent.</li>
+  </ul>
 
   <h2>Use Cases</h2>
   <ul>
@@ -97,9 +110,9 @@
   </ul>
 
   <p style="margin-top: 30px;">
-    For questions or automation ideas, feel free to <a href="mailto:sandeep.nair@1898andco.com">reach out</a>.
+    For questions or automation ideas, feel free to 
+    <a href="mailto:sandeep.nair@1898andco.com">reach out</a>.
   </p>
 </div>
-
 </body>
 </html>
