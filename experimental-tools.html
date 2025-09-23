@@ -1,199 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Solar Farm Collector Designer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    body { font-family:'Inter',sans-serif; background:#f0f8ff; margin:0 }
-    main { padding:20px; max-width:1800px; margin:auto }
+    :root {
+      --primary:#0a66c2;
+      --primary-dark:#004a99;
+      --ink:#111827;
+      --muted:#6b7280;
+      --panel:#fafdff;
+      --bg:#f0f8ff;
+    }
+    * { box-sizing:border-box }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: var(--ink); }
+    main { padding: 20px; max-width: 1800px; margin: auto; }
+    h1 { margin: 0 0 12px; }
+    .row { display:flex; gap:16px; flex-wrap:wrap; align-items:end }
     label { display:block; margin:10px 0 4px; font-weight:600 }
-    input, textarea { width:300px; padding:8px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px }
-    button { margin:10px 10px 0 0; padding:10px 16px; background:#0a66c2; color:#fff; border:none; border-radius:6px; cursor:pointer }
-    button:hover { background:#004a99 }
-    #canvasContainer { width:100%; height:65vh; min-height:500px; border:1px solid #ccc; overflow:hidden; position:relative; cursor:grab; background:#fafdff }
-    #canvasContainer.grabbing { cursor:grabbing }
-    canvas { transform-origin:0 0; display:block }
-    #coordContainer { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-top:10px }
-    .coordPane { background:#fff; border:1px solid #ccc; padding:10px; font-family:monospace; white-space:pre; max-height:300px; overflow:auto; font-size:13px }
+    input, textarea, select { width: 300px; padding: 8px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-family:inherit }
+    textarea { height: 70px; resize: vertical }
+    .chk { display:flex; gap:8px; align-items:center; margin: 4px 12px 0 0 }
+    button { margin: 10px 10px 0 0; padding: 10px 16px; background: var(--primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight:600 }
+    button:hover { background: var(--primary-dark) }
+    button.secondary { background:#e5e7eb; color:#111; }
+    #canvasContainer { width: 100%; height: 65vh; min-height: 520px; border: 1px solid #cbd5e1; overflow: hidden; position: relative; cursor: grab; background: var(--panel); border-radius: 10px }
+    #canvasContainer.grabbing { cursor: grabbing }
+    canvas { transform-origin: 0 0; display: block }
+    #coordContainer { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-top: 10px }
+    .coordPane { background: #fff; border: 1px solid #cbd5e1; padding: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; white-space: pre; max-height: 320px; overflow: auto; font-size: 13px; border-radius:10px }
+    .help { color: var(--muted); font-size: 13px }
+    .badge { display:inline-block; padding:2px 6px; border-radius:999px; background:#eef2ff; color:#3730a3; font-size:12px; border:1px solid #c7d2fe }
   </style>
 </head>
 <body>
-<main>
-  <h1>⚡ Solar Farm Collector Designer</h1>
-  <label>Total Inverters</label><input type="number" id="total" placeholder="e.g., 40">
-  <label>Default Inverters per Feeder</label><input type="number" id="perFeeder" placeholder="e.g., 8">
-  <label>Custom Feeder Configuration</label><textarea id="customFeeder" placeholder="e.g., 4,4,4,4"></textarea>
-  <label>Capacitor Bank (kVAR)</label><input type="number" id="capacitor" placeholder="e.g., 500">
-  <label>MV Voltage (kV)</label><input type="number" id="mvVoltage" value="34.5" step="0.1">
-  <label>LV Voltage (kV)</label><input type="number" id="lvVoltage" value="0.66" step="0.01">
-  <label>Impedance (Z pu)</label><input type="number" id="impedance" placeholder="e.g., 0.03" step="0.01">
-  <div><input type="checkbox" id="lvLoad"><label for="lvLoad">Add Load on LV side</label></div>
-  <div><input type="checkbox" id="showLegend" checked><label for="showLegend">Show Legend</label></div>
-  <div><input type="checkbox" id="showCoords"><label for="showCoords">Show Bus Coordinates</label></div>
-  <button id="genBtn">Generate</button>
-  <button id="resetBtn">Reset View</button>
-  <button id="zoomInBtn">Zoom In</button>
-  <button id="zoomOutBtn">Zoom Out</button>
-  <label for="zoomSlider">Zoom:</label><input type="range" id="zoomSlider" min="0.1" max="3" step="0.01" value="1">
-  <button id="downloadLocBtn">Download .loc</button>
-  <button id="downloadIdvBtn">bus.idv</button>
-  <button id="downloadBranchIdvBtn">branch.idv</button>
-  <div id="canvasContainer"><canvas id="schematicCanvas" width="1800" height="2000"></canvas></div>
-  <div id="coordContainer">
-    <div id="leftPane" class="coordPane">Bus coords appear here.</div>
-    <div id="locPane" class="coordPane">.loc output appears here.</div>
-    <div id="idvPane" class="coordPane">bus.idv output appears here.</div>
-    <div id="branchIdvPane" class="coordPane">branch.idv output appears here.</div>
-  </div>
-</main>
-<script>
-(() => {
-  const canvas = document.getElementById('schematicCanvas'), ctx = canvas.getContext('2d'), container = document.getElementById('canvasContainer'), slider = document.getElementById('zoomSlider');
-  let scale=1, panX=0, panY=0, isPanning=false, startX=0, startY=0;
-  let busCoords = [], mvPoints = [], branches = [];
-  let mvKV=34.5, lvKV=0.66;
+  <main>
+    <h1>⚡ Solar Farm Collector Designer</h1>
 
-  function updateTransform() { canvas.style.transform = `translate(${panX}px,${panY}px) scale(${scale})`; }
-  function resetView() { scale=1; panX=0; panY=0; updateTransform(); slider.value=scale; }
-  function zoomTo(ns, cx=canvas.clientWidth/2, cy=canvas.clientHeight/2) {
-    panX -= (cx/scale - cx/ns);
-    panY -= (cy/scale - cy/ns);
-    scale = ns; updateTransform(); slider.value=ns;
-  }
-  slider.addEventListener('input', e=>zoomTo(+e.target.value));
-  document.getElementById('resetBtn').addEventListener('click', resetView);
-  document.getElementById('zoomInBtn').addEventListener('click', ()=>zoomTo(Math.min(scale*1.1,3)));
-  document.getElementById('zoomOutBtn').addEventListener('click', ()=>zoomTo(Math.max(scale*0.9,0.1)));
-  container.addEventListener('wheel', e=>{ e.preventDefault(); const d=-e.deltaY*0.001; const ns=Math.min(Math.max(scale+d,0.1),3); const r=canvas.getBoundingClientRect(); zoomTo(ns,e.clientX-r.left,e.clientY-r.top); });
-  container.addEventListener('mousedown', e=>{ isPanning=true; container.classList.add('grabbing'); startX=e.clientX-panX; startY=e.clientY-panY; });
-  document.addEventListener('mousemove', e=>{ if(!isPanning) return; panX=e.clientX-startX; panY=e.clientY-startY; updateTransform(); });
-  document.addEventListener('mouseup', ()=>{ isPanning=false; container.classList.remove('grabbing'); });
+    <div class="row">
+      <div>
+        <label>Total Inverters <span class="help">(e.g., 40)</span></label>
+        <input type="number" id="total" placeholder="e.g., 40" />
+      </div>
+      <div>
+        <label>Default Inverters per Feeder <span class="help">(e.g., 8)</span></label>
+        <input type="number" id="perFeeder" placeholder="e.g., 8" />
+      </div>
+      <div style="min-width:330px">
+        <label>Custom Feeder Configuration
+          <span class="help">Examples: <span class="badge">9,8</span> or <span class="badge">4,4,4,4,4</span></span>
+        </label>
+        <textarea id="customFeeder" placeholder="If partial (e.g., 9,8) the rest auto-fills using per-feeder."></textarea>
+      </div>
+      <div>
+        <label>Capacitor Bank (kVAR)</label>
+        <input type="number" id="capacitor" placeholder="e.g., 500" />
+      </div>
+      <div>
+        <label>MV Voltage (kV)</label>
+        <input type="number" id="mvVoltage" value="34.5" step="0.1" />
+      </div>
+      <div>
+        <label>LV Voltage (kV)</label>
+        <input type="number" id="lvVoltage" value="0.66" step="0.01" />
+      </div>
+      <div>
+        <label>Impedance (Z pu)</label>
+        <input type="number" id="impedance" placeholder="e.g., 0.03" step="0.001" />
+      </div>
+      <div class="chk">
+        <input type="checkbox" id="lvLoad" />
+        <label for="lvLoad">Add Load on LV side</label>
+      </div>
+      <div class="chk">
+        <input type="checkbox" id="showLegend" checked />
+        <label for="showLegend">Show Legend</label>
+      </div>
+      <div class="chk">
+        <input type="checkbox" id="showCoords" />
+        <label for="showCoords">Show Bus Coordinates on Canvas</label>
+      </div>
+    </div>
 
-  document.getElementById('genBtn').addEventListener('click', () => {
-    const total = +document.getElementById('total').value;
-    if(!total){ alert('Enter total inverters'); return; }
-    const perF = +document.getElementById('perFeeder').value;
-    const custom = document.getElementById('customFeeder').value.trim();
-    mvKV = +document.getElementById('mvVoltage').value;
-    lvKV = +document.getElementById('lvVoltage').value;
+    <div class="row">
+      <button id="genBtn">Generate</button>
+      <button id="resetBtn" class="secondary">Reset View</button>
+      <button id="zoomInBtn" class="secondary">Zoom In</button>
+      <button id="zoomOutBtn" class="secondary">Zoom Out</button>
+      <label for="zoomSlider" style="margin-left:6px">Zoom:</label>
+      <input type="range" id="zoomSlider" min="0.1" max="3" step="0.01" value="1" style="width:200px" />
+      <button id="downloadLocBtn">Download .loc</button>
+      <button id="downloadIdvBtn">Download bus.idv</button>
+      <button id="downloadBranchIdvBtn">Download branch.idv</button>
+    </div>
 
-    let feederConfig = [], rem = total;
-    if(custom){
-      feederConfig = custom.split(',').map(n=>+n).filter(n=>n>0);
-      let sum = feederConfig.reduce((a,b)=>a+b,0);
-      while(sum<total){ feederConfig.push(1); sum++; }
-      if(sum>total){ let run=0; feederConfig = feederConfig.filter(n=>{ if(run+n<=total){ run+=n; return true; } if(run<total){ feederConfig.push(total-run); run=total; return true;} return false; }); }
-    } else {
-      while(rem>0){ const cnt = Math.min(perF>0?perF:total, rem); feederConfig.push(cnt); rem-=cnt; }
-    }
+    <div id="canvasContainer"><canvas id="schematicCanvas" width="2200" height="2400"></canvas></div>
 
-    mvPoints = [];
-    const cx = canvas.width/2, SUB_Y = 340, sx=180, sy=100;
-    feederConfig.forEach((cnt,i) => {
-      const baseX = cx - ((feederConfig.length-1)/2)*sx + i*sx;
-      for(let j=0; j<cnt; j++){
-        mvPoints.push({ x: baseX, y: SUB_Y + 40 + j*sy, name: `INV${1001+mvPoints.length}`, feeder: i+1 });
+    <div id="coordContainer">
+      <div id="leftPane" class="coordPane">Bus coords appear here.</div>
+      <div id="locPane" class="coordPane">.loc output appears here.</div>
+      <div id="idvPane" class="coordPane">bus.idv output appears here.</div>
+      <div id="branchIdvPane" class="coordPane">branch.idv output appears here.</div>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById('schematicCanvas');
+      const ctx = canvas.getContext('2d');
+      const container = document.getElementById('canvasContainer');
+      const slider = document.getElementById('zoomSlider');
+
+      let scale = 1, panX = 0, panY = 0, isPanning = false, startX = 0, startY = 0;
+      let busCoords = [], mvPoints = [], branches = [];
+      let mvKV = 34.5, lvKV = 0.66;
+
+      function updateTransform(){ canvas.style.transform = `translate(${panX}px,${panY}px) scale(${scale})`; }
+      function resetView(){ scale=1; panX=0; panY=0; updateTransform(); slider.value=scale; }
+      function zoomTo(ns, cx=canvas.clientWidth/2, cy=canvas.clientHeight/2){ panX -= (cx/scale - cx/ns); panY -= (cy/scale - cy/ns); scale = ns; updateTransform(); slider.value = ns; }
+
+      slider.addEventListener('input', e => zoomTo(+e.target.value));
+      document.getElementById('resetBtn').addEventListener('click', resetView);
+      document.getElementById('zoomInBtn').addEventListener('click', () => zoomTo(Math.min(scale*1.1, 3)));
+      document.getElementById('zoomOutBtn').addEventListener('click', () => zoomTo(Math.max(scale*0.9, 0.1)));
+      container.addEventListener('wheel', e => { e.preventDefault(); const d = -e.deltaY * 0.001; const ns = Math.min(Math.max(scale + d, 0.1), 3); const r = canvas.getBoundingClientRect(); zoomTo(ns, e.clientX - r.left, e.clientY - r.top); });
+      container.addEventListener('mousedown', e => { isPanning = true; container.classList.add('grabbing'); startX = e.clientX - panX; startY = e.clientY - panY; });
+      document.addEventListener('mousemove', e => { if (!isPanning) return; panX = e.clientX - startX; panY = e.clientY - startY; updateTransform(); });
+      document.addEventListener('mouseup', () => { isPanning = false; container.classList.remove('grabbing'); });
+
+      // ---------- Feeder configuration logic ----------
+      function parseCustomFeeder(value){
+        if(!value) return [];
+        const arr = value.split(',').map(s => +s.trim()).filter(n => Number.isFinite(n) && n>0);
+        return arr;
       }
-    });
 
-    drawLayout(feederConfig);
-    fitToContainer();
-    updatePanes();
-  });
+      function buildFeederConfig(total, perF, customList){
+        if(!Number.isFinite(total) || total<=0) throw new Error('Enter a valid total inverter count (>0).');
+        const cfg = [];
 
-  function drawLayout(feederConfig){
-    ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,canvas.width,canvas.height);
-    busCoords = [];
-    const cx=canvas.width/2, POI_Y=100, GSU_Y=180, XFMR_Y=230, SUB_Y=340;
-    const sx=180;
+        if (customList.length===0 && (!Number.isFinite(perF) || perF<=0)) {
+          // No custom, no per-feeder: single feeder equals total
+          cfg.push(total);
+          return cfg;
+        }
 
-    // Generator
-    ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.arc(cx, POI_Y-35, 15,0,2*Math.PI); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(cx, POI_Y-20); ctx.lineTo(cx, POI_Y); ctx.stroke();
-    ctx.font='bold 13px Inter'; ctx.fillStyle='#555'; ctx.fillText('GENERATOR', cx-30, POI_Y-50);
-    ctx.restore();
-    busCoords.push({name:'GENERATOR', x:cx, y:POI_Y-50});
+        if (customList.length===0) {
+          // Pure equal-chunking by perFeeder
+          while (total > 0) { const n = Math.min(perF, total); cfg.push(n); total -= n; }
+          return cfg;
+        }
 
-    // POI BUS
-    ctx.save(); ctx.strokeStyle='#0a66c2'; ctx.lineWidth=4;
-    ctx.beginPath(); ctx.moveTo(cx-50,POI_Y); ctx.lineTo(cx+50,POI_Y); ctx.stroke(); ctx.restore();
-    busCoords.push({name:'POI BUS', x:cx, y:POI_Y});
+        // Has partial/complete custom list
+        const sumCustom = customList.reduce((a,b)=>a+b,0);
+        if (sumCustom > total) throw new Error(`Custom feeders sum (${sumCustom}) exceeds total inverters (${total}).`);
 
-    // T-Line
-    ctx.save(); ctx.strokeStyle='#000'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.moveTo(cx,POI_Y); ctx.lineTo(cx,GSU_Y); ctx.stroke(); ctx.restore();
+        cfg.push(...customList);
+        const remaining = total - sumCustom;
+        if (remaining === 0) return cfg; // exact fit
 
-    // GSU HV BUS
-    ctx.save(); ctx.strokeStyle='#0a66c2'; ctx.lineWidth=4;
-    ctx.beginPath(); ctx.moveTo(cx-50,GSU_Y); ctx.lineTo(cx+50,GSU_Y); ctx.stroke(); ctx.restore();
-    busCoords.push({name:'GSU HV BUS', x:cx, y:GSU_Y});
+        if (!Number.isFinite(perF) || perF<=0) {
+          throw new Error('Per-feeder count is required to auto-compute remaining feeders when custom configuration is partial.');
+        }
 
-    // Transformer
-    ctx.save(); ctx.strokeStyle='#2ecc71'; ctx.lineWidth=3;
-    ctx.beginPath(); ctx.moveTo(cx,GSU_Y); ctx.lineTo(cx,XFMR_Y); ctx.stroke();
-    ctx.fillStyle='#2ecc71'; ctx.fillRect(cx-13,XFMR_Y,26,44);
-    ctx.beginPath(); ctx.moveTo(cx,XFMR_Y+44); ctx.lineTo(cx,SUB_Y); ctx.stroke(); ctx.restore();
+        let rem = remaining;
+        while (rem > 0) { const n = Math.min(perF, rem); cfg.push(n); rem -= n; }
+        return cfg;
+      }
 
-    // SUB-MV BUS
-    const width = (feederConfig.length-1)*sx + 100;
-    ctx.save(); ctx.strokeStyle='#0a66c2'; ctx.lineWidth=4;
-    ctx.beginPath(); ctx.moveTo(cx-width/2,SUB_Y); ctx.lineTo(cx+width/2,SUB_Y); ctx.stroke(); ctx.restore();
-    busCoords.push({name:'SUB-MV BUS', x:cx, y:SUB_Y});
+      // ---------- Drawing ----------
+      function drawLayout(feederConfig){
+        ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,canvas.width,canvas.height);
+        busCoords = []; mvPoints = []; branches = [];
 
-    // Vertical feeders
-    ctx.save(); ctx.strokeStyle='#888'; ctx.lineWidth=2;
-    const groups = {};
-    mvPoints.forEach(pt => { (groups[pt.feeder] = groups[pt.feeder]||[]).push(pt); });
-    Object.values(groups).forEach(arr => {
-      arr.sort((a,b)=>a.y-b.y);
-      ctx.beginPath(); ctx.moveTo(arr[0].x, SUB_Y); ctx.lineTo(arr[0].x, arr[arr.length-1].y+64); ctx.stroke();
-    });
-    ctx.restore();
+        const cx = canvas.width/2, POI_Y = 100, GSU_Y = 180, XFMR_Y = 230, SUB_Y = 340;
+        const sx = 180, sy = 100;
 
-    // Nodes
-    mvPoints.forEach((pt, idx) => {
-      // MV bus segment
-      ctx.save(); ctx.strokeStyle='red'; ctx.lineWidth=4;
-      ctx.beginPath(); ctx.moveTo(pt.x-20, pt.y); ctx.lineTo(pt.x+20,pt.y); ctx.stroke(); ctx.restore();
-      busCoords.push({name:pt.name, x:pt.x, y:pt.y});
-      ctx.fillStyle='#000'; ctx.font='12px Inter'; ctx.fillText(pt.name, pt.x+24, pt.y+4);
+        // Generator symbol
+        ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(cx, POI_Y-35, 15, 0, Math.PI*2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, POI_Y-20); ctx.lineTo(cx, POI_Y); ctx.stroke();
+        ctx.font='bold 13px Inter'; ctx.fillStyle='#555'; ctx.fillText('GENERATOR', cx-34, POI_Y-52); ctx.restore();
+        busCoords.push({name:'GENERATOR', x:cx, y:POI_Y-50});
 
-      // Padmount
-      const padY = pt.y + 32;
-      ctx.save(); ctx.fillStyle='#2ecc71'; ctx.fillRect(pt.x+8, padY-8, 16,16); ctx.restore();
-      busCoords.push({name:pt.name+'_PAD', x:pt.x+16, y:padY});
+        // POI BUS
+        drawBus(cx-50, POI_Y, cx+50, POI_Y, '#0a66c2', 4, 'POI BUS', cx, POI_Y);
 
-      // connector to pad and LV
-      ctx.save(); ctx.strokeStyle='#888'; ctx.lineWidth=2;
-      ctx.beginPath(); ctx.moveTo(pt.x, pt.y); ctx.lineTo(pt.x, padY-8); ctx.stroke();
-      const lvY = pt.y + 64;
-      ctx.beginPath(); ctx.moveTo(pt.x+16,padY+8); ctx.lineTo(pt.x+16,lvY); ctx.stroke(); ctx.restore();
+        // T-Line
+        ctx.save(); ctx.strokeStyle='#000'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(cx, POI_Y); ctx.lineTo(cx, GSU_Y); ctx.stroke(); ctx.restore();
 
-      // LV bus
-      ctx.save(); ctx.strokeStyle='blue'; ctx.lineWidth=4;
-      ctx.beginPath(); ctx.moveTo(pt.x+16-20, lvY); ctx.lineTo(pt.x+16+20,lvY); ctx.stroke(); ctx.restore();
-      busCoords.push({name:pt.name+'_LV', x:pt.x+16, y:lvY});
-      ctx.fillStyle='#000'; ctx.font='12px Inter'; ctx.fillText(pt.name+'_LV', pt.x+40, lvY+4);
-    });
-  }
+        // GSU HV BUS
+        drawBus(cx-50, GSU_Y, cx+50, GSU_Y, '#0a66c2', 4, 'GSU HV BUS', cx, GSU_Y);
 
-  function fitToContainer() {
-    if(!busCoords.length) return;
-    const xs = busCoords.map(b=>b.x), ys = busCoords.map(b=>b.y);
-    const minX=Math.min(...xs), maxX=Math.max(...xs), minY=Math.min(...ys), maxY=Math.max(...ys);
-    const m=40, w=(maxX-minX)+m*2, h=(maxY-minY)+m*2;
-    const W=container.clientWidth, H=container.clientHeight;
-    const s=Math.min(W/w, H/h);
-    const oX=(W-w*s)/2-(minX-m)*s, oY=(H-h*s)/2-(minY-m)*s;
-    canvas.style.transform = `translate(${oX}px,${oY}px) scale(${s})`;
-    scale=s; panX=oX; panY=oY; slider.value=s;
-  }
+        // Transformer block
+        ctx.save(); ctx.strokeStyle='#2ecc71'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(cx, GSU_Y); ctx.lineTo(cx, XFMR_Y); ctx.stroke();
+        ctx.fillStyle='#2ecc71'; ctx.fillRect(cx-13, XFMR_Y, 26, 44);
+        ctx.beginPath(); ctx.moveTo(cx, XFMR_Y+44); ctx.lineTo(cx, SUB_Y); ctx.stroke(); ctx.restore();
 
-  function updatePanes() {/* omitted for brevity */}
-})();
-</script>
+        // SUB-MV BUS (horizontal)
+        const width = (feederConfig.length-1)*sx + 100;
+        drawBus(cx - width/2, SUB_Y, cx + width/2, SUB_Y, '#0a66c2', 4, 'SUB-MV BUS', cx, SUB_Y);
+
+        // Build MV points for each feeder
+        const baseX0 = cx - ((feederConfig.length-1)/2)*sx;
+        let globalIndex = 0;
+        feederConfig.forEach((cnt, i) => {
+          const baseX = baseX0 + i*sx;
+          const feederNo = i+1;
+          // feeder riser
+          ctx.save(); ctx.strokeStyle='#888'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(baseX, SUB_Y); ctx.lineTo(baseX, SUB_Y + 40 + (cnt-1)*sy + 64); ctx.stroke(); ctx.restore();
+
+          for (let j=0; j<cnt; j++){
+            const y = SUB_Y + 40 + j*sy;
+            const name = `INV${1001+globalIndex}`;
+            globalIndex++;
+            mvPoints.push({ x: baseX, y, name, feeder: feederNo });
+
+            // MV tap bus segment
+            drawBus(baseX-20, y, baseX+20, y, 'red', 4, name, baseX, y);
+            // label
+            ctx.fillStyle='#000'; ctx.font='12px Inter'; ctx.fillText(name, baseX+24, y+4);
+
+            // padmount xfmr
+            const padY = y + 32; ctx.save(); ctx.fillStyle='#2ecc71'; ctx.fillRect(baseX+8, padY-8, 16, 16); ctx.restore();
+            busCoords.push({name:`${name}_PAD`, x: baseX+16, y: padY});
+
+            // connectors
+            ctx.save(); ctx.strokeStyle='#888'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(baseX, y); ctx.lineTo(baseX, padY-8); ctx.stroke();
+            const lvY = y + 64; ctx.beginPath(); ctx.moveTo(baseX+16, padY+8); ctx.lineTo(baseX+16, lvY); ctx.stroke(); ctx.restore();
+
+            // LV bus
+            drawBus(baseX+16-20, lvY, baseX+16+20, lvY, 'blue', 4, `${name}_LV`, baseX+16, lvY);
+            ctx.fillStyle='#000'; ctx.font='12px Inter'; ctx.fillText(`${name}_LV`, baseX+40, lvY+4);
+
+            // branches list for export (logical connections)
+            branches.push({ from:'SUB-MV BUS', to:name });
+            branches.push({ from:name, to:`${name}_PAD` });
+            branches.push({ from:`${name}_PAD`, to:`${name}_LV` });
+          }
+        });
+
+        // Optional legend
+        if (document.getElementById('showLegend').checked) drawLegend();
+
+        // Optional coordinate markers on canvas
+        if (document.getElementById('showCoords').checked) drawCoordsOverlay();
+      }
+
+      function drawBus(x1,y1,x2,y2,color,thick,label,labx,laby){
+        ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=thick; ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.restore();
+        busCoords.push({name:label, x:labx, y:laby});
+      }
+
+      function drawLegend(){
+        const lines = [
+          'Legend',
+          '— High-voltage bus (blue)',
+          '— MV tap (red)',
+          '■ Transformer (green)',
+          '○ Generator symbol',
+          `MV: ${mvKV.toFixed(2)} kV`,
+          `LV: ${lvKV.toFixed(2)} kV`,
+          document.getElementById('lvLoad').checked ? 'LV load: yes' : 'LV load: no'
+        ];
+        const x=24, y=24, w=260, h= lines.length*18 + 16;
+        ctx.save();
+        ctx.fillStyle='rgba(255,255,255,0.85)'; ctx.strokeStyle='#cbd5e1'; ctx.lineWidth=1;
+        ctx.fillRect(x, y, w, h); ctx.strokeRect(x, y, w, h);
+        ctx.fillStyle='#111827'; ctx.font='12px Inter';
+        lines.forEach((t,i)=> ctx.fillText(t, x+12, y+20 + i*18));
+        ctx.restore();
+      }
+
+      function drawCoordsOverlay(){
+        ctx.save(); ctx.fillStyle='rgba(17,24,39,0.75)'; ctx.font='10px Inter';
+        busCoords.forEach(b => { ctx.fillText(`(${Math.round(b.x)},${Math.round(b.y)})`, b.x+6, b.y-6); });
+        ctx.restore();
+      }
+
+      function fitToContainer(){
+        if (!busCoords.length) return;
+        const xs = busCoords.map(b=>b.x), ys = busCoords.map(b=>b.y);
+        const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+        const m=40, w=(maxX-minX)+m*2, h=(maxY-minY)+m*2;
+        const W=container.clientWidth, H=container.clientHeight;
+        const s=Math.min(W/w, H/h);
+        const oX=(W-w*s)/2-(minX-m)*s, oY=(H-h*s)/2-(minY-m)*s;
+        canvas.style.transform = `translate(${oX}px,${oY}px) scale(${s})`;
+        scale=s; panX=oX; panY=oY; slider.value=s;
+      }
+
+      // ---------- Exports ----------
+      function makeLoc(){
+        // Simple .loc: name, x, y (pixel space). Keep format friendly for downstream parsing.
+        const header = `# .loc generated ${new Date().toISOString()}\n# name,x,y\n`;
+        const rows = uniqueBuses(busCoords).map(b => `${b.name},${Math.round(b.x)},${Math.round(b.y)}`).join('\n');
+        return header + rows + '\n';
+      }
+
+      function makeBusIdv(){
+        // Minimalistic bus.idv-like commands for downstream scripting.
+        // Use a neutral, parseable line format: BUS, name, x, y
+        const header = `; bus.idv generated ${new Date().toISOString()}\n; BUS,name,x,y\n`;
+        const rows = uniqueBuses(busCoords).map(b => `BUS,${safe(b.name)},${Math.round(b.x)},${Math.round(b.y)}`).join('\n');
+        return header + rows + '\n';
+      }
+
+      function makeBranchIdv(){
+        // Simple branch listing: BRANCH, from, to
+        const header = `; branch.idv generated ${new Date().toISOString()}\n; BRANCH,from,to\n`;
+        const rows = branches.map(br => `BRANCH,${safe(br.from)},${safe(br.to)}`).join('\n');
+        return header + rows + '\n';
+      }
+
+      function uniqueBuses(list){
+        const seen = new Set();
+        const out = [];
+        for (const b of list){
+          const key = b.name;
+          if (!seen.has(key)) { seen.add(key); out.push(b); }
+        }
+        return out;
+      }
+
+      function safe(s){ return String(s).replaceAll(',', '_'); }
+
+      function updatePanes(){
+        // Left: human-readable coordinates
+        const buses = uniqueBuses(busCoords);
+        const left = buses.map(b => `${b.name.padEnd(16,' ')} @ (${String(Math.round(b.x)).padStart(4,' ')}, ${String(Math.round(b.y)).padStart(4,' ')})`).join('\n');
+        document.getElementById('leftPane').textContent = left || 'No buses yet.';
+
+        // Exports
+        const loc = makeLoc();
+        const idv = makeBusIdv();
+        const bidv = makeBranchIdv();
+        document.getElementById('locPane').textContent = loc;
+        document.getElementById('idvPane').textContent = idv;
+        document.getElementById('branchIdvPane').textContent = bidv;
+      }
+
+      function download(filename, text){
+        const blob = new Blob([text], {type: 'text/plain'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename; a.style.display = 'none';
+        document.body.appendChild(a); a.click();
+        setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 0);
+      }
+
+      // ---------- Wire up controls ----------
+      document.getElementById('genBtn').addEventListener('click', () => {
+        try {
+          const total = +document.getElementById('total').value;
+          const perF = document.getElementById('perFeeder').value === '' ? NaN : +document.getElementById('perFeeder').value;
+          const custom = parseCustomFeeder(document.getElementById('customFeeder').value.trim());
+          mvKV = +document.getElementById('mvVoltage').value;
+          lvKV = +document.getElementById('lvVoltage').value;
+
+          const feederConfig = buildFeederConfig(total, perF, custom);
+          drawLayout(feederConfig);
+          fitToContainer();
+          updatePanes();
+        } catch (err){
+          alert(err.message || String(err));
+        }
+      });
+
+      document.getElementById('downloadLocBtn').addEventListener('click', () => download('layout.loc', document.getElementById('locPane').textContent));
+      document.getElementById('downloadIdvBtn').addEventListener('click', () => download('bus.idv', document.getElementById('idvPane').textContent));
+      document.getElementById('downloadBranchIdvBtn').addEventListener('click', () => download('branch.idv', document.getElementById('branchIdvPane').textContent));
+
+      // Initial example for convenience
+      (function demo(){
+        document.getElementById('total').value = 40;
+        document.getElementById('perFeeder').value = 8;
+        document.getElementById('customFeeder').value = '';
+        document.getElementById('genBtn').click();
+      })();
+    })();
+  </script>
 </body>
 </html>
