@@ -1,29 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sandeep Nair | Power Systems Tools & PSS/E Automation</title>
 
-  <!-- Primary SEO Meta -->
+  <!-- Primary SEO -->
   <meta name="description" content="Sandeep Nair – Siemens PTI PSS/E expert in load flow, grid modeling, Python automation, and transmission planning tools.">
   <meta name="keywords" content="Sandeep Nair, PSSE, PSS/E, Siemens PTI, power system simulation, contingency analysis, load flow tools, dynamic studies, short circuit calculator, voltage profile explorer, network model viewer, power system engineer, grid studies, transmission planning, python automation">
   <meta name="author" content="Sandeep Nair">
 
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Sandeep Nair | Power Systems Tools & PSS/E Automation">
   <meta property="og:description" content="Free, cutting-edge PSS/E tools & automation research for power system engineers worldwide.">
   <meta property="og:image" content="preview.jpg">
   <meta property="og:url" content="https://gridbynair.com">
-  <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Favicon -->
+  <!-- Favicons/Fonts -->
   <link rel="icon" href="favicon.ico"/>
-  
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -31,203 +26,66 @@
       --secondary: #34a853;
       --bg: #f9fbfd;
       --text: #333;
-      --card-bg: #fff;
+      --card: #fff;
+      --border: #ddd;
     }
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+    [data-theme="dark"] {
+      --bg: #0f1115;
+      --text: #eaeaea;
+      --card: #1a1d23;
+      --border: #333;
     }
-    header {
-      background: var(--primary);
-      padding: 60px 20px;
-      text-align: center;
-      color: white;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      letter-spacing: 1px;
-    }
-    header p {
-      margin-top: 8px;
-      font-size: 1.1rem;
-    }
-    nav {
-      text-align: center;
-      padding: 16px 0;
-      background: var(--card-bg);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    nav a {
-      color: var(--primary);
-      text-decoration: none;
-      margin: 0 20px;
-      font-weight: 600;
-      transition: color .3s;
-    }
-    nav a:hover { color: #004182; }
-    .container {
-      max-width: 960px;
-      margin: 40px auto;
-      padding: 20px;
-      background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      animation: fadeIn 1s ease-in;
-    }
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .buttons a {
-      display: inline-block;
-      text-align: center;
-      background: var(--primary);
-      color: white;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background .3s, transform .2s;
-    }
-    .buttons a:hover {
-      background: #004182;
-      transform: translateY(-2px);
-    }
-    footer {
-      text-align: center;
-      padding: 24px;
-      background: #f1f3f5;
-      font-size: 0.95rem;
-      color: #666;
-      margin-top: 60px;
-    }
+    body { margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--text);}
+    header { background:var(--primary); color:#fff; text-align:center; padding:60px 20px;}
+    header h1{margin:0; font-size:2.5rem;}
+    nav { background:var(--card); text-align:center; padding:14px; position:sticky; top:0; z-index:100; border-bottom:1px solid var(--border);}
+    nav a { margin:0 16px; font-weight:600; color:var(--primary); text-decoration:none;}
+    nav a:hover{color:#004182;}
+    .container { max-width:960px; margin:32px auto; padding:24px; background:var(--card); border-radius:12px; border:1px solid var(--border);}
+    .buttons { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:20px;}
+    .buttons a { display:block; text-align:center; padding:12px; background:var(--primary); color:#fff; text-decoration:none; border-radius:8px; font-weight:600;}
+    .buttons a:hover{background:#004182;}
+    footer { text-align:center; padding:24px; margin-top:40px; background:var(--card); border-top:1px solid var(--border); color:#777;}
+    #theme-toggle { position:fixed; top:16px; right:16px; z-index:1000; padding:8px 12px; border:none; border-radius:8px; background:var(--card); border:1px solid var(--border); cursor:pointer;}
+    /* Floating */
     .floating-contact, #gpay-button {
-      position: fixed;
-      right: 20px;
-      padding: 10px 16px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 0.9rem;
-      z-index: 10000;
-      cursor: pointer;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-      transition: transform .2s;
+      position:fixed; right:20px; padding:10px 16px; border-radius:30px; font-weight:600; cursor:pointer; box-shadow:0 3px 8px rgba(0,0,0,.2);
     }
-    .floating-contact:hover, #gpay-button:hover { transform: scale(1.05); }
-    .floating-contact {
-      bottom: 300px;
-      background: var(--primary);
-      color: white;
-      text-decoration: none;
-    }
-    #gpay-button {
-      bottom: 240px;
-      background: var(--secondary);
-      color: white;
-      border: none;
-    }
-    #qr-popup {
-      display: none;
-      position: fixed;
-      bottom: 100px;
-      right: 20px;
-      background: var(--card-bg);
-      padding: 16px;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-      z-index: 10001;
-      max-width: 260px;
-      text-align: center;
-      animation: fadeInUp .4s ease-in;
-    }
-    #qr-popup img {
-      width: 200px;
-      height: 200px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    #qr-popup button {
-      margin-top: 10px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    #mascot-wrapper {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 160px;
-      z-index: 9999;
-    }
-    #mascot {
-      width: 100%;
-      cursor: pointer;
-      transition: transform .3s;
-    }
-    #mascot:hover { transform: scale(1.05); }
-    .eye, .eyelid {
-      position: absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .eye { background: black; }
-    .left-eye { top: 50px; left: 60px; }
-    .right-eye { top: 50px; left: 78px; }
-    .eyelid { background: var(--bg); opacity: 0; }
-    .eyelid.left { top: 50px; left: 60px; }
-    .eyelid.right { top: 50px; left: 78px; }
-    .eyelid.blink { animation: blink 1s ease-in-out; }
-    #mascot.explode { animation: explode 0.8s ease-out forwards; }
-    #speech-bubble {
-      position: fixed;
-      bottom: 350px;
-      right: 30px;
-      background: #fff;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      display: none;
-      z-index: 10001;
-      animation: fadeIn .6s ease;
-    }
-    /* Animations */
-    @keyframes blink { 0%,100%{opacity:0;transform:scaleY(0);}50%{opacity:1;transform:scaleY(1);} }
-    @keyframes explode {0%{transform:scale(1) rotate(0);opacity:1;}50%{transform:scale(1.8) rotate(180deg);opacity:.5;}100%{transform:scale(0) rotate(360deg);opacity:0;}}
-    @keyframes fadeIn {from{opacity:0;}to{opacity:1;}}
-    @keyframes fadeInUp {from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    .floating-contact{bottom:300px; background:var(--primary); color:#fff; text-decoration:none;}
+    #gpay-button{bottom:240px; background:var(--secondary); color:#fff; border:none;}
+    /* QR */
+    #qr-popup{display:none; position:fixed; bottom:100px; right:20px; background:var(--card); border:1px solid var(--border); padding:16px; border-radius:12px; z-index:2000;}
+    #qr-popup img{width:200px; height:200px; border-radius:8px; border:1px solid var(--border);}
+    #qr-popup button{margin-top:10px; padding:8px 12px; border:none; border-radius:6px; background:var(--primary); color:#fff; cursor:pointer;}
+    /* Mascot */
+    #mascot-wrapper{position:fixed; bottom:20px; right:20px; width:160px;}
+    #speech-bubble{position:fixed; bottom:350px; right:30px; background:var(--card); border:1px solid var(--border); padding:10px; border-radius:10px; display:none;}
+    /* Login Overlay */
+    #login-overlay{position:fixed; inset:0; background:rgba(0,0,0,.85); display:flex; align-items:center; justify-content:center; z-index:3000;}
+    #login-box{background:#fff; color:#000; padding:24px; border-radius:12px; width:300px; text-align:center;}
+    #login-box input{width:100%; padding:10px; margin-top:10px; border:1px solid #ccc; border-radius:6px;}
+    #login-box button{margin-top:12px; padding:10px; border:none; border-radius:8px; background:var(--primary); color:#fff; cursor:pointer; width:100%;}
+    #login-box .contact{margin-top:14px; font-size:.9rem;}
   </style>
 </head>
 <body>
+  <button id="theme-toggle">🌙 Dark</button>
+
   <header>
     <h1>Sandeep Nair</h1>
     <p>Transmission Planner | PSS/E | Python Automation</p>
   </header>
-  <nav aria-label="Main navigation">
+
+  <nav>
     <a href="#">Home</a>
-    <a href="resume.pdf" download target="_blank" rel="noopener">📄 Resume</a>
-    <a href="#">PSS/E Inside Python Guide</a>
+    <a href="resume.pdf" target="_blank">📄 Resume</a>
+    <a href="#">Guides</a>
     <a href="#">Downloads</a>
   </nav>
-  <main class="container">
-    <h2>Welcome</h2>
-    <p>
-      I'm Sandeep Nair, a power systems engineer specializing in Siemens PTI PSS/E, Python-based automation, and transmission planning. 
-      I build tools and workflows for load flow simulations, contingency analysis, transformer loading, dynamic stability studies, and renewable integration.
-    </p>
+
+  <main class="container" id="protected-content" hidden>
+    <h2>Transmission Planner Hub</h2>
+    <p>World’s best collection of tools for power system engineers.</p>
     <div class="buttons">
       <a href="loadflow-converter.html">Load Flow Converter</a>
       <a href="short-circuit-tool.html">Short Circuit Tool</a>
@@ -238,122 +96,68 @@
       <a href="drive-mapping.html">Drive Mapping</a>
       <a href="network-viewer.html">Network Viewer</a>
       <a href="experimental-tools.html">Experimental Tools</a>
+      <!-- Dummy tools -->
+      <a href="#">Dummy Tool 1</a>
+      <a href="#">Dummy Tool 2</a>
+      <a href="#">Dummy Tool 3</a>
     </div>
   </main>
+
   <footer>
     &copy; 2025 Sandeep Nair · gridbynair.com<br>
     💡 Donations help build free tools for power system engineers worldwide.
   </footer>
 
-  <!-- Contact -->
-  <a href="mailto:sandeep.nair@1898andco.com" class="floating-contact" aria-label="Contact via email">✉️ Contact</a>
-
-  <!-- GPay Button -->
-  <button id="gpay-button" aria-label="Donate with GPay">Donations</button>
-
-  <!-- QR Popup -->
-  <div id="qr-popup" role="dialog" aria-labelledby="donate-title" aria-hidden="true">
-    <h4 id="donate-title">Scan to Donate</h4>
-    <img src="gpay.jpeg" alt="Google Pay QR Code">
-    <p>Support power system tools & automation research by Sandeep.</p>
+  <!-- Floating -->
+  <a href="mailto:sandeep.nair@1898andco.com" class="floating-contact">✉️ Contact</a>
+  <button id="gpay-button">Donations</button>
+  <div id="qr-popup">
+    <h4>Scan to Donate</h4>
+    <img src="gpay.jpeg" alt="GPay QR">
     <button onclick="document.getElementById('qr-popup').style.display='none'">Close</button>
   </div>
 
   <!-- Mascot -->
   <div id="mascot-wrapper">
     <img id="mascot" src="villain.png" alt="Mascot">
-    <div class="eye left-eye"></div>
-    <div class="eye right-eye"></div>
-    <div class="eyelid left eyelid-left"></div>
-    <div class="eyelid right eyelid-right"></div>
   </div>
-  <div id="speech-bubble" role="status">Need help? Click me 💥</div>
+  <div id="speech-bubble">Need help? Click me 💥</div>
 
-  <!-- Scripts -->
-  <script defer>
-    // GPay + QR fallback
-    document.getElementById('gpay-button').addEventListener('click', async () => {
-      try {
-        const supportedInstruments = [{
-          supportedMethods: 'https://tez.google.com/pay',
-          data: {
-            pa: '8669866140@oksbi',
-            pn: 'Sandeep Nair',
-            tr: 'GRIDBYNAIR001',
-            url: 'https://gridbynair.com',
-            mc: '0000',
-            tn: 'Support Grid Tools by Sandeep',
-            invoiceNo: 'VOLT500',
-            invoiceDate: new Date().toISOString(),
-            gstIn: 'NA'
-          }
-        }];
-        const details = {
-          total: { label: 'Donation', amount: { currency: 'INR', value: '500.00' } }
-        };
-        const request = new PaymentRequest(supportedInstruments, details);
-        if (await request.canMakePayment()) {
-          const response = await request.show();
-          await response.complete('success');
-          alert('✅ Thank you for your ₹500 support!');
-        } else {
-          document.getElementById('qr-popup').style.display = 'block';
-        }
-      } catch {
-        document.getElementById('qr-popup').style.display = 'block';
+  <!-- Login Overlay -->
+  <div id="login-overlay">
+    <div id="login-box">
+      <h2>🔐 Member Access</h2>
+      <p>Enter password to access tools:</p>
+      <input type="password" id="password-input" placeholder="Password">
+      <button id="login-btn">Unlock</button>
+      <div class="contact">Don’t have it? Contact: <a href="mailto:sandeep.nair@1898andco.com">sandeep.nair@1898andco.com</a></div>
+    </div>
+  </div>
+
+  <script>
+    // Theme
+    const toggleBtn=document.getElementById('theme-toggle');
+    toggleBtn.addEventListener('click',()=>{
+      const root=document.documentElement;
+      const current=root.getAttribute('data-theme');
+      const next=current==='dark'?'light':'dark';
+      root.setAttribute('data-theme',next);
+      toggleBtn.textContent=next==='dark'?'☀️ Light':'🌙 Dark';
+    });
+
+    // Password = "Grid"
+    const loginBtn=document.getElementById('login-btn');
+    const overlay=document.getElementById('login-overlay');
+    const protectedContent=document.getElementById('protected-content');
+    loginBtn.addEventListener('click',()=>{
+      const val=document.getElementById('password-input').value;
+      if(val==="Grid"){
+        overlay.style.display='none';
+        protectedContent.hidden=false;
+      } else {
+        alert("❌ Incorrect password. Contact Sandeep for access.");
       }
     });
-
-    // Mascot animations
-    const mascot = document.getElementById('mascot');
-    const speechBubble = document.getElementById('speech-bubble');
-    const eyes = document.querySelectorAll('.eye');
-    const leftLid = document.querySelector('.eyelid-left');
-    const rightLid = document.querySelector('.eyelid-right');
-    const tips = [
-      "⚡ Try Load Flow Converter!",
-      "🔋 Use Voltage Explorer!",
-      "🛠 Contingency tool finds weak links.",
-      "⚡ Short Circuit Calculator is powerful!",
-      "🐍 Python automation boosts productivity!"
-    ];
-    let tipIndex = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      eyes.forEach(eye => {
-        const rect = eye.getBoundingClientRect();
-        const eyeX = rect.left + rect.width / 2;
-        const eyeY = rect.top + rect.height / 2;
-        const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-        const offset = 4;
-        eye.style.transform = `translate(${Math.cos(angle)*offset}px, ${Math.sin(angle)*offset}px)`;
-      });
-    });
-
-    setInterval(() => {
-      leftLid.classList.add('blink');
-      rightLid.classList.add('blink');
-      setTimeout(() => {
-        leftLid.classList.remove('blink');
-        rightLid.classList.remove('blink');
-      }, 1000);
-    }, 4000);
-
-    mascot.addEventListener('click', () => {
-      mascot.classList.add('explode');
-      speechBubble.style.display = 'none';
-      setTimeout(() => mascot.style.display = 'none', 800);
-      setTimeout(() => {
-        mascot.style.display = 'block';
-        mascot.classList.remove('explode');
-      }, 5000);
-    });
-
-    setInterval(() => {
-      speechBubble.textContent = tips[tipIndex];
-      speechBubble.style.display = 'block';
-      tipIndex = (tipIndex + 1) % tips.length;
-    }, 15000);
   </script>
 </body>
 </html>
