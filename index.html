@@ -1,67 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sandeep Nair | Power Systems Tools & PSS/E Automation</title>
 
-  <!-- SEO Meta -->
+  <!-- Primary SEO Meta -->
   <meta name="description" content="Sandeep Nair – Siemens PTI PSS/E expert in load flow, grid modeling, Python automation, and transmission planning tools.">
   <meta name="keywords" content="Sandeep Nair, PSSE, PSS/E, Siemens PTI, power system simulation, contingency analysis, load flow tools, dynamic studies, short circuit calculator, voltage profile explorer, network model viewer, power system engineer, grid studies, transmission planning, python automation">
   <meta name="author" content="Sandeep Nair">
-  <link rel="icon" href="favicon.ico" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Sandeep Nair | Power Systems Tools & PSS/E Automation">
+  <meta property="og:description" content="Free, cutting-edge PSS/E tools & automation research for power system engineers worldwide.">
+  <meta property="og:image" content="preview.jpg">
+  <meta property="og:url" content="https://gridbynair.com">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico"/>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --primary: #0a66c2;
+      --secondary: #34a853;
+      --bg: #f9fbfd;
+      --text: #333;
+      --card-bg: #fff;
+    }
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
-      background: #f9fbfd;
-      color: #333;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
     header {
-      background-color: #0a66c2;
-      padding: 40px 20px;
-      color: white;
+      background: var(--primary);
+      padding: 60px 20px;
       text-align: center;
+      color: white;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+    }
+    header p {
+      margin-top: 8px;
+      font-size: 1.1rem;
     }
     nav {
       text-align: center;
       padding: 16px 0;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      background: var(--card-bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       position: sticky;
       top: 0;
       z-index: 100;
     }
     nav a {
-      color: #0a66c2;
+      color: var(--primary);
       text-decoration: none;
       margin: 0 20px;
       font-weight: 600;
+      transition: color .3s;
     }
+    nav a:hover { color: #004182; }
     .container {
       max-width: 960px;
       margin: 40px auto;
       padding: 20px;
-      background: #fff;
+      background: var(--card-bg);
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      animation: fadeIn 1s ease-in;
     }
     .buttons {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 12px;
       margin-top: 20px;
     }
     .buttons a {
-      background: #0a66c2;
+      display: inline-block;
+      text-align: center;
+      background: var(--primary);
       color: white;
-      text-decoration: none;
-      padding: 10px 16px;
+      padding: 12px;
       border-radius: 8px;
       font-weight: 600;
+      text-decoration: none;
+      transition: background .3s, transform .2s;
+    }
+    .buttons a:hover {
+      background: #004182;
+      transform: translateY(-2px);
     }
     footer {
       text-align: center;
@@ -71,45 +110,44 @@
       color: #666;
       margin-top: 60px;
     }
-    .floating-contact {
+    .floating-contact, #gpay-button {
       position: fixed;
-      bottom: 300px;
       right: 20px;
-      background: #0a66c2;
-      color: white;
       padding: 10px 16px;
       border-radius: 30px;
-      text-decoration: none;
       font-weight: bold;
       font-size: 0.9rem;
       z-index: 10000;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      transition: transform .2s;
+    }
+    .floating-contact:hover, #gpay-button:hover { transform: scale(1.05); }
+    .floating-contact {
+      bottom: 300px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
     }
     #gpay-button {
-      position: fixed;
       bottom: 240px;
-      right: 20px;
-      background: #34a853;
+      background: var(--secondary);
       color: white;
-      padding: 10px 16px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 0.9rem;
-      z-index: 10000;
       border: none;
-      cursor: pointer;
     }
     #qr-popup {
       display: none;
       position: fixed;
       bottom: 100px;
       right: 20px;
-      background: white;
+      background: var(--card-bg);
       padding: 16px;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.2);
       z-index: 10001;
       max-width: 260px;
       text-align: center;
+      animation: fadeInUp .4s ease-in;
     }
     #qr-popup img {
       width: 200px;
@@ -119,7 +157,7 @@
     }
     #qr-popup button {
       margin-top: 10px;
-      background: #0a66c2;
+      background: var(--primary);
       color: white;
       border: none;
       padding: 6px 12px;
@@ -136,56 +174,41 @@
     #mascot {
       width: 100%;
       cursor: pointer;
+      transition: transform .3s;
     }
+    #mascot:hover { transform: scale(1.05); }
     .eye, .eyelid {
-      pointer-events: auto;
       position: absolute;
-      width: 10px;
-      height: 10px;
+      width: 10px; height: 10px;
       border-radius: 50%;
+      pointer-events: none;
     }
-    .eye {
-      background: black;
-      z-index: 10001;
-    }
+    .eye { background: black; }
     .left-eye { top: 50px; left: 60px; }
     .right-eye { top: 50px; left: 78px; }
-    .eyelid {
-      background: #f9fbfd;
-      z-index: 10002;
-      opacity: 0;
-    }
+    .eyelid { background: var(--bg); opacity: 0; }
     .eyelid.left { top: 50px; left: 60px; }
     .eyelid.right { top: 50px; left: 78px; }
-    .eyelid.blink {
-      animation: blink 1s ease-in-out;
-    }
-    @keyframes blink {
-      0% { opacity: 0; transform: scaleY(0); }
-      50% { opacity: 1; transform: scaleY(1); }
-      100% { opacity: 0; transform: scaleY(0); }
-    }
-    #mascot.explode {
-      animation: explode 0.8s ease-out forwards;
-    }
-    @keyframes explode {
-      0% { transform: scale(1) rotate(0deg); opacity: 1; }
-      50% { transform: scale(1.8) rotate(180deg); opacity: 0.5; }
-      100% { transform: scale(0) rotate(360deg); opacity: 0; }
-    }
+    .eyelid.blink { animation: blink 1s ease-in-out; }
+    #mascot.explode { animation: explode 0.8s ease-out forwards; }
     #speech-bubble {
       position: fixed;
       bottom: 350px;
       right: 30px;
       background: #fff;
-      color: #333;
       padding: 10px 14px;
       border-radius: 12px;
       font-size: 0.9rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       display: none;
       z-index: 10001;
+      animation: fadeIn .6s ease;
     }
+    /* Animations */
+    @keyframes blink { 0%,100%{opacity:0;transform:scaleY(0);}50%{opacity:1;transform:scaleY(1);} }
+    @keyframes explode {0%{transform:scale(1) rotate(0);opacity:1;}50%{transform:scale(1.8) rotate(180deg);opacity:.5;}100%{transform:scale(0) rotate(360deg);opacity:0;}}
+    @keyframes fadeIn {from{opacity:0;}to{opacity:1;}}
+    @keyframes fadeInUp {from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
   </style>
 </head>
 <body>
@@ -193,46 +216,45 @@
     <h1>Sandeep Nair</h1>
     <p>Transmission Planner | PSS/E | Python Automation</p>
   </header>
-  <nav>
+  <nav aria-label="Main navigation">
     <a href="#">Home</a>
-    <a href="resume.pdf" download target="_blank">📄 Download Resume</a>
-
-    <a href="#">PSS/E Inside Python : Guide</a>
+    <a href="resume.pdf" download target="_blank" rel="noopener">📄 Resume</a>
+    <a href="#">PSS/E Inside Python Guide</a>
     <a href="#">Downloads</a>
   </nav>
-  <div class="container">
+  <main class="container">
     <h2>Welcome</h2>
     <p>
-      I'm Sandeep Nair, a power systems engineer specializing in Siemens PTI PSS/E, Python-based automation, and transmission planning. I build tools and workflows for load flow simulations, contingency analysis, transformer loading, dynamic stability studies, and renewable integration.
+      I'm Sandeep Nair, a power systems engineer specializing in Siemens PTI PSS/E, Python-based automation, and transmission planning. 
+      I build tools and workflows for load flow simulations, contingency analysis, transformer loading, dynamic stability studies, and renewable integration.
     </p>
-  <div class="buttons">
-  <a href="loadflow-converter.html">Load Flow Converter</a>
-  <a href="short-circuit-tool.html">Short Circuit Tool</a>
-  <a href="voltage-profile.html">Voltage Profile Explorer</a>
-  <a href="contingency-explainer.html">Contingency Analysis</a>
-  <a href="transformer-loading.html">Transformer Loading</a>
-  <a href="line-impedance-tool.html">Line Impedance Visualizer</a>
-  <a href="drive-mapping.html">Drive Mapping</a>
-  <a href="network-viewer.html">Network Viewer</a>
-  <a href="experimental-tools.html">Experimental Tools</a>
-</div>
-
-  </div>
+    <div class="buttons">
+      <a href="loadflow-converter.html">Load Flow Converter</a>
+      <a href="short-circuit-tool.html">Short Circuit Tool</a>
+      <a href="voltage-profile.html">Voltage Profile Explorer</a>
+      <a href="contingency-explainer.html">Contingency Analysis</a>
+      <a href="transformer-loading.html">Transformer Loading</a>
+      <a href="line-impedance-tool.html">Line Impedance Visualizer</a>
+      <a href="drive-mapping.html">Drive Mapping</a>
+      <a href="network-viewer.html">Network Viewer</a>
+      <a href="experimental-tools.html">Experimental Tools</a>
+    </div>
+  </main>
   <footer>
     &copy; 2025 Sandeep Nair · gridbynair.com<br>
     💡 Donations help build free tools for power system engineers worldwide.
   </footer>
 
   <!-- Contact -->
-  <a href="mailto:sandeep.nair@1898andco.com" class="floating-contact">✉️ Contact</a>
+  <a href="mailto:sandeep.nair@1898andco.com" class="floating-contact" aria-label="Contact via email">✉️ Contact</a>
 
   <!-- GPay Button -->
- #<button id="gpay-button">Donations</button>
+  <button id="gpay-button" aria-label="Donate with GPay">Donations</button>
 
   <!-- QR Popup -->
-  <div id="qr-popup">
-    <h4>Scan to Donate</h4>
-    <img src="gpay.jpeg" alt="GPay QR">
+  <div id="qr-popup" role="dialog" aria-labelledby="donate-title" aria-hidden="true">
+    <h4 id="donate-title">Scan to Donate</h4>
+    <img src="gpay.jpeg" alt="Google Pay QR Code">
     <p>Support power system tools & automation research by Sandeep.</p>
     <button onclick="document.getElementById('qr-popup').style.display='none'">Close</button>
   </div>
@@ -245,10 +267,10 @@
     <div class="eyelid left eyelid-left"></div>
     <div class="eyelid right eyelid-right"></div>
   </div>
-  <div id="speech-bubble">Need help? Click me 💥</div>
+  <div id="speech-bubble" role="status">Need help? Click me 💥</div>
 
   <!-- Scripts -->
-  <script>
+  <script defer>
     // GPay + QR fallback
     document.getElementById('gpay-button').addEventListener('click', async () => {
       try {
@@ -277,7 +299,7 @@
         } else {
           document.getElementById('qr-popup').style.display = 'block';
         }
-      } catch (err) {
+      } catch {
         document.getElementById('qr-popup').style.display = 'block';
       }
     });
@@ -289,11 +311,11 @@
     const leftLid = document.querySelector('.eyelid-left');
     const rightLid = document.querySelector('.eyelid-right');
     const tips = [
-      "Try Load Flow Converter!",
-      "Use Voltage Explorer!",
-      "Contingency tool helps find weak links.",
-      "Short Circuit Calculator is powerful!",
-      "Python automation boosts productivity!"
+      "⚡ Try Load Flow Converter!",
+      "🔋 Use Voltage Explorer!",
+      "🛠 Contingency tool finds weak links.",
+      "⚡ Short Circuit Calculator is powerful!",
+      "🐍 Python automation boosts productivity!"
     ];
     let tipIndex = 0;
 
