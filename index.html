@@ -485,6 +485,50 @@
     }
 
     /* Mascot */
+    
+    /* ADDED: Collapsible FE workflow styles */
+    details.fe-toggle{
+      margin-top:8px;
+      border-radius:12px;
+      border:1px solid rgba(148,163,184,.35);
+      background:linear-gradient(135deg,#f9fafb,#eef4ff);
+      padding:8px 10px 10px;
+      box-shadow:0 6px 14px rgba(15,23,42,.04);
+      transition:background .25s ease-out, box-shadow .25s ease-out, border-color .25s ease-out;
+    }
+    details.fe-toggle[open]{
+      background:#ffffff;
+      border-color:rgba(37,99,235,.4);
+      box-shadow:0 10px 24px rgba(37,99,235,.15);
+    }
+    .collapsible-summary{
+      list-style:none;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:600;
+      font-size:.9rem;
+      color:#0a66c2;
+    }
+    details.fe-toggle summary::-webkit-details-marker{display:none}
+    .collapsible-icon{
+      font-size:.85rem;
+      transition:transform .22s ease-out;
+      display:inline-flex;
+    }
+    details.fe-toggle[open] .collapsible-icon{
+      transform:rotate(90deg);
+    }
+    @keyframes pulse-arrow{
+      0%{transform:translateX(0)}
+      50%{transform:translateX(3px)}
+      100%{transform:translateX(0)}
+    }
+    details.fe-toggle:not([open]) .collapsible-icon{
+      animation:pulse-arrow 1.4s ease-in-out infinite;
+    }
+
+    /* Mascot */
     #mascot-wrapper{
       position:fixed;
       bottom:20px;
@@ -755,26 +799,26 @@
   <p class="project-meta"><strong>Transmission Planner – Planning & Coordination Studies</strong></p>
 
   <!-- ADDED: Collapsible FE workflow summary -->
-  <details style="margin-top:8px;">
-    <summary style="cursor:pointer;font-weight:600;color:#0a66c2;">Detailed Workflow (Folder Creation → Analysis → Report)</summary>
+  <details class="fe-toggle" style="margin-top:8px;">
+    <summary class="collapsible-summary"><span class="collapsible-icon">▸</span><span>Detailed Workflow (Folder Creation → Analysis → Report)</span></summary>
     <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
-      <li><strong>Standardized Project Setup:</strong> Created OpCo-specific folders (Case, Input, Drawing, Results) from FE templates; ensured structured, traceable model and data management.</li>
+      <li><strong>Standardized Project Setup:</strong> Created OpCo‑specific folders (Case, Input, Drawing, Results) from FE templates; ensured structured, traceable model and data management.</li>
       <li><strong>IDV Model Development:</strong> Built PSSE IDV files to split buses, tap lines, add loads, update topology, and validate system balance before running in PSS®E/Enfuzion.</li>
-      <li><strong>Contingency Preparation:</strong> Loaded updated cases in TARA Viewer, attached SUB/MON/CON files, resolved tap-related warnings (1030 edits), and verified readiness for N-1 / N-1-1 studies.</li>
-      <li><strong>TARA ACCA Simulation:</strong> Configured ACCA spreadsheet for N-1 and N-1-1 runs, linked PSSE/TARA files, executed analysis, and monitored full simulation through Sparta/Enfuzion.</li>
-      <li><strong>Results Processing:</strong> Filtered N-1 and N-1-1 violations, removed lower-kV/P+ non-applicable events, screened valid thermal/voltage issues, and compiled clean planner-ready result sets.</li>
-      <li><strong>One-Line Diagrams:</strong> Developed FE-formatted planning diagrams in Visio including tap distances, substation data, GIS/TAMI imagery, and customer/utility connection details.</li>
+      <li><strong>Contingency Preparation:</strong> Loaded updated cases in TARA Viewer, attached SUB/MON/CON files, resolved tap‑related warnings (1030 edits), and verified readiness for N‑1 / N‑1‑1 studies.</li>
+      <li><strong>TARA ACCA Simulation:</strong> Configured ACCA spreadsheet for N‑1 and N‑1‑1 runs, linked PSSE/TARA files, executed analysis, and monitored full simulation through Sparta/Enfuzion.</li>
+      <li><strong>Results Processing:</strong> Filtered N‑1 and N‑1‑1 violations, removed lower‑kV/P+ non‑applicable events, screened valid thermal/voltage issues, and compiled clean planner‑ready result sets.</li>
+      <li><strong>One‑Line Diagrams:</strong> Developed FE‑formatted planning diagrams in Visio including tap distances, substation data, GIS/TAMI imagery, and customer/utility connection details.</li>
       <li><strong>Reporting:</strong> Prepared CLS/DLS reports detailing assumptions, methodology, contingency performance, reinforcement needs, and issued internal + redacted customer versions.</li>
     </ul>
   </details>
 
   <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
-    <li>Performed FirstEnergy transmission-level Load Interconnection Studies in accordance with FE Planning Criteria, CLS/DLS procedures, PJM protocols, and NERC TPL standards.</li>
-    <li>Modeled customer load additions in PSS®E, updated FE/PJM base cases, and executed N-1, N-1-1, and Generator Deliverability studies using PowerGEM TARA.</li>
-    <li>Reviewed PJM-posted deliverability results and identified system upgrades or reinforcements.</li>
-    <li>Built FE one-line diagrams (internal + customer versions) using Microsoft Visio.</li>
+    <li>Performed FirstEnergy transmission‑level Load Interconnection Studies in accordance with FE Planning Criteria, CLS/DLS procedures, PJM protocols, and NERC TPL standards.</li>
+    <li>Modeled customer load additions in PSS®E, updated FE/PJM base cases, and executed N‑1, N‑1‑1, and Generator Deliverability studies using PowerGEM TARA.</li>
+    <li>Reviewed PJM‑posted deliverability results and identified system upgrades or reinforcements.</li>
+    <li>Built FE one‑line diagrams (internal + customer versions) using Microsoft Visio.</li>
     <li>Prepared formal FE planning reports summarizing assumptions, results, violations, and mitigations.</li>
-    <li>Coordinated directly with FirstEnergy planners through structured weekly sync-ups and TCPR workflows.</li>
+    <li>Coordinated directly with FirstEnergy planners through structured weekly sync‑ups and TCPR workflows.</li>
   </ul>
 </article>
 
