@@ -747,75 +747,38 @@
       </p>
 
       <div class="project-grid">
-        <article class="project-card">
-          <div class="project-label">Programme Support</div>
-          <h3>NextEra Renewable Energy Resources</h3>
-<!-- ADDED: site count badge -->
-<span class="site-count-badge" style="position:absolute; top:14px; right:18px; background:#0a66c2; color:#fff; padding:6px 12px; border-radius:999px; font-size:0.78rem; font-weight:600; box-shadow:0 4px 10px rgba(10,102,194,0.25);">40+ Sites</span>
-<p class="project-meta"><strong>Associate Senior Engineer – Project Lead</strong></p>
-<!-- CHANGED: Updated NextEra details based on Cavalry Solar VAR / Fault Study scope -->
-<ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563;">
-  <!-- ADDED -->
-  <li><!-- CHANGED: generalized portfolio wording -->
-  <!-- CHANGED: added MW and voltage details -->
-  <li><!-- CHANGED: added regional coverage -->
-          Supported a broad portfolio of 40+ NextEra Energy solar, storage, and hybrid sites across multiple U.S. regions <!-- CHANGED: replaced BMI–E98 framework --> under <strong>1898 &amp; Co. (consulting wing of Burns &amp; McDonnell)</strong>, spanning projects from the **East Coast to the West Coast** across several states, with project sizes up to <strong>1200&nbsp;MW</strong> (developed in <strong>300&nbsp;MW phased blocks</strong>) and transmission interconnections up to <strong>345&nbsp;kV</strong></strong>.</li>S. regions <!-- CHANGED: replaced BMI–E98 framework --> under <strong>1898 &amp; Co. (consulting wing of Burns &amp; McDonnell)</strong>, <!-- REMOVED: Cavalry Solar name -->.</li>
-  <li>Performed complete multi‑stage Voltage/VAR and Fault Studies (Conceptual → 30% → IFC) following TO/ISO criteria and FERC Order 827.</li>
-  <li>Developed both equivalent and detailed PSS®E collector system models, including feeders, pad‑mount transformers, inverter data, reactive devices, and MSU transformer configurations.</li>
-  <li>Evaluated inverter reactive capability curves, VAR requirements at POI, and mitigation options (tap optimization, shunt additions, collector adjustments).</li>
-  <li>Conducted three‑phase and SLG fault simulations; validated main transformer impedance, neutral grounding reactor sizing, and fault current compliance (<25 kA / <16 kA thresholds).</li>
-  <li>Delivered draft and final technical reports including VAR capability plots, shunt switching strategy, DETC/LTC recommendations, and supplemental dynamic device needs (STATCOM/DVAR).</li>
-  <li><!-- CHANGED: replaced internal team mention & removed Z‑drive reference -->
-          Collaborated directly with client-side project managers, engineers, and technical leads; maintained clear, consistent communication through weekly coordination meetings and structured review cycles.</li>
-</ul>
-        </article>
 
-        <article class="project-card">
-          <div class="project-label">Interconnection Applications</div>
-          <h3>NYISO &amp; PJM – AES</h3>
-          <p class="project-meta"><strong>Associate Senior Engineer – Interconnection Support</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563;">
-            <li>Prepared input data, steady-state and dynamic PSS®E models, and completed dynamic model testing.</li>
-            <li>Led interconnection application form preparation and data validation with ISO requirements.</li>
-            <li>Developed short-circuit models in ASPEN (online) for submission packages.</li>
-          </ul>
-        </article>
+<!-- ADDED: FirstEnergy moved to top with collapsible summary -->
+<article class="project-card" style="position:relative;">
+  <div class="project-label">Network-Level Interconnection</div>
+  <h3>FirstEnergy Load Interconnection Study</h3>
+  <p class="project-meta"><strong>Transmission Planner – Planning & Coordination Studies</strong></p>
 
-        <article class="project-card">
-          <div class="project-label">Interconnection Applications</div>
-          <h3>Origis Energy</h3>
-          <p class="project-meta"><strong>Associate Senior Engineer</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563;">
-            <li>Built PSS®E steady-state and dynamic models, including model validation and testing.</li>
-            <li>Supported full interconnection application preparation and data coordination.</li>
-            <li>Created ASPEN short-circuit models to align protection assumptions with planning cases.</li>
-          </ul>
-        </article>
+  <!-- ADDED: Collapsible FE workflow summary -->
+  <details style="margin-top:8px;">
+    <summary style="cursor:pointer;font-weight:600;color:#0a66c2;">Detailed Workflow (Folder Creation → Analysis → Report)</summary>
+    <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
+      <li><strong>Standardized Project Setup:</strong> Created OpCo-specific folders (Case, Input, Drawing, Results) from FE templates; ensured structured, traceable model and data management.</li>
+      <li><strong>IDV Model Development:</strong> Built PSSE IDV files to split buses, tap lines, add loads, update topology, and validate system balance before running in PSS®E/Enfuzion.</li>
+      <li><strong>Contingency Preparation:</strong> Loaded updated cases in TARA Viewer, attached SUB/MON/CON files, resolved tap-related warnings (1030 edits), and verified readiness for N-1 / N-1-1 studies.</li>
+      <li><strong>TARA ACCA Simulation:</strong> Configured ACCA spreadsheet for N-1 and N-1-1 runs, linked PSSE/TARA files, executed analysis, and monitored full simulation through Sparta/Enfuzion.</li>
+      <li><strong>Results Processing:</strong> Filtered N-1 and N-1-1 violations, removed lower-kV/P+ non-applicable events, screened valid thermal/voltage issues, and compiled clean planner-ready result sets.</li>
+      <li><strong>One-Line Diagrams:</strong> Developed FE-formatted planning diagrams in Visio including tap distances, substation data, GIS/TAMI imagery, and customer/utility connection details.</li>
+      <li><strong>Reporting:</strong> Prepared CLS/DLS reports detailing assumptions, methodology, contingency performance, reinforcement needs, and issued internal + redacted customer versions.</li>
+    </ul>
+  </details>
 
-        <article class="project-card">
-          <div class="project-label">Interconnection Applications</div>
-          <h3>Swift Current</h3>
-          <p class="project-meta"><strong>Associate Senior Engineer</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563;">
-            <li>Prepared project input data and PSS®E models for interconnection analysis.</li>
-            <li>Supported dynamic model testing and coordinated application form completion.</li>
-          </ul>
-        </article>
+  <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
+    <li>Performed FirstEnergy transmission-level Load Interconnection Studies in accordance with FE Planning Criteria, CLS/DLS procedures, PJM protocols, and NERC TPL standards.</li>
+    <li>Modeled customer load additions in PSS®E, updated FE/PJM base cases, and executed N-1, N-1-1, and Generator Deliverability studies using PowerGEM TARA.</li>
+    <li>Reviewed PJM-posted deliverability results and identified system upgrades or reinforcements.</li>
+    <li>Built FE one-line diagrams (internal + customer versions) using Microsoft Visio.</li>
+    <li>Prepared formal FE planning reports summarizing assumptions, results, violations, and mitigations.</li>
+    <li>Coordinated directly with FirstEnergy planners through structured weekly sync-ups and TCPR workflows.</li>
+  </ul>
+</article>
 
-        <!-- LI interconnection at network level for FirstEnergy -->
-        <article class="project-card">
-          <div class="project-label">Network-Level Interconnection</div>
-          <h3><!-- CHANGED: corrected programme name -->
-          <!-- CHANGED: removed Long Island reference -->
-          FirstEnergy Load Interconnection Study</h3>
-          <p class="project-meta"><strong>Transmission Planner – Network Studies</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563%;">
-            <li><!-- CHANGED: removed LI reference and generalized description -->
-            <li>Supported FirstEnergy system‑level load interconnection assessments, aligning study models with utility planning configurations.</li>
-            <li>Developed and validated PSS®E cases reflecting bulk system topology, pocket areas, and key contingency patterns.</li></li>
-            <li>Screened thermal and voltage performance for multiple interconnection scenarios, highlighting binding interfaces and upgrades.</li>
-          </ul>
-        </article>
+        <!-- MOVED: FirstEnergy Load Interconnection Study moved above NextEra -->
 
         <!-- Gendeliv study for PJM -->
         <article class="project-card">
