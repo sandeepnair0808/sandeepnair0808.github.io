@@ -348,15 +348,16 @@
     }
 
     /* Project cards & grids */
+    /* STACKED RECTANGULAR PROJECT TILES */
     .project-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-      gap:14px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
     }
     .project-card{
       background:var(--card);
       border-radius:var(--radius);
-      padding:14px 16px 16px;
+      padding:16px 20px 18px;
       box-shadow:var(--shadow);
       border:1px solid rgba(148,163,184,.18);
       display:flex;
@@ -365,6 +366,7 @@
       position:relative;
       overflow:hidden;
       transition:transform .25s ease-out, box-shadow .25s ease-out;
+      width:100%;
     }
     .project-card:hover{
       transform:translateY(-4px);
@@ -377,9 +379,23 @@
       letter-spacing:.08em;
       color:#9ca3af;
     }
+    /* TITLE ON A BAR */
     .project-card h3{
-      margin:2px 0 0;
-      font-size:1.0rem;
+      margin:4px 0 6px;
+      font-size:1rem;
+      font-weight:600;
+      position:relative;
+      display:block;
+      padding:6px 12px;
+      border-radius:999px;
+      color:#ffffff;
+      background:linear-gradient(90deg,#0a66c2,#2563eb);
+      box-shadow:0 4px 10px rgba(15,23,42,.18);
+      width:max-content;
+      max-width:100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
     .project-card p{
       font-size:.9rem;
@@ -900,7 +916,7 @@
           <div class="project-label">Programme Support</div>
           <h3>Invenergy</h3>
           <p class="project-meta"><strong>Transmission Planner</strong></p>
-          <p style="font-size:.9rem;color:#4b5563;">
+          <p style="font-size:.9rem;color:#4b5563%;">
             Provided conceptual-to-commissioning support for multiple project substations, including
             reactive power studies, short-circuit analysis, and mitigation recommendations for
             reinforcement and protection coordination.
@@ -1031,5 +1047,3 @@
   </script>
 </body>
 </html>
-
-
