@@ -464,46 +464,8 @@
       box-shadow:0 10px 22px rgba(10,102,194,.35);
     }
 
-    /* Mascot */
-    #mascot-wrapper{
-      position:fixed;
-      bottom:20px;
-      left:20px;
-      width:150px;
-      z-index:999;
-    }
-    #mascot{width:100%;height:auto;cursor:pointer}
-    .eye,.eyelid{
-      position:absolute;
-      width:10px;
-      height:10px;
-      border-radius:50%;
-    }
-    .eye{background:black}
-    .left-eye{top:46px;left:56px}
-    .right-eye{top:46px;left:74px}
-    .eyelid{
-      background:var(--bg);
-      opacity:0;
-    }
-    .eyelid.left{top:46px;left:56px}
-    .eyelid.right{top:46px;left:74px}
-    .eyelid.blink{animation:blink 1s ease-in-out}
-    @keyframes blink{
-      0%{opacity:0;transform:scaleY(0)}
-      50%{opacity:1;transform:scaleY(1)}
-      100%{opacity:0;transform:scaleY(0)}
-    }
-
-    @media (max-width:900px){
-      .layout{
-        grid-template-columns:1fr;
-      }
-      main{
-        margin-top:-12px;
-      }
-      #mascot-wrapper{display:none}
-    }
+    
+   
   </style>
 
   <!-- Schema.org (Person) -->
@@ -974,14 +936,7 @@
 
   <a href="mailto:nairsandeep0808@gmail.com" class="floating-contact" aria-label="Email Sandeep Nair">✉️ Contact</a>
 
-  <!-- Mascot (no speech bubble) -->
-  <div id="mascot-wrapper" aria-hidden="true">
-    <img id="mascot" src="/villain.png" alt="" loading="lazy" decoding="async">
-    <div class="eye left-eye"></div>
-    <div class="eye right-eye"></div>
-    <div class="eyelid left eyelid-left"></div>
-    <div class="eyelid right eyelid-right"></div>
-  </div>
+
 
   <script>
     // Mascot micro-interactions
@@ -1023,4 +978,5 @@
   </script>
 </body>
 </html>
+
 
