@@ -826,18 +826,45 @@
 
         <!-- Gendeliv study for PJM -->
         <article class="project-card">
-          <div class="project-label">Generation Deliverability</div>
-          <h3>Gendeliv Study – PJM</h3>
-          <p class="project-meta"><strong>Transmission Planner – Deliverability Analysis</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563%;">
-            <li>Contributed to PJM generation deliverability (Gendeliv) studies, evaluating new generation injections under stressed system conditions.</li>
-            <li>Assessed interface and branch overloads across multiple dispatch scenarios, aligning with PJM deliverability criteria.</li>
-            <li>Summarised limiting contingencies and reinforcements to support interconnection decision-making.</li>
-          </ul>
-        </article>
+  <div class="project-label">Generation Interconnection</div>
+  <h3><!-- CHANGED: Updated to FE Generation Interconnection -->FE Generation Interconnection – GenDeliv Analysis</h3>
+  <p class="project-meta"><strong>Transmission Planner – FE Generation Interconnection Support</strong></p>
 
-        <article class="project-card">
-          <div class="project-label">Zero-Emission Transport</div>
+  <!-- ADDED: Collapsible FE GenDeliv workflow -->
+  <details class="fe-toggle" style="margin-top:8px;">
+    <summary class="collapsible-summary"><span class="collapsible-icon">▸</span><span>GenDeliv Workflow (Case Build → Analysis → Results)</span></summary>
+    <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
+      <li><strong>Case Development:</strong> Added new generation using PSSE IDV workflows, updated Area settings, Pmax/Qmax limits, and validated machine parameters.</li>
+      <li><strong>RTEP Case Integration:</strong> Loaded FE/PJM RTEP cases in TARA Studio, inserted new machine at correct tap/substation bus, and ensured convergence.</li>
+      <li><strong>GD Data Preparation:</strong> Created GenDeliv data sheets (bus, area, Pmax, CIR, MW Cap) following FE/PJM templates.</li>
+      <li><strong>GenDeliv Simulation:</strong> Executed FE GenDeliv tool twice (Base + Post‑Project), with appropriate SUB/MON/CON files and flowgate capture enabled.</li>
+      <li><strong>Results Processing:</strong> Processed active/all flowgate files, filtered by Pre‑Existing/Below‑100% logic, and identified valid overloads.</li>
+      <li><strong>Violation Classification:</strong> Flagged lower‑kV P+ non‑applicable contingencies, validated remaining overloads, and prepared pivot‑table summaries.</li>
+      <li><strong>Deliverables:</strong> Packaged Base vs Post comparison, flowgate data, pivot summaries, and planner‑ready results for FE review.</li>
+    </ul>
+  </details>
+
+  <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
+    <li><!-- CHANGED -->Performed FE Generation Interconnection GenDeliv assessments using PJM RTEP cases and FE‑approved TARA workflows.</li>
+    <li><!-- CHANGED -->Built generation additions in PSSE (Area, Pmax/Qmax, CIR) and verified electrical correctness in TARA Studio.</li>
+    <li><!-- CHANGED -->Executed full GenDeliv runs (Base + Post), processed flowgate results, and identified valid system overloads.</li>
+    <li><!-- CHANGED -->Prepared FE‑formatted deliverables including GD Data, active/all flowgate outputs, and pivot‑based violation summaries.</li>
+  </ul>
+</article>
+
+        <!-- ADDED: NextEra portfolio programme after FE GenDeliv -->
+        <article class="project-card" style="position:relative;">
+          <div class="project-label">Programme Support · Reactive Studies</div>
+          <h3>NextEra Energy Resources – VAR &amp; Fault Study Portfolio</h3>
+          <p class="project-meta"><strong>Associate Senior Engineer – Portfolio Study Lead</strong> <span style="float:right;font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;">40+ sites · up to 1200&nbsp;MW @ 345&nbsp;kV</span></p>
+
+          <details class="fe-toggle" style="margin-top:8px;">
+            <summary class="collapsible-summary"><span class="collapsible-icon">▸</span><span>Workflow (Conceptual → 30% → IFC VAR &amp; Fault Studies)</span></summary>
+            <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
+              <li><strong>Multi‑site portfolio setup:</strong> Organized 40+ solar/BESS sites across U.S. regions from East Coast to West Coast, standardizing templates, study assumptions, and reporting structure under 1898 &amp; Co. (consulting wing of Burns &amp; McDonnell).</li>
+              <li><strong>Model development:</strong> Built equivalent and detailed collector‑system models in PSS&reg;E for each site, including main GSU, feeders, pad‑mount transformers, and inverter representations.</li>
+              <li><strong>Preliminary VAR &amp; fault studies:</strong> Evaluated power‑factor capability, POI voltage criteria, transformer impedance, and short‑circuit duty at early design stages; tested mitigation via shunt devices, inverter dispatch, and tap settings.</li>
+              <li><strong>30% &amp; IFC refresh:</strong> Refined studies as collectio
           <h3>PowerSouth Energy Cooperative</h3>
           <p class="project-meta"><strong>Support Engineer – Fleet Management</strong></p>
           <p style="font-size:.9rem;color:#4b5563;">
@@ -979,6 +1006,7 @@
     }, 4000);
 
     // Scroll reveal
+    // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -988,7 +1016,8 @@
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // CHANGED: apply reveal observer to all sections with .reveal
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
   </script>
 </body>
 </html>
