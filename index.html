@@ -65,27 +65,6 @@
       transform:translateY(0);
     }
 
-    /* Skip link */
-    .skip-link{
-      position:absolute;
-      left:-999px;
-      top:auto;
-      width:1px;
-      height:1px;
-      overflow:hidden;
-    }
-    .skip-link:focus{
-      left:16px;
-      top:16px;
-      width:auto;
-      height:auto;
-      background:#fff;
-      padding:10px 14px;
-      border-radius:10px;
-      box-shadow:var(--shadow);
-      z-index:1100;
-    }
-
     header{
       background:linear-gradient(135deg,#0a66c2,#062a4d);
       padding:52px 20px 60px;
@@ -104,30 +83,10 @@
       border-radius:50%;
       background:radial-gradient(circle,#53a6ff40,#ffffff00);
     }
-    header h1{
-      margin:0;
-      font-size:2.4rem;
-      letter-spacing:.05em;
-      text-transform:uppercase;
-    }
-    header p{
-      margin:.25rem 0 0;
-      font-size:0.96rem;
-      opacity:.96;
-    }
-    .role-line{
-      margin-top:.4rem;
-      font-size:1.05rem;
-      font-weight:700;
-      letter-spacing:.01em;
-    }
-    .tagline{
-      margin-top:10px;
-      font-weight:500;
-      opacity:.96;
-      font-size:.9rem;
-    }
-    .tagline q{quotes:"“" "”" "‘" "’"}
+    header h1{margin:0;font-size:2.4rem;letter-spacing:.05em;text-transform:uppercase}
+    header p{margin:.25rem 0 0;font-size:0.96rem;opacity:.96}
+    .role-line{margin-top:.4rem;font-size:1.05rem;font-weight:700;letter-spacing:.01em}
+    .tagline{margin-top:10px;font-weight:500;opacity:.96;font-size:.9rem}
 
     nav{
       display:flex;
@@ -142,12 +101,7 @@
       z-index:100;
       box-shadow:0 2px 14px rgba(15,23,42,.06);
     }
-    nav a{
-      font-weight:600;
-      font-size:.95rem;
-      color:#111827;
-      padding:4px 0;
-    }
+    nav a{font-weight:600;font-size:.95rem;color:#111827;padding:4px 0}
 
     main{
       max-width:1100px;
@@ -155,6 +109,7 @@
       padding:0 20px 40px;
     }
 
+    /* Two-column layout */
     .layout{
       display:grid;
       grid-template-columns:2fr 1.1fr;
@@ -175,92 +130,9 @@
       box-shadow:0 18px 40px rgba(15,23,42,.15);
     }
 
-    .hero-card h2{
-      margin:0 0 .4rem;
-      font-size:1.6rem;
-    }
-    .hero-sub{
-      font-size:.98rem;
-      color:var(--muted);
-      margin-bottom:.8rem;
-    }
-    .hero-highlights{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin:.9rem 0 1.2rem;
-    }
-    .pill{
-      border-radius:999px;
-      border:1px solid #e5e7eb;
-      padding:6px 11px;
-      font-size:.8rem;
-      color:#374151;
-      background:#f9fafb;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      white-space:nowrap;
-    }
-    .pill i{font-size:.75rem}
-
-    .cta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      background:var(--brand);
-      color:#fff;
-      padding:10px 14px;
-      border-radius:10px;
-      font-weight:700;
-      font-size:.95rem;
-      box-shadow:0 6px 18px rgba(10,102,194,.30);
-      border:none;
-      transition:transform .2s ease-out, box-shadow .2s ease-out;
-    }
-    .btn.secondary{
-      background:#fff;
-      color:#0a66c2;
-      border:1px solid rgba(147,197,253,.8);
-      box-shadow:none;
-    }
-    .btn:hover{
-      text-decoration:none;
-      transform:translateY(-1px);
-      box-shadow:0 8px 20px rgba(10,102,194,.35);
-    }
-
-    .meta-list{
-      list-style:none;
-      padding:0;
-      margin:0;
-      font-size:.9rem;
-      color:var(--muted);
-    }
-    .meta-list li+li{margin-top:.35rem}
-    .meta-label{font-weight:600;color:#4b5563}
-
-    /* Profile photo card */
-    .photo-card{
-      padding:18px 18px 20px;
-      text-align:center;
-    }
-    .photo-card h2{
-      margin:0 0 10px;
-      font-size:1.05rem;
-    }
-    .profile-photo-row{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:8px;
-    }
+    /* Photo Card */
+    .photo-card{text-align:center;padding:18px 18px 20px}
+    .profile-photo-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
     .profile-photo-wrap{
       width:180px;
       height:180px;
@@ -270,90 +142,24 @@
       box-shadow:0 8px 24px rgba(15,23,42,.25);
       background:#e5e7eb;
     }
-    .profile-photo{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      display:block;
-      border-radius:0;
-    }
+    .profile-photo{width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:0}
 
-    section{
-      margin-top:26px;
-    }
-    section h2{
-      margin:0 0 12px;
-      font-size:1.35rem;
-    }
-    section p{
-      margin:.35rem 0;
-      line-height:1.6;
-      font-size:.95rem;
-      color:#374151;
-    }
+    section{margin-top:26px}
+    section h2{margin:0 0 12px;font-size:1.35rem}
+    section p{margin:.35rem 0;line-height:1.6;font-size:.95rem;color:#374151}
 
-    /* EXPERIENCE TIMELINE ONLY */
-    .timeline-wrapper{
-      position:relative;
-      margin-top:8px;
-      padding-left:26px;
-    }
-    .timeline-spine{
-      position:absolute;
-      left:8px;
-      top:0;
-      bottom:0;
-      width:2px;
-      background:linear-gradient(to bottom,#4f46e5,#e5e7eb);
-      border-radius:999px;
-    }
-    .timeline-item{
-      position:relative;
-      padding:0 0 18px 22px;
-      font-size:.9rem;
-      color:#374151;
-    }
-    .timeline-item:last-child{
-      padding-bottom:0;
-    }
-    .timeline-dot{
-      position:absolute;
-      left:-4px;
-      top:4px;
-      width:12px;
-      height:12px;
-      border-radius:999px;
-      background:#0a66c2;
-      box-shadow:0 0 0 4px rgba(37,99,235,.15);
-    }
-    .timeline-year{
-      font-size:.8rem;
-      font-weight:600;
-      color:#6b7280;
-      margin-bottom:2px;
-    }
-    .timeline-title{
-      font-weight:600;
-    }
-    .timeline-meta{
-      font-size:.85rem;
-      color:#6b7280;
-    }
-    .timeline-bullets{
-      margin:6px 0 0;
-      padding-left:18px;
-      color:#4b5563;
-      font-size:.9rem;
-    }
+    /* Timeline */
+    .timeline-wrapper{position:relative;margin-top:8px;padding-left:26px}
+    .timeline-spine{position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#4f46e5,#e5e7eb);border-radius:999px}
+    .timeline-item{position:relative;padding:0 0 18px 22px;font-size:.9rem;color:#374151}
+    .timeline-dot{position:absolute;left:-4px;top:4px;width:12px;height:12px;border-radius:999px;background:#0a66c2;box-shadow:0 0 0 4px rgba(37,99,235,.15)}
+    .timeline-year{font-size:.8rem;font-weight:600;color:#6b7280;margin-bottom:2px}
+    .timeline-title{font-weight:600}
+    .timeline-meta{font-size:.85rem;color:#6b7280}
+    .timeline-bullets{margin:6px 0 0;padding-left:18px;color:#4b5563;font-size:.9rem}
 
-    /* Project cards & grids */
-    /* STACKED RECTANGULAR PROJECT TILES */
-    .project-grid{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
+    /* PROJECT CARDS */
+    .project-grid{display:flex;flex-direction:column;gap:16px}
     .project-card{
       background:var(--card);
       border-radius:var(--radius);
@@ -364,686 +170,312 @@
       flex-direction:column;
       gap:6px;
       position:relative;
-      overflow:hidden;
-      transition:transform .25s ease-out, box-shadow .25s ease-out;
       width:100%;
     }
-    .project-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 18px 40px rgba(15,23,42,.17);
-    }
-    .project-label{
-      font-size:.72rem;
-      font-weight:600;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      color:#9ca3af;
-    }
-    /* TITLE ON A BAR */
+    .project-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#9ca3af}
     .project-card h3{
       margin:4px 0 6px;
       font-size:1rem;
       font-weight:600;
-      position:relative;
-      display:block;
       padding:6px 12px;
       border-radius:999px;
-      color:#ffffff;
-      background:linear-gradient(90deg,#0a66c2,#2563eb);
-      box-shadow:0 4px 10px rgba(15,23,42,.18);
       width:max-content;
-      max-width:100%;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-    .project-card p{
-      font-size:.9rem;
-      color:#4b5563;
-    }
-    .project-meta{
-      margin-top:auto;
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      font-size:.78rem;
-      color:#6b7280;
-    }
-    .project-diagram{
-      margin-top:8px;
-      border-radius:12px;
-      border:1px dashed #d1d5db;
-      padding:8px;
-      font-size:.8rem;
-      color:#9ca3af;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .tools-note{
-      font-size:.9rem;
-      color:#6b7280;
-      margin-bottom:10px;
-    }
-
-    .tool-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-      gap:12px;
-    }
-    .tool-card{
-      background:var(--card);
-      border-radius:var(--radius);
-      padding:13px 14px 14px;
-      border:1px solid rgba(209,213,219,.9);
-      box-shadow:0 6px 18px rgba(15,23,42,.06);
-      display:flex;
-      flex-direction:column;
-      gap:7px;
-      transition:transform .25s ease-out, box-shadow .25s ease-out;
-    }
-    .tool-card:hover{
-      transform:translateY(-3px);
-      box-shadow:0 16px 32px rgba(15,23,42,.12);
-    }
-    .tool-card h3{
-      margin:0;
-      font-size:.98rem;
-    }
-    .tool-card p{
-      margin:0;
-      color:var(--muted);
-      font-size:.9rem;
-    }
-    .tool-card .go{
-      margin-top:auto;
-      align-self:flex-start;
-    }
-
-    footer{
-      margin:0;
-      padding:22px 16px 26px;
-      background:#f1f3f5;
-      color:#6b7280;
-      text-align:center;
-      font-size:.86rem;
-    }
-
-    .floating-contact{
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      background:var(--brand);
+      background:linear-gradient(90deg,#0a66c2,#2563eb);
       color:#fff;
-      padding:12px 16px;
-      border-radius:999px;
-      font-weight:600;
-      font-size:.9rem;
-      z-index:1000;
-      box-shadow:0 10px 22px rgba(10,102,194,.35);
+      box-shadow:0 4px 10px rgba(15,23,42,.18);
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      overflow:hidden;
     }
 
-    /* Mascot */
-    #mascot-wrapper{
-      position:fixed;
-      bottom:20px;
-      left:20px;
-      width:150px;
-      z-index:999;
-    }
-    #mascot{width:100%;height:auto;cursor:pointer}
-    .eye,.eyelid{
-      position:absolute;
-      width:10px;
-      height:10px;
-      border-radius:50%;
-    }
-    .eye{background:black}
-    .left-eye{top:46px;left:56px}
-    .right-eye{top:46px;left:74px}
-    .eyelid{
-      background:var(--bg);
-      opacity:0;
-    }
-    .eyelid.left{top:46px;left:56px}
-    .eyelid.right{top:46px;left:74px}
-    .eyelid.blink{animation:blink 1s ease-in-out}
-    @keyframes blink{
-      0%{opacity:0;transform:scaleY(0)}
-      50%{opacity:1;transform:scaleY(1)}
-      100%{opacity:0;transform:scaleY(0)}
-    }
+    .project-card p{font-size:.9rem;color:#4b5563}
+    .project-meta{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem;color:#6b7280}
+    .project-diagram{border:1px dashed #d1d5db;border-radius:12px;padding:8px;font-size:.8rem;color:#9ca3af;display:flex;align-items:center;gap:8px;margin-top:8px}
 
-    @media (max-width:900px){
-      .layout{
-        grid-template-columns:1fr;
-      }
-      main{
-        margin-top:-12px;
-      }
-      #mascot-wrapper{display:none}
-    }
+    /* Tools */
+    .tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+    .tool-card{background:var(--card);border-radius:var(--radius);padding:13px 14px 14px;border:1px solid rgba(209,213,219,.9);box-shadow:0 6px 18px rgba(15,23,42,.06);display:flex;flex-direction:column}
+
+    footer{text-align:center;padding:22px 16px 26px;background:#f1f3f5;color:#6b7280;font-size:.86rem}
   </style>
-
-  <!-- Schema.org (Person) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Sandeep Nair",
-    "url": "https://gridbynair.com/",
-    "jobTitle": "Transmission Planner",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "1898 & Co. (Burns & McDonnell)"
-    },
-    "sameAs": [
-      "https://www.linkedin.com/in/nairsandeep0808"
-    ]
-  }
-  </script>
 </head>
 <body>
-  <a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <h1>Sandeep Nair</h1>
+  <p>Transmission Planning · PSS®E · PowerGEM TARA · GE PSLF · ETAP · HOMER Grid · Python Automation</p>
+  <p class="role-line"><strong>Associate Sr. Engineer (Burns & McDonnell) · 5.5+ years of experience</strong></p>
+  <p class="tagline"><q>Stability is engineered; reliability is earned.</q></p>
+</header>
 
-  <header role="banner">
-    <h1>Sandeep Nair</h1>
-    <p>Transmission Planning · PSS®E · PowerGEM TARA · GE PSLF · ETAP · HOMER Grid · Python Automation</p>
-    <p class="role-line"><strong>Associate Sr. Engineer (Burns &amp; McDonnell) · 5.5+ years of experience</strong></p>
-    <p> <br> </p>
-    <p> <br> </p>
-    <p class="tagline"><q>Stability is engineered; reliability is earned.</q></p>
-  </header>
+<nav>
+  <a href="#about">About</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#project-experience">Project Experience</a>
+  <a href="#tools">Engineering Tools</a>
+  <a href="/Resume_Sandeep_Nair.pdf" download>📄 Resume_Download</a>
+</nav>
 
-  <nav role="navigation" aria-label="Primary">
-    <a href="#about">About</a>
-    <a href="#experience">Experience</a>
-    <a href="#projects">Projects</a>
-    <a href="#project-experience">Project Experience</a>
-    <a href="#tools">Engineering Tools</a>
-    <a href="/Resume_Sandeep_Nair.pdf" download target="_blank" rel="noopener">📄 Resume_Download</a>
-    <a href="/Studies_Innovation.pptm" download target="_blank" rel="noopener">📄 Studies/Innovation_Download</a>
-  </nav>
+<main id="main">
+  <!-- ABOUT -->
+  <section id="about" class="layout hero-section reveal">
+    <article class="card hero-card">
+      <h2>Transmission planner focused on reliable interconnections</h2>
+      <p class="hero-sub">North America–focused transmission planning, interconnection studies, and model automation.</p>
+      <p>Power systems engineer specializing in PSS®E, TARA, GE PSLF, ETAP, HOMER Grid & automation.</p>
+      <p>Experienced in steady-state, voltage performance, SC, RVC, reactive studies & queue support.</p>
+      <p>Hands-on with transient stability, harmonics, relay coordination & utility interfacing.</p>
 
-  <main id="main">
-    <!-- ABOUT / HERO -->
-    <section id="about" class="layout hero-section reveal" aria-labelledby="about-heading">
-      <!-- Left: hero copy -->
-      <article class="card hero-card">
-        <h2 id="about-heading">
-          Transmission planner focused on reliable interconnections
-        </h2>
-        <p class="hero-sub">
-          North America–focused transmission planning, interconnection studies, and model automation.
-        </p>
+      <div class="hero-highlights">
+        <span class="pill"><i class="fa-solid fa-wave-square"></i> PSS®E studies</span>
+        <span class="pill"><i class="fa-solid fa-code"></i> Python automation</span>
+        <span class="pill"><i class="fa-solid fa-solar-panel"></i> Renewables</span>
+        <span class="pill"><i class="fa-solid fa-bolt"></i> Interconnection</span>
+      </div>
 
-        <p>
-          Power systems engineer specializing in Siemens PTI PSS®E, PowerGEM TARA, GE PSLF, ETAP, HOMER Grid,
-          Python-based automation, and transmission planning studies for North American utilities and developers.
-        </p>
-        <p>
-          My work spans interconnection application support, steady-state and voltage performance studies,
-          reactive power compensation, short-circuit assessments, and injection analysis for large-scale
-          renewable and grid modernization projects. I focus on turning complex study workflows into
-          repeatable, automated pipelines that engineers trust and decision-makers can act on.
-        </p>
-        <p>
-          I also bring experience with transient stability, harmonic and relay coordination studies, grid code
-          compliance, and load forecasting. Day to day, that means PSS®E and ASPEN at the core, supported by
-          ETAP, ArcGIS, AutoCAD, and Python tooling that ties everything together.
-        </p>
+      <div class="cta-row">
+        <a class="btn" href="#projects"><i class="fa-solid fa-diagram-project"></i> View Projects</a>
+        <a class="btn secondary" href="mailto:sandeep.nair@1898andco.com"><i class="fa-solid fa-envelope"></i> Contact</a>
+      </div>
+    </article>
 
-        <div class="hero-highlights" aria-label="Key focus areas">
-          <span class="pill"><i class="fa-solid fa-wave-square"></i> PSS®E & steady-state studies</span>
-          <span class="pill"><i class="fa-solid fa-code"></i> Python + batch automation</span>
-          <span class="pill"><i class="fa-solid fa-solar-panel"></i> Renewable integration</span>
-          <span class="pill"><i class="fa-solid fa-bolt"></i> Interconnection applications</span>
+    <!-- PHOTO + AT A GLANCE -->
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <aside class="card photo-card">
+        <div class="profile-photo-row">
+          <div class="profile-photo-wrap"><img src="sandeep_nair.jpg" class="profile-photo"></div>
+          <div class="profile-photo-wrap"><img src="Sansai_9.jpeg" class="profile-photo"></div>
+        </div>
+        <p style="font-size:.9rem;color:#4b5563;">Delivering dependable grids by day,<br>pursuing demanding climbs by passion</p>
+        <p>: discipline connects both</p>
+      </aside>
+
+      <aside class="card">
+        <h2 style="font-size:1.05rem;">At a glance</h2>
+        <ul class="meta-list">
+          <li><span class="meta-label">Current role:</span> Associate Senior Engineer, Burns & McDonnell</li>
+          <li><span class="meta-label">Experience:</span> 5.5+ years in planning, SC, RVC, queue studies</li>
+          <li><span class="meta-label">Location:</span> Mumbai · Open to relocation</li>
+          <li><span class="meta-label">Core tools:</span> PSS®E, TARA, GE PSLF, ETAP, HOMER Grid, ASPEN, MATLAB, Python</li>
+          <li><span class="meta-label">LinkedIn:</span> <a href="https://linkedin.com/in/nairsandeep0808">nairsandeep0808</a></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="reveal">
+    <h2>Experience</h2>
+    <div class="card">
+      <div class="timeline-wrapper">
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Jan 2025 – Present</div>
+          <div class="timeline-title">Associate Senior Engineer – Transmission Planning</div>
+          <div class="timeline-meta">1898 & Co. (Burns & McDonnell)</div>
+          <ul class="timeline-bullets">
+            <li>Lead studies for interconnection applications (N-1, thermal/voltage, SC).</li>
+            <li>Guide automation, reporting & scenario-based workflows.</li>
+            <li>Direct interface with ISO/RTO stakeholders.</li>
+          </ul>
         </div>
 
-        <div class="cta-row" role="group" aria-label="Primary calls to action">
-          <a class="btn" href="#projects"><i class="fa-solid fa-diagram-project"></i> View Projects</a>
-          <a class="btn secondary" href="mailto:sandeep.nair@1898andco.com"><i class="fa-solid fa-envelope"></i> Contact</a>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Aug 2022 – Dec 2024</div>
+          <div class="timeline-title">Engineer – Transmission Planning</div>
+          <div class="timeline-meta">1898 & Co.</div>
+          <ul class="timeline-bullets">
+            <li>Steady-state (ACLF), RVC, SC, capacitor studies in PSS®E.</li>
+            <li>Python multi-run automation & report generation.</li>
+            <li>Supported utility-scale solar & ZEV electrification studies.</li>
+          </ul>
         </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Jan 2022 – Aug 2022</div>
+          <div class="timeline-title">Analyst Co-op – Power Systems Analytics</div>
+          <div class="timeline-meta">GE Appliances</div>
+          <ul class="timeline-bullets">
+            <li>Analyzed plant/grid loading, reliability & protection impacts.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Mar 2021 – Dec 2021</div>
+          <div class="timeline-title">GET – Electrical</div>
+          <div class="timeline-meta">Haldia Petrochemicals</div>
+          <ul class="timeline-bullets">
+            <li>Hands-on exposure to industrial power systems & plant equipment.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Jan 2019 – Jul 2019</div>
+          <div class="timeline-title">Research Intern & JRF</div>
+          <div class="timeline-meta">IIT Bombay</div>
+          <ul class="timeline-bullets">
+            <li>Worked on magnetic levitation research & feedback control.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="card" style="margin-top:18px;">
+      <h3>Education</h3>
+      <ul class="meta-list">
+        <li><span class="meta-label">2019–2021 · M.Tech in Electrical Power Systems</span><br>Government College of Engineering, Karad</li>
+        <li style="margin-top:10px;"><span class="meta-label">2015–2019 · B.E. in Electrical Engineering</span><br>University of Mumbai</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECT EXPERIENCE (MOVED HERE AFTER EDUCATION) -->
+  <section id="project-experience" class="reveal">
+    <h2>Project Experience</h2>
+    <p>A snapshot of programmes & interconnection studies across North American utilities & developers.</p>
+
+    <div class="project-grid">
+
+      <article class="project-card">
+        <div class="project-label">Programme Support</div>
+        <h3>NextEra Renewable Energy Resources</h3>
+        <p class="project-meta"><strong>Associate Senior Engineer – Project Lead</strong></p>
+        <ul style="margin:6px 0 0 18px;">
+          <li>Prepared PSS®E & ASPEN models (equivalents + full topology).</li>
+          <li>Performed ACLF for inverter count, capacitor sizing & IEEE-2800 compliance.</li>
+          <li>SC analysis for CLR/NGR sizing & transformer impedance validation.</li>
+        </ul>
       </article>
 
-      <!-- Right: photo card + at-a-glance -->
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <aside class="card photo-card" aria-label="Profile photo">
-          <h2></h2>
-          <div class="profile-photo-row">
-            <div class="profile-photo-wrap">
-              <img src="sandeep_nair.jpg" alt="Sandeep Nair at a mountain summit" class="profile-photo">
-            </div>
-            <div class="profile-photo-wrap">
-              <img src="Sansai_9.jpeg" alt="Professional headshot of Sandeep Nair" class="profile-photo">
-            </div>
-          </div>
-          <p style="font-size:.9rem;color:#4b5563;margin:6px 0 0;">
-            Delivering dependable grids by day, <br> pursuing demanding climbs by passion
-          </p>
-          <p>: discipline connects both</p>
-        </aside>
-
-        <aside class="card" aria-label="Professional details">
-          <h2 style="font-size:1.05rem;margin:0 0 10px;">At a glance</h2>
-          <ul class="meta-list">
-            <li><span class="meta-label">Current role:</span> Associate Senior Engineer, Transmission Planning – 1898 &amp; Co. (Burns &amp; McDonnell)</li>
-            <li><span class="meta-label">Experience:</span> 5.5+ years across transmission studies, interconnection support &amp; plant operations</li>
-            <li><span class="meta-label">Location:</span> Mumbai, India · Open to relocation</li>
-            <li><span class="meta-label">Core tools:</span> PSS®E, PowerGEM TARA, GE PSLF, ETAP, HOMER Pro/Grid, ASPEN, MATLAB/Simulink, Python</li>
-            <li><span class="meta-label">LinkedIn:</span> <a href="https://www.linkedin.com/in/nairsandeep0808" target="_blank" rel="noopener">nairsandeep0808</a></li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-
-    <!-- EXPERIENCE (TIMELINE) -->
-    <section id="experience" class="reveal" aria-labelledby="experience-heading">
-      <h2 id="experience-heading">Experience</h2>
-
-      <div class="card">
-        <div class="timeline-wrapper" aria-label="Career timeline">
-          <div class="timeline-spine" aria-hidden="true"></div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-year">Jan 2025 – Present · Mumbai</div>
-            <div class="timeline-title">Associate Senior Engineer – Transmission Planning</div>
-            <div class="timeline-meta">1898 &amp; Co. (Burns &amp; McDonnell India)</div>
-            <ul class="timeline-bullets">
-              <li>Lead transmission planning studies for interconnection applications from preliminary screening through commissioning support.</li>
-              <li>Drive study scope, methodology, and documentation for North American utility and developer clients.</li>
-              <li>Guide Python-based automation and review of multi-scenario result sets for decision-ready insights.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-year">Aug 2022 – Dec 2024 · Mumbai</div>
-            <div class="timeline-title">Engineer – Transmission Planning</div>
-            <div class="timeline-meta">1898 &amp; Co. (Burns &amp; McDonnell India)</div>
-            <ul class="timeline-bullets">
-              <li>Performed steady-state power flow, reactive power compensation, cap bank switching, short-circuit, and RVC analysis in PSS®E.</li>
-              <li>Built and maintained Python-driven PSS®E multi-run frameworks to accelerate contingency and scenario evaluations.</li>
-              <li>Collaborated with ISO/RTO stakeholders across North America to confirm grid reliability and study assumptions.</li>
-              <li>Supported utility-scale solar and zero-emission transportation initiatives through detailed grid impact assessments.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-year">Jan 2022 – Aug 2022 · Bengaluru</div>
-            <div class="timeline-title">Analyst Co-op – Power Systems Analytics</div>
-            <div class="timeline-meta">GE Appliances</div>
-            <ul class="timeline-bullets">
-              <li>Supported analysis of plant and grid-connected loads, focusing on reliability, efficiency, and protection constraints.</li>
-              <li>Worked with cross-functional teams on data-driven insights feeding into planning and operations decisions.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-year">Mar 2021 – Dec 2021 · Kolkata</div>
-            <div class="timeline-title">GET Engineer – Electrical</div>
-            <div class="timeline-meta">Haldia Petrochemicals</div>
-            <ul class="timeline-bullets">
-              <li>Gained hands-on experience with industrial power systems, including captive generation and process loads.</li>
-              <li>Assisted with protection coordination checks, equipment loading reviews, and outage planning.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-year">Jan 2019 – Jul 2019 · Mumbai</div>
-            <div class="timeline-title">Research Intern &amp; JRF – Electrical Engineering</div>
-            <div class="timeline-meta">IIT Bombay</div>
-            <ul class="timeline-bullets">
-              <li>Worked on IP-driven research and feedback-controlled magnetic levitation at IIT Bombay.</li>
-              <li>Built early experience in modeling, control, and analytical thinking applied to electrical systems.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Tool ecosystem -->
-        <h3 style="font-size:1rem;margin:20px 0 8px;">Tool Proficiency &amp; Study Ecosystem</h3>
-        <p style="font-size:.92rem;color:#374151;line-height:1.55;">
-          Along with PSS®E–Python automation, my work frequently intersects with industry-standard planning
-          and modeling platforms:
-        </p>
-        <ul style="font-size:.9rem;color:#4b5563;margin:6px 0 0 18px;line-height:1.55;">
-          <li><strong>PowerGEM TARA</strong> – screening studies, PTDF/OTDF analytics, and identifying stressed interfaces.</li>
-          <li><strong>GE PSLF</strong> – steady-state and contingency analysis used in WECC-aligned transmission planning studies.</li>
-          <li><strong>ETAP</strong> – AC load flow, short-circuit, and protective coordination in industrial &amp; captive generation networks.</li>
-          <li><strong>HOMER Pro / Grid</strong> – hybrid system modeling, DER integration assessments, and techno-economic optimization.</li>
+      <article class="project-card">
+        <div class="project-label">Interconnection Applications</div>
+        <h3>NYISO & PJM – AES</h3>
+        <p class="project-meta"><strong>Associate Senior Engineer – Queue Support</strong></p>
+        <ul style="margin:6px 0 0 18px;">
+          <li>Prepared steady-state & dynamics models for ISO submission.</li>
+          <li>Completed form packages & SC model preparation (ASPEN Online).</li>
         </ul>
-      </div>
+      </article>
 
-      <!-- EDUCATION BELOW EXPERIENCE -->
-      <div class="card" style="margin-top:18px;">
-        <h3 style="margin:0 0 10px;font-size:1.1rem;">Education</h3>
-        <ul class="meta-list">
-          <li>
-            <span class="meta-label">2019–2021 · M.Tech in Electrical Power Systems</span><br>
-            Government College of Engineering, Karad
-          </li>
-          <li style="margin-top:10px;">
-            <span class="meta-label">2015–2019 · B.E. in Electrical Engineering</span><br>
-            University of Mumbai
-          </li>
+      <article class="project-card">
+        <div class="project-label">Interconnection Applications</div>
+        <h3>Origis Energy</h3>
+        <p class="project-meta"><strong>Associate Senior Engineer</strong></p>
+        <ul style="margin:6px 0 0 18px;">
+          <li>Built full PSS®E & dynamics models, including validation & debugging.</li>
+          <li>Supported ISO form submission & SC model alignment.</li>
         </ul>
-      </div>
-    </section>
+      </article>
 
-    <!-- SELECTED PROJECTS (conceptual/tools) -->
-    <section id="projects" class="reveal" aria-labelledby="projects-heading">
-      <h2 id="projects-heading">Selected Projects & Diagrams</h2>
-      <p>
-        This section showcases a subset of study frameworks and internal tools. I’ll be adding
-        professional one-line diagrams, workflow schematics, and architecture views for each.
-      </p>
+      <article class="project-card">
+        <div class="project-label">Interconnection Applications</div>
+        <h3>Swift Current</h3>
+        <p class="project-meta"><strong>Associate Senior Engineer</strong></p>
+        <ul style="margin:6px 0 0 18px;">
+          <li>Input data prep, PSS®E model creation & dynamics testing.</li>
+        </ul>
+      </article>
 
-      <div class="project-grid" aria-label="Project highlights">
-        <article class="project-card">
-          <div class="project-label">Interconnection Studies</div>
-          <h3>Utility-scale Solar Interconnection Portfolio</h3>
-          <p>
-            Supported a major U.S. solar developer on interconnection projects across multiple ISO/RTO footprints,
-            from injection screening to commissioning support, ensuring compliance with reliability criteria.
-          </p>
-          <div class="project-diagram">
-            <i class="fa-solid fa-diagram-project"></i>
-            Diagram placeholder: one-line showing POI, collector system, and nearby transmission network.
-          </div>
-          <div class="project-meta">
-            <span><i class="fa-solid fa-wave-square"></i> Steady-state &amp; SC</span>
-            <span><i class="fa-solid fa-solar-panel"></i> Solar + Storage</span>
-          </div>
-        </article>
+      <article class="project-card">
+        <div class="project-label">Network-Level Interconnection</div>
+        <h3>Long Island Interconnection Study – FirstEnergy</h3>
+        <p class="project-meta"><strong>Transmission Planner – Network Studies</strong></p>
+        <ul style="margin:6px 0 0 18px;">
+          <li>Built network-level PSS®E cases reflecting bulk configuration & key contingencies.</li>
+          <li>Screened thermal & voltage issues identifying upgrade triggers.</li>
+        </ul>
+      </article>
 
-        <article class="project-card">
-          <div class="project-label">Automation</div>
-          <h3>PSS®E Multi-Run Automation Framework</h3>
-          <p>
-            Python + batch-based framework to run PSS®E cases, apply contingencies, and export structured results
-            for review dashboards and model validation, reducing manual study time and error risk.
-          </p>
-          <div class="project-diagram">
-            <i class="fa-solid fa-gears"></i>
-            Diagram placeholder: flow of case set-up → contingency sets → automation loop → results store.
-          </div>
-          <div class="project-meta">
-            <span><i class="fa-solid fa-code"></i> Python / PSS®E</span>
-            <span><i class="fa-solid fa-chart-line"></i> Multi-scenario</span>
-          </div>
-        </article>
+      <article class="project-card">
+        <div class="project-label">Generation Deliverability</div>
+        <h3>Gendeliv Study – PJM</h3>
+        <p class="project-meta"><strong>Transmission Planner – Deliverability</strong></p>
+        <ul style="margin:6px 0 0 18px;">
+          <li>Evaluated injections under multiple deliverability dispatches.</li>
+          <li>Identified limiting branches/interfaces & reinforcement needs.</li>
+        </ul>
+      </article>
 
-        <article class="project-card">
-          <div class="project-label">Grid Resilience</div>
-          <h3>Reactive Power &amp; RVC Analysis</h3>
-          <p>
-            Studies focused on cap bank switching, reactive power compensation, and voltage performance under stressed
-            operating conditions for transmission networks, informing reinforcement and mitigation plans.
-          </p>
-          <div class="project-diagram">
-            <i class="fa-solid fa-wave-square"></i>
-            Diagram placeholder: voltage profile before/after compensation and RVC time-series snapshot.
-          </div>
-          <div class="project-meta">
-            <span><i class="fa-solid fa-bolt"></i> RVC &amp; cap banks</span>
-            <span><i class="fa-solid fa-brain"></i> Sensitivity insights</span>
-          </div>
-        </article>
+      <article class="project-card">
+        <div class="project-label">Zero-Emission Transport</div>
+        <h3>PowerSouth Energy Cooperative</h3>
+        <p class="project-meta"><strong>Support Engineer – Fleet Modelling</strong></p>
+        <p>Assisted in ZEV fleet electrification impact assessment & feeder performance review.</p>
+      </article>
 
-        <article class="project-card">
-          <div class="project-label">Planning Tools</div>
-          <h3>Cross-Platform Study Support (TARA · GE PSLF · ETAP · HOMER Pro)</h3>
-          <p>
-            Supplemented PSS®E-based workflows with additional analytical platforms to validate thermal limits,
-            interface flows, protection margins, and hybrid resource behavior across different study regions.
-          </p>
-          <div class="project-diagram">
-            <i class="fa-solid fa-sliders"></i>
-            Diagram placeholder: tool workflow map (PSS®E ↔ TARA ↔ GE PSLF ↔ ETAP ↔ HOMER Pro).
-          </div>
-          <div class="project-meta">
-            <span><i class="fa-solid fa-gears"></i> Multi-tool validation</span>
-            <span><i class="fa-solid fa-chart-area"></i> System analytics</span>
-          </div>
-        </article>
-      </div>
-    </section>
+      <article class="project-card">
+        <div class="project-label">NYISO Interconnection</div>
+        <h3>AES Clean Energy Development LLC</h3>
+        <p class="project-meta"><strong>Transmission Planner</strong></p>
+        <p>Modeled renewable plants, supported NYISO forms & SC model preparation.</p>
+      </article>
 
-    <!-- PROJECT EXPERIENCE (client/programme) -->
-    <section id="project-experience" class="reveal" aria-labelledby="project-experience-heading">
-      <h2 id="project-experience-heading">Project Experience</h2>
-      <p>
-        A snapshot of recent programmes and interconnection studies I’ve supported as engineer and
-        associate senior engineer, primarily for North American utilities and large renewable developers.
-      </p>
+      <article class="project-card">
+        <div class="project-label">Programme Support</div>
+        <h3>Invenergy</h3>
+        <p class="project-meta"><strong>Transmission Planner</strong></p>
+        <p>Delivered reactive studies, SC analysis & mitigation recommendations across multiple POIs.</p>
+      </article>
+    </div>
+  </section>
 
-      <div class="project-grid">
-        <article class="project-card">
-          <div class="project-label">Programme Support</div>
-          <h3>NextEra Renewable Energy Resources</h3>
-          <p class="project-meta"><strong>Associate Senior Engineer – Project Lead</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563;">
-            <li>Prepared equivalent and detailed models in PSS®E and ASPEN for multiple facilities.</li>
-            <li>Performed load-flow studies to finalize inverter count, capacitor bank sizing, and ensure IEEE-2800 / TO criteria compliance.</li>
-            <li>Executed short-circuit studies for CLR &amp; NGR sizing and transformer impedance calculation.</li>
-            <li>Provided commissioning support including sensitivity tests and on-site study reconciliation.</li>
-          </ul>
-        </article>
+  <!-- SELECTED PROJECTS -->
+  <section id="projects" class="reveal">
+    <h2>Selected Projects & Diagrams</h2>
+    <p>Conceptual tools, study frameworks & automation visuals.</p>
 
-        <article class="project-card">
-          <div class="project-label">Interconnection Applications</div>
-          <h3>NYISO &amp; PJM – AES</h3>
-          <p class="project-meta"><strong>Associate Senior Engineer – Interconnection Support</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563;">
-            <li>Prepared input data, steady-state and dynamic PSS®E models, and completed dynamic model testing.</li>
-            <li>Led interconnection application form preparation and data validation with ISO requirements.</li>
-            <li>Developed short-circuit models in ASPEN (online) for submission packages.</li>
-          </ul>
-        </article>
+    <div class="project-grid">
+      <article class="project-card">
+        <div class="project-label">Interconnection Studies</div>
+        <h3>Utility-scale Solar Interconnection Portfolio</h3>
+        <p>Supporting a major solar developer across multiple queues.</p>
+      </article>
 
-        <article class="project-card">
-          <div class="project-label">Interconnection Applications</div>
-          <h3>Origis Energy</h3>
-          <p class="project-meta"><strong>Associate Senior Engineer</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563;">
-            <li>Built PSS®E steady-state and dynamic models, including model validation and testing.</li>
-            <li>Supported full interconnection application preparation and data coordination.</li>
-            <li>Created ASPEN short-circuit models to align protection assumptions with planning cases.</li>
-          </ul>
-        </article>
+      <article class="project-card">
+        <div class="project-label">Automation</div>
+        <h3>PSS®E Multi-Run Automation Framework</h3>
+        <p>Python-driven bulk contingency & scenario engine.</p>
+      </article>
 
-        <article class="project-card">
-          <div class="project-label">Interconnection Applications</div>
-          <h3>Swift Current</h3>
-          <p class="project-meta"><strong>Associate Senior Engineer</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563;">
-            <li>Prepared project input data and PSS®E models for interconnection analysis.</li>
-            <li>Supported dynamic model testing and coordinated application form completion.</li>
-          </ul>
-        </article>
+      <article class="project-card">
+        <div class="project-label">Grid Resilience</div>
+        <h3>Reactive Power & RVC Analysis</h3>
+        <p>Voltage stability, cap bank & reactive planning studies.</p>
+      </article>
 
-        <!-- LI interconnection at network level for FirstEnergy -->
-        <article class="project-card">
-          <div class="project-label">Network-Level Interconnection</div>
-          <h3>Long Island Interconnection Study – FirstEnergy</h3>
-          <p class="project-meta"><strong>Transmission Planner – Network Studies</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563%;">
-            <li>Supported LI-area interconnection assessments at the network level, coordinating with FirstEnergy planning models.</li>
-            <li>Developed and validated PSS®E cases to reflect bulk system configuration, local pockets, and key contingency patterns.</li>
-            <li>Screened thermal and voltage performance for multiple interconnection scenarios, highlighting binding interfaces and upgrades.</li>
-          </ul>
-        </article>
+      <article class="project-card">
+        <div class="project-label">Planning Tools</div>
+        <h3>Cross-Platform Study Support</h3>
+        <p>Using PSS®E, TARA, GE PSLF, ETAP & HOMER for cross-checking results.</p>
+      </article>
+    </div>
+  </section>
 
-        <!-- Gendeliv study for PJM -->
-        <article class="project-card">
-          <div class="project-label">Generation Deliverability</div>
-          <h3>Gendeliv Study – PJM</h3>
-          <p class="project-meta"><strong>Transmission Planner – Deliverability Analysis</strong></p>
-          <ul style="margin:6px 0 0 18px;font-size:.9rem;color:#4b5563%;">
-            <li>Contributed to PJM generation deliverability (Gendeliv) studies, evaluating new generation injections under stressed system conditions.</li>
-            <li>Assessed interface and branch overloads across multiple dispatch scenarios, aligning with PJM deliverability criteria.</li>
-            <li>Summarised limiting contingencies and reinforcements to support interconnection decision-making.</li>
-          </ul>
-        </article>
+  <!-- TOOLS -->
+  <section id="tools" class="reveal">
+    <h2>Engineering Tools & Utilities</h2>
+    <p class="tools-note">Study workflow tools engineered for reliability & repeatability.</p>
 
-        <article class="project-card">
-          <div class="project-label">Zero-Emission Transport</div>
-          <h3>PowerSouth Energy Cooperative</h3>
-          <p class="project-meta"><strong>Support Engineer – Fleet Management</strong></p>
-          <p style="font-size:.9rem;color:#4b5563;">
-            Supported fleet electrification planning, load impacts, and integration considerations for
-            zero-emission transportation initiatives.
-          </p>
-        </article>
+    <div class="tool-grid">
+      <article class="tool-card"><h3>Load Flow Converter</h3><p>Convert/validate cases.</p></article>
+      <article class="tool-card"><h3>Short Circuit Tool</h3><p>Fault level calculations.</p></article>
+      <article class="tool-card"><h3>Voltage Profile Explorer</h3><p>Voltage visualization.</p></article>
+      <article class="tool-card"><h3>Contingency Explorer</h3><p>N-1/N-2 screening.</p></article>
+      <article class="tool-card"><h3>Transformer Loading View</h3><p>Thermal & tap insights.</p></article>
+      <article class="tool-card"><h3>Line Impedance Visualizer</h3><p>Sequence parameters.</p></article>
+    </div>
+  </section>
+</main>
 
-        <article class="project-card">
-          <div class="project-label">NYISO Interconnection</div>
-          <h3>AES Clean Energy Development LLC</h3>
-          <p class="project-meta"><strong>Transmission Planner</strong></p>
-          <p style="font-size:.9rem;color:#4b5563;">
-            Modeled multiple renewable plants in PSS®E, supported interconnection application form
-            completion, and provided dynamics study support, delivering a complete interconnection
-            studies package. ASPEN was used for associated short-circuit studies.
-          </p>
-        </article>
+<footer>
+  &copy; 2025 Sandeep Nair · gridbynair.com<br>
+  Future-ready grid studies · Crafted with care
+</footer>
 
-        <article class="project-card">
-          <div class="project-label">Programme Support</div>
-          <h3>Invenergy</h3>
-          <p class="project-meta"><strong>Transmission Planner</strong></p>
-          <p style="font-size:.9rem;color:#4b5563%;">
-            Provided conceptual-to-commissioning support for multiple project substations, including
-            reactive power studies, short-circuit analysis, and mitigation recommendations for
-            reinforcement and protection coordination.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- TOOLS -->
-    <section id="tools" class="reveal" aria-labelledby="tools-heading">
-      <h2 id="tools-heading">Engineering Tools &amp; Utilities</h2>
-      <p class="tools-note">
-        These tools reflect how I think about study workflows: repeatable, transparent, and easy for other engineers to adopt.
-        Public links are provided where possible; others are demonstrated in project diagrams or on request.
-      </p>
-
-      <div class="tool-grid">
-        <article class="tool-card">
-          <h3>Load Flow Converter</h3>
-          <p>Convert case formats and validate model consistency across planning and operations environments.</p>
-          <a class="go btn" href="loadflow-converter.html" aria-label="Open Load Flow Converter">Open</a>
-        </article>
-
-        <article class="tool-card">
-          <h3>Short Circuit Tool</h3>
-          <p>Calculate fault levels with configurable source equivalencing and exportable reports.</p>
-          <a class="go btn" href="short-circuit-tool.html" aria-label="Open Short Circuit Tool">Open</a>
-        </article>
-
-        <article class="tool-card">
-          <h3>Voltage Profile Explorer</h3>
-          <p>Visualize per-bus voltage, identify weak pockets, and track limits across scenarios.</p>
-          <a class="go btn" href="voltage-profile.html" aria-label="Open Voltage Profile Explorer">Open</a>
-        </article>
-
-        <article class="tool-card">
-          <h3>Contingency Analysis Explainer</h3>
-          <p>Screen N-1 / N-2 events and highlight binding elements with engineer-friendly summaries.</p>
-          <a class="go btn" href="contingency-explainer.html" aria-label="Open Contingency Analysis">Open</a>
-        </article>
-
-        <article class="tool-card">
-          <h3>Transformer Loading View</h3>
-          <p>Single view for thermal checks, tap positions, and normal/emergency ratings.</p>
-          <a class="go btn" href="transformer-loading.html" aria-label="Open Transformer Loading">Open</a>
-        </article>
-
-        <article class="tool-card">
-          <h3>Line Impedance Visualizer</h3>
-          <p>Inspect R/X/B and derive sequence parameters with interactive plots.</p>
-          <a class="go btn" href="line-impedance-tool.html" aria-label="Open Line Impedance Visualizer">Open</a>
-        </article>
-
-        <article class="tool-card">
-          <h3>Drive Mapping Utility</h3>
-          <p>One-click network drive setup with environment-aware paths for study teams.</p>
-          <a class="go btn" href="drive-mapping.html" aria-label="Open Drive Mapping">Open</a>
-        </article>
-
-        <article class="tool-card">
-          <h3>Network Viewer</h3>
-          <p>Interactive bus-branch graphs with filtering, searching, and case overlays.</p>
-          <a class="go btn" href="network-viewer.html" aria-label="Open Network Viewer">Open</a>
-        </article>
-
-        <article class="tool-card">
-          <h3>Experimental Tools</h3>
-          <p>Early-stage utilities and prototypes under active development.</p>
-          <a class="go btn" href="experimental-tools.html" aria-label="Open Experimental Tools">Open</a>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    &copy; 2025 Sandeep Nair · gridbynair.com<br>
-    Future-ready grid studies · Crafted with care
-  </footer>
-
-  <a href="mailto:sandeep.nair@1898andco.com" class="floating-contact" aria-label="Email Sandeep Nair">✉️ Contact</a>
-
-  <!-- Mascot (no speech bubble) -->
-  <div id="mascot-wrapper" aria-hidden="true">
-    <img id="mascot" src="/engineer-mascot.png" alt="" loading="lazy" decoding="async">
-    <div class="eye left-eye"></div>
-    <div class="eye right-eye"></div>
-    <div class="eyelid left eyelid-left"></div>
-    <div class="eyelid right eyelid-right"></div>
-  </div>
-
-  <script>
-    // Mascot micro-interactions
-    const eyes = document.querySelectorAll('.eye');
-    const leftLid = document.querySelector('.eyelid-left');
-    const rightLid = document.querySelector('.eyelid-right');
-
-    document.addEventListener('mousemove', (e) => {
-      eyes.forEach(eye => {
-        const rect = eye.getBoundingClientRect();
-        const eyeX = rect.left + rect.width / 2;
-        const eyeY = rect.top + rect.height / 2;
-        const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-        const offset = 4;
-        eye.style.transform = `translate(${Math.cos(angle)*offset}px, ${Math.sin(angle)*offset}px)`;
-      });
-    });
-
-    setInterval(() => {
-      leftLid.classList.add('blink');
-      rightLid.classList.add('blink');
-      setTimeout(() => {
-        leftLid.classList.remove('blink');
-        rightLid.classList.remove('blink');
-      }, 1000);
-    }, 4000);
-
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
 </body>
-</html>
