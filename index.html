@@ -348,7 +348,6 @@
     }
 
     /* Project cards & grids */
-    /* STACKED RECTANGULAR PROJECT TILES */
     .project-grid{
       display:flex;
       flex-direction:column;
@@ -379,7 +378,6 @@
       letter-spacing:.08em;
       color:#9ca3af;
     }
-    /* TITLE ON A BAR */
     .project-card h3{
       margin:4px 0 6px;
       font-size:1rem;
@@ -408,17 +406,6 @@
       gap:6px;
       font-size:.78rem;
       color:#6b7280;
-    }
-    .project-diagram{
-      margin-top:8px;
-      border-radius:12px;
-      border:1px dashed #d1d5db;
-      padding:8px;
-      font-size:.8rem;
-      color:#9ca3af;
-      display:flex;
-      align-items:center;
-      gap:8px;
     }
 
     .tools-note{
@@ -484,9 +471,7 @@
       box-shadow:0 10px 22px rgba(10,102,194,.35);
     }
 
-    /* Mascot */
-    
-    /* ADDED: Collapsible FE workflow styles */
+    /* Collapsible FE workflow styles */
     details.fe-toggle{
       margin-top:8px;
       border-radius:12px;
@@ -603,7 +588,6 @@
   <nav role="navigation" aria-label="Primary">
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
-    <!-- REMOVED: Projects link (projects section deleted) -->
     <a href="#project-experience">Project Experience</a>
     <a href="#tools">Engineering Tools</a>
     <a href="/Resume_Sandeep_Nair.pdf" download target="_blank" rel="noopener">📄 Resume_Download</a>
@@ -639,14 +623,14 @@
         </p>
 
         <div class="hero-highlights" aria-label="Key focus areas">
-          <span class="pill"><i class="fa-solid fa-wave-square"></i> PSS®E & steady-state studies</span>
+          <span class="pill"><i class="fa-solid fa-wave-square"></i> PSS®E &amp; steady-state studies</span>
           <span class="pill"><i class="fa-solid fa-code"></i> Python + batch automation</span>
           <span class="pill"><i class="fa-solid fa-solar-panel"></i> Renewable integration</span>
           <span class="pill"><i class="fa-solid fa-bolt"></i> Interconnection applications</span>
         </div>
 
         <div class="cta-row" role="group" aria-label="Primary calls to action">
-          <a class="btn" href="#projects"><i class="fa-solid fa-diagram-project"></i> View Projects</a>
+          <a class="btn" href="#project-experience"><i class="fa-solid fa-diagram-project"></i> View Projects</a>
           <a class="btn secondary" href="mailto:sandeep.nair@1898andco.com"><i class="fa-solid fa-envelope"></i> Contact</a>
         </div>
       </article>
@@ -779,9 +763,6 @@
       </div>
     </section>
 
-    <!-- SELECTED PROJECTS (conceptual/tools) -->
-    <!-- REMOVED: Entire Selected Projects & Diagrams section -->
-
     <!-- PROJECT EXPERIENCE (client/programme) -->
     <section id="project-experience" class="reveal" aria-labelledby="project-experience-heading">
       <h2 id="project-experience-heading">Project Experience</h2>
@@ -792,79 +773,103 @@
 
       <div class="project-grid">
 
-<!-- ADDED: FirstEnergy moved to top with collapsible summary -->
-<article class="project-card" style="position:relative;">
-  <div class="project-label">Network-Level Interconnection</div>
-  <h3>FirstEnergy Load Interconnection Study</h3>
-  <p class="project-meta"><strong>Transmission Planner – Planning & Coordination Studies</strong></p>
+        <!-- FirstEnergy Load Interconnection Study -->
+        <article class="project-card" style="position:relative;">
+          <div class="project-label">Network-Level Interconnection</div>
+          <h3>FirstEnergy Load Interconnection Study</h3>
+          <p class="project-meta"><strong>Transmission Planner – Planning &amp; Coordination Studies</strong></p>
 
-  <!-- ADDED: Collapsible FE workflow summary -->
-  <details class="fe-toggle" style="margin-top:8px;">
-    <summary class="collapsible-summary"><span class="collapsible-icon">▸</span><span>Detailed Workflow (Folder Creation → Analysis → Report)</span></summary>
-    <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
-      <li><strong>Standardized Project Setup:</strong> Created OpCo‑specific folders (Case, Input, Drawing, Results) from FE templates; ensured structured, traceable model and data management.</li>
-      <li><strong>IDV Model Development:</strong> Built PSSE IDV files to split buses, tap lines, add loads, update topology, and validate system balance before running in PSS®E/Enfuzion.</li>
-      <li><strong>Contingency Preparation:</strong> Loaded updated cases in TARA Viewer, attached SUB/MON/CON files, resolved tap‑related warnings (1030 edits), and verified readiness for N‑1 / N‑1‑1 studies.</li>
-      <li><strong>TARA ACCA Simulation:</strong> Configured ACCA spreadsheet for N‑1 and N‑1‑1 runs, linked PSSE/TARA files, executed analysis, and monitored full simulation through Sparta/Enfuzion.</li>
-      <li><strong>Results Processing:</strong> Filtered N‑1 and N‑1‑1 violations, removed lower‑kV/P+ non‑applicable events, screened valid thermal/voltage issues, and compiled clean planner‑ready result sets.</li>
-      <li><strong>One‑Line Diagrams:</strong> Developed FE‑formatted planning diagrams in Visio including tap distances, substation data, GIS/TAMI imagery, and customer/utility connection details.</li>
-      <li><strong>Reporting:</strong> Prepared CLS/DLS reports detailing assumptions, methodology, contingency performance, reinforcement needs, and issued internal + redacted customer versions.</li>
-    </ul>
-  </details>
+          <details class="fe-toggle" style="margin-top:8px;">
+            <summary class="collapsible-summary">
+              <span class="collapsible-icon">▸</span>
+              <span>Detailed Workflow (Folder Creation → Analysis → Report)</span>
+            </summary>
+            <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
+              <li><strong>Standardized Project Setup:</strong> Created OpCo-specific folders (Case, Input, Drawing, Results) from FE templates; ensured structured, traceable model and data management.</li>
+              <li><strong>IDV Model Development:</strong> Built PSSE IDV files to split buses, tap lines, add loads, update topology, and validate system balance before running in PSS®E/Enfuzion.</li>
+              <li><strong>Contingency Preparation:</strong> Loaded updated cases in TARA Viewer, attached SUB/MON/CON files, resolved tap-related warnings (1030 edits), and verified readiness for N-1 / N-1-1 studies.</li>
+              <li><strong>TARA ACCA Simulation:</strong> Configured ACCA spreadsheet for N-1 and N-1-1 runs, linked PSSE/TARA files, executed analysis, and monitored full simulation through Sparta/Enfuzion.</li>
+              <li><strong>Results Processing:</strong> Filtered N-1 and N-1-1 violations, removed lower-kV/P+ non-applicable events, screened valid thermal/voltage issues, and compiled clean planner-ready result sets.</li>
+              <li><strong>One-Line Diagrams:</strong> Developed FE-formatted planning diagrams in Visio including tap distances, substation data, GIS/TAMI imagery, and customer/utility connection details.</li>
+              <li><strong>Reporting:</strong> Prepared CLS/DLS reports detailing assumptions, methodology, contingency performance, reinforcement needs, and issued internal + redacted customer versions.</li>
+            </ul>
+          </details>
 
-  <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
-    <li>Performed FirstEnergy transmission‑level Load Interconnection Studies in accordance with FE Planning Criteria, CLS/DLS procedures, PJM protocols, and NERC TPL standards.</li>
-    <li>Modeled customer load additions in PSS®E, updated FE/PJM base cases, and executed N‑1, N‑1‑1, and Generator Deliverability studies using PowerGEM TARA.</li>
-    <li>Reviewed PJM‑posted deliverability results and identified system upgrades or reinforcements.</li>
-    <li>Built FE one‑line diagrams (internal + customer versions) using Microsoft Visio.</li>
-    <li>Prepared formal FE planning reports summarizing assumptions, results, violations, and mitigations.</li>
-    <li>Coordinated directly with FirstEnergy planners through structured weekly sync‑ups and TCPR workflows.</li>
-  </ul>
-</article>
+          <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
+            <li>Performed FirstEnergy transmission-level Load Interconnection Studies in accordance with FE Planning Criteria, CLS/DLS procedures, PJM protocols, and NERC TPL standards.</li>
+            <li>Modeled customer load additions in PSS®E, updated FE/PJM base cases, and executed N-1, N-1-1, and Generator Deliverability studies using PowerGEM TARA.</li>
+            <li>Reviewed PJM-posted deliverability results and identified system upgrades or reinforcements.</li>
+            <li>Built FE one-line diagrams (internal + customer versions) using Microsoft Visio.</li>
+            <li>Prepared formal FE planning reports summarizing assumptions, results, violations, and mitigations.</li>
+            <li>Coordinated directly with FirstEnergy planners through structured weekly sync-ups and TCPR workflows.</li>
+          </ul>
+        </article>
 
-        <!-- MOVED: FirstEnergy Load Interconnection Study moved above NextEra -->
-
-        <!-- Gendeliv study for PJM -->
+        <!-- FE Generation Interconnection – GenDeliv -->
         <article class="project-card">
-  <div class="project-label">Generation Interconnection</div>
-  <h3><!-- CHANGED: Updated to FE Generation Interconnection -->FE Generation Interconnection – GenDeliv Analysis</h3>
-  <p class="project-meta"><strong>Transmission Planner – FE Generation Interconnection Support</strong></p>
+          <div class="project-label">Generation Interconnection</div>
+          <h3>FE Generation Interconnection – GenDeliv Analysis</h3>
+          <p class="project-meta"><strong>Transmission Planner – FE Generation Interconnection Support</strong></p>
 
-  <!-- ADDED: Collapsible FE GenDeliv workflow -->
-  <details class="fe-toggle" style="margin-top:8px;">
-    <summary class="collapsible-summary"><span class="collapsible-icon">▸</span><span>GenDeliv Workflow (Case Build → Analysis → Results)</span></summary>
-    <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
-      <li><strong>Case Development:</strong> Added new generation using PSSE IDV workflows, updated Area settings, Pmax/Qmax limits, and validated machine parameters.</li>
-      <li><strong>RTEP Case Integration:</strong> Loaded FE/PJM RTEP cases in TARA Studio, inserted new machine at correct tap/substation bus, and ensured convergence.</li>
-      <li><strong>GD Data Preparation:</strong> Created GenDeliv data sheets (bus, area, Pmax, CIR, MW Cap) following FE/PJM templates.</li>
-      <li><strong>GenDeliv Simulation:</strong> Executed FE GenDeliv tool twice (Base + Post‑Project), with appropriate SUB/MON/CON files and flowgate capture enabled.</li>
-      <li><strong>Results Processing:</strong> Processed active/all flowgate files, filtered by Pre‑Existing/Below‑100% logic, and identified valid overloads.</li>
-      <li><strong>Violation Classification:</strong> Flagged lower‑kV P+ non‑applicable contingencies, validated remaining overloads, and prepared pivot‑table summaries.</li>
-      <li><strong>Deliverables:</strong> Packaged Base vs Post comparison, flowgate data, pivot summaries, and planner‑ready results for FE review.</li>
-    </ul>
-  </details>
+          <details class="fe-toggle" style="margin-top:8px;">
+            <summary class="collapsible-summary">
+              <span class="collapsible-icon">▸</span>
+              <span>GenDeliv Workflow (Case Build → Analysis → Results)</span>
+            </summary>
+            <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55%;">
+              <li><strong>Case Development:</strong> Added new generation using PSSE IDV workflows, updated Area settings, Pmax/Qmax limits, and validated machine parameters.</li>
+              <li><strong>RTEP Case Integration:</strong> Loaded FE/PJM RTEP cases in TARA Studio, inserted new machine at correct tap/substation bus, and ensured convergence.</li>
+              <li><strong>GD Data Preparation:</strong> Created GenDeliv data sheets (bus, area, Pmax, CIR, MW Cap) following FE/PJM templates.</li>
+              <li><strong>GenDeliv Simulation:</strong> Executed FE GenDeliv tool twice (Base + Post-Project), with appropriate SUB/MON/CON files and flowgate capture enabled.</li>
+              <li><strong>Results Processing:</strong> Processed active/all flowgate files, filtered by Pre-Existing/Below-100% logic, and identified valid overloads.</li>
+              <li><strong>Violation Classification:</strong> Flagged lower-kV P+ non-applicable contingencies, validated remaining overloads, and prepared pivot-table summaries.</li>
+              <li><strong>Deliverables:</strong> Packaged Base vs Post comparison, flowgate data, pivot summaries, and planner-ready results for FE review.</li>
+            </ul>
+          </details>
 
-  <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
-    <li><!-- CHANGED -->Performed FE Generation Interconnection GenDeliv assessments using PJM RTEP cases and FE‑approved TARA workflows.</li>
-    <li><!-- CHANGED -->Built generation additions in PSSE (Area, Pmax/Qmax, CIR) and verified electrical correctness in TARA Studio.</li>
-    <li><!-- CHANGED -->Executed full GenDeliv runs (Base + Post), processed flowgate results, and identified valid system overloads.</li>
-    <li><!-- CHANGED -->Prepared FE‑formatted deliverables including GD Data, active/all flowgate outputs, and pivot‑based violation summaries.</li>
-  </ul>
-</article>
+          <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
+            <li>Performed FE Generation Interconnection GenDeliv assessments using PJM RTEP cases and FE-approved TARA workflows.</li>
+            <li>Built generation additions in PSSE (Area, Pmax/Qmax, CIR) and verified electrical correctness in TARA Studio.</li>
+            <li>Executed full GenDeliv runs (Base + Post), processed flowgate results, and identified valid system overloads.</li>
+            <li>Prepared FE-formatted deliverables including GD Data, active/all flowgate outputs, and pivot-based violation summaries.</li>
+          </ul>
+        </article>
 
-        <!-- ADDED: NextEra portfolio programme after FE GenDeliv -->
+        <!-- NextEra VAR & Fault Study Portfolio -->
         <article class="project-card" style="position:relative;">
           <div class="project-label">Programme Support · Reactive Studies</div>
           <h3>NextEra Energy Resources – VAR &amp; Fault Study Portfolio</h3>
-          <p class="project-meta"><strong>Associate Senior Engineer – Portfolio Study Lead</strong> <span style="float:right;font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;">40+ sites · up to 1200&nbsp;MW @ 345&nbsp;kV</span></p>
+          <p class="project-meta">
+            <strong>Associate Senior Engineer – Portfolio Study Lead</strong>
+            <span style="float:right;font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;">
+              40+ sites · up to 1200&nbsp;MW @ 345&nbsp;kV
+            </span>
+          </p>
 
           <details class="fe-toggle" style="margin-top:8px;">
-            <summary class="collapsible-summary"><span class="collapsible-icon">▸</span><span>Workflow (Conceptual → 30% → IFC VAR &amp; Fault Studies)</span></summary>
+            <summary class="collapsible-summary">
+              <span class="collapsible-icon">▸</span>
+              <span>Workflow (Conceptual → 30% → IFC VAR &amp; Fault Studies)</span>
+            </summary>
             <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
-              <li><strong>Multi‑site portfolio setup:</strong> Organized 40+ solar/BESS sites across U.S. regions from East Coast to West Coast, standardizing templates, study assumptions, and reporting structure under 1898 &amp; Co. (consulting wing of Burns &amp; McDonnell).</li>
-              <li><strong>Model development:</strong> Built equivalent and detailed collector‑system models in PSS&reg;E for each site, including main GSU, feeders, pad‑mount transformers, and inverter representations.</li>
-              <li><strong>Preliminary VAR &amp; fault studies:</strong> Evaluated power‑factor capability, POI voltage criteria, transformer impedance, and short‑circuit duty at early design stages; tested mitigation via shunt devices, inverter dispatch, and tap settings.</li>
-              <li><strong>30% &amp; IFC refresh:</strong> Refined studies as collectio
+              <li><strong>Multi-site portfolio setup:</strong> Organized 40+ solar/BESS sites across U.S. regions from East Coast to West Coast, standardizing templates, study assumptions, and reporting structure under 1898 &amp; Co. (consulting wing of Burns &amp; McDonnell).</li>
+              <li><strong>Model development:</strong> Built equivalent and detailed collector-system models in PSS®E for each site, including main GSU, feeders, pad-mount transformers, and inverter representations.</li>
+              <li><strong>Preliminary VAR &amp; fault studies:</strong> Evaluated power-factor capability, POI voltage criteria, transformer impedance, and short-circuit duty at early design stages; tested mitigation via shunt devices, inverter dispatch, and tap settings.</li>
+              <li><strong>30% &amp; IFC refresh:</strong> Refined studies as collection system and substation designs matured, updating models and rerunning VAR/fault checks to track design impacts.</li>
+              <li><strong>Deliverables:</strong> Prepared site-specific VAR and fault reports, coordinated comments with OEMs and developers, and aligned outputs with interconnection and internal design milestones.</li>
+            </ul>
+          </details>
+
+          <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
+            <li>Led portfolio-level coordination for VAR and short-circuit studies across multiple solar/BESS sites.</li>
+            <li>Standardized study templates and reporting structure, improving consistency across projects and design stages.</li>
+            <li>Collaborated with OEMs, developers, and internal design teams to close gaps between study assumptions and evolving layouts.</li>
+          </ul>
+        </article>
+
+        <!-- PowerSouth as a separate project -->
+        <article class="project-card">
+          <div class="project-label">Cooperative Utility Planning</div>
           <h3>PowerSouth Energy Cooperative</h3>
           <p class="project-meta"><strong>Support Engineer – Fleet Management</strong></p>
           <p style="font-size:.9rem;color:#4b5563;">
@@ -873,6 +878,7 @@
           </p>
         </article>
 
+        <!-- AES Clean Energy -->
         <article class="project-card">
           <div class="project-label">NYISO Interconnection</div>
           <h3>AES Clean Energy Development LLC</h3>
@@ -884,16 +890,18 @@
           </p>
         </article>
 
+        <!-- Invenergy -->
         <article class="project-card">
           <div class="project-label">Programme Support</div>
           <h3>Invenergy</h3>
           <p class="project-meta"><strong>Transmission Planner</strong></p>
-          <p style="font-size:.9rem;color:#4b5563%;">
+          <p style="font-size:.9rem;color:#4b5563;">
             Provided conceptual-to-commissioning support for multiple project substations, including
             reactive power studies, short-circuit analysis, and mitigation recommendations for
             reinforcement and protection coordination.
           </p>
         </article>
+
       </div>
     </section>
 
@@ -1006,7 +1014,6 @@
     }, 4000);
 
     // Scroll reveal
-    // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1016,7 +1023,6 @@
       });
     }, { threshold: 0.15 });
 
-    // CHANGED: apply reveal observer to all sections with .reveal
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
   </script>
 </body>
