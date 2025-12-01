@@ -1492,6 +1492,19 @@ function shootAtDetails(detailsEl){
 
   }, SETTLE_MS);
 }
+  window.addEventListener('scroll', () => {
+    if (isShootingDetails && currentDetailsSummary){
+      positionBeam(laserLeft,  leftEye,  currentDetailsSummary);
+      positionBeam(laserRight, rightEye, currentDetailsSummary);
+    }
+  }, { passive:true });
+
+  window.addEventListener('resize', () => {
+    if (isShootingDetails && currentDetailsSummary){
+      positionBeam(laserLeft,  leftEye,  currentDetailsSummary);
+      positionBeam(laserRight, rightEye, currentDetailsSummary);
+    }
+  });
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -1579,6 +1592,7 @@ const observer = new IntersectionObserver((entries) => {
   </script>
 </body>
 </html>
+
 
 
 
