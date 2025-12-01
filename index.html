@@ -62,16 +62,11 @@
       border-radius:10px;
     }
 
-    /* Simple utilities */
     .text-muted{color:var(--muted)}
     .text-sm{font-size:.9rem}
     .text-xs{font-size:.8rem}
-    .fw-bold{font-weight:700}
     .mt-0{margin-top:0}
     .mt-1{margin-top:.25rem}
-    .mt-2{margin-top:.5rem}
-    .mt-3{margin-top:.75rem}
-    .mt-4{margin-top:1rem}
 
     /* Reveal animation */
     .reveal{
@@ -474,7 +469,7 @@
     }
     .tool-card{
       background:var(--card);
-      border-radius:var(--radius);
+      border-radius:var(---radius);
       padding:13px 14px 14px;
       border:1px solid rgba(209,213,219,.9);
       box-shadow:var(--shadow-soft);
@@ -598,6 +593,33 @@
       100%{opacity:0;transform:scaleY(0)}
     }
 
+    /* Laser overlay */
+    #laser-layer{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:998; /* below mascot, above content */
+    }
+    .laser-beam{
+      position:fixed;
+      height:2px;
+      background:linear-gradient(90deg,#0ea5e9,#38bdf8,#0ea5e9);
+      box-shadow:0 0 10px rgba(56,189,248,.95);
+      opacity:0;
+      transform-origin:0 50%;
+      transform:rotate(0deg);
+      transition:opacity .2s ease-out;
+    }
+    .laser-beam.active{
+      opacity:1;
+      animation:laserPulse .6s ease-in-out infinite;
+    }
+    @keyframes laserPulse{
+      0%  { box-shadow:0 0 6px rgba(56,189,248,.7); }
+      50% { box-shadow:0 0 18px rgba(56,189,248,1); }
+      100%{ box-shadow:0 0 6px rgba(56,189,248,.7); }
+    }
+
     @media (max-width:900px){
       .layout{
         grid-template-columns:1fr;
@@ -606,6 +628,7 @@
         margin-top:-12px;
       }
       #mascot-wrapper{display:none}
+      #laser-layer{display:none}
       nav{
         flex-wrap:wrap;
         row-gap:6px;
@@ -685,9 +708,9 @@
             repeatable, automated pipelines that engineers trust and decision-makers can act on.
           </p>
           <p>
-            I also bring experience with transient stability, harmonic and relay coordination studies, grid code
+            I also bring experience with dynamic stability(flat & bump test), grid code
             compliance, and load forecasting. Day to day, that means PSS®E and ASPEN at the core, supported by
-            ETAP, ArcGIS, AutoCAD, and Python tooling that ties everything together.
+            ETAP, QGIS (similar to ArcGIS), AutoCAD, and Python tooling that ties everything together.
           </p>
         </div>
 
@@ -868,7 +891,7 @@
           Along with PSS®E–Python automation, my work frequently intersects with industry-standard planning
           and modeling platforms:
         </p>
-        <ul class="text-sm" style="color:#4b5563;margin:6px 0 0 18px;line-height:1.55;">
+        <ul class="text-sm" style="color:#4b5563;margin:6px 0 0 18px;line-height:1.55%;">
           <li><strong>PowerGEM TARA</strong> – screening studies, PTDF/OTDF analytics, and identifying stressed interfaces.</li>
           <li><strong>GE PSLF</strong> – steady-state and contingency analysis used in WECC-aligned transmission planning studies.</li>
           <li><strong>ETAP</strong> – AC load flow, short-circuit, and protective coordination in industrial &amp; captive generation networks.</li>
@@ -1138,13 +1161,15 @@
           <a class="go btn" href="network-viewer.html" aria-label="Open Network Viewer">Open</a>
         </article>
 
-        <article class="tool-card">
+        <!-- Experimental tools card with ID -->
+        <article class="tool-card" id="card-experimental">
           <h3>Experimental Tools</h3>
           <p>Early-stage utilities and prototypes under active development.</p>
           <a class="go btn" href="experimental-tools.html" aria-label="Open Experimental Tools">Open</a>
         </article>
 
-        <article class="tool-card">
+        <!-- TARA load tool card with ID -->
+        <article class="tool-card" id="card-tara">
           <h3>TARA Load Comparison Tool</h3>
           <p>
             PyQt-based desktop utility that compares load models at a selected bus
@@ -1163,6 +1188,12 @@
 
   <a href="mailto:sandeep.nair@1898andco.com" class="floating-contact" aria-label="Email Sandeep Nair">✉️ Contact</a>
 
+  <!-- Laser overlay (eyes -> tool cards) -->
+  <div id="laser-layer" aria-hidden="true">
+    <div class="laser-beam" id="laser-left"></div>
+    <div class="laser-beam" id="laser-right"></div>
+  </div>
+
   <!-- Mascot (no speech bubble) -->
   <div id="mascot-wrapper" aria-hidden="true">
     <img id="mascot" src="/engineer-mascot.png" alt="" loading="lazy" decoding="async">
@@ -1173,7 +1204,7 @@
   </div>
 
   <script>
-    // -------- Mascot micro-interactions (rAF-driven) --------
+    // -------- Mascot micro-interactions --------
     (function(){
       const eyes = document.querySelectorAll('.eye');
       const leftLid = document.querySelector('.eyelid-left');
@@ -1289,9 +1320,7 @@
           tooltipDelay: 120,
           zoomView: true
         },
-        physics: {
-          enabled: false
-        },
+        physics: { enabled: false },
         layout: {
           improvedLayout: true,
           hierarchical: {
@@ -1350,6 +1379,73 @@
         requestAnimationFrame(animate);
       });
     });
+
+    // -------- Eye Lasers -> two tool cards --------
+    (function(){
+      const leftEye  = document.querySelector('.eye.left-eye');
+      const rightEye = document.querySelector('.eye.right-eye');
+      const laserLeft  = document.getElementById('laser-left');
+      const laserRight = document.getElementById('laser-right');
+      const cardExp  = document.getElementById('card-experimental');
+      const cardTara = document.getElementById('card-tara');
+
+      if (!leftEye || !rightEye || !laserLeft || !laserRight || !cardExp || !cardTara) {
+        return;
+      }
+
+      function positionBeam(beam, fromEl, toEl){
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect   = toEl.getBoundingClientRect();
+
+        const fromX = fromRect.left + fromRect.width / 2;
+        const fromY = fromRect.top  + fromRect.height / 2;
+        const toX   = toRect.left   + toRect.width / 2;
+        const toY   = toRect.top    + toRect.height / 2;
+
+        const dx = toX - fromX;
+        const dy = toY - fromY;
+        const dist  = Math.sqrt(dx*dx + dy*dy);
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+        beam.style.width = dist + 'px';
+        beam.style.left  = fromX + 'px';
+        beam.style.top   = fromY + 'px';
+        beam.style.transform = 'rotate(' + angle + 'deg)';
+      }
+
+      let lasersActive = false;
+
+      function updateLasers(){
+        if (!lasersActive) return;
+        positionBeam(laserLeft,  leftEye,  cardExp);
+        positionBeam(laserRight, rightEye, cardTara);
+      }
+
+      const observer = new IntersectionObserver((entries)=>{
+        let visible = 0;
+        entries.forEach(e => { if (e.isIntersecting) visible++; });
+
+        const atBottom =
+          (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 40);
+
+        const shouldTurnOn = (visible === 2) && atBottom;
+
+        lasersActive = shouldTurnOn;
+        [laserLeft, laserRight].forEach(b => {
+          b.classList.toggle('active', shouldTurnOn);
+        });
+
+        if (shouldTurnOn) {
+          updateLasers();
+        }
+      }, { threshold: 0.6 });
+
+      observer.observe(cardExp);
+      observer.observe(cardTara);
+
+      window.addEventListener('scroll',  () => { if (lasersActive) updateLasers(); }, { passive:true });
+      window.addEventListener('resize', () => { if (lasersActive) updateLasers(); });
+    })();
   </script>
 </body>
 </html>
