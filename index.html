@@ -1419,7 +1419,7 @@
 
       let isShootingDetails = false;
       let toolsLasersOn = false;
-
+      let currentDetailsSummary = null; 
       function positionBeam(beam, fromEl, toEl){
         const fromRect = fromEl.getBoundingClientRect();
         const toRect   = toEl.getBoundingClientRect();
@@ -1455,40 +1455,39 @@ function shootAtDetails(detailsEl){
   if (!summary) return;
 
   isShootingDetails = true;
+  currentDetailsSummary = summary;   // <--- remember the target
 
-  // small wait so layout/scroll settles before we aim
-  const SETTLE_MS   = 200;  // time to let page settle
-  const SHOT_MS     = 450;  // how long the laser is visible
-  const OPEN_DELAY  = 900;  // when the details actually opens
+  const SETTLE_MS   = 200;
+  const SHOT_MS     = 450;
+  const OPEN_DELAY  = 900;
 
   setTimeout(() => {
-    // if user scrolled away during the settle time, abort
     const rect = detailsEl.getBoundingClientRect();
     const stillVisible =
       rect.top < window.innerHeight && rect.bottom > 0;
 
     if (!stillVisible){
       isShootingDetails = false;
+      currentDetailsSummary = null;  // <-- clear if we bailed
       return;
     }
 
-    // aim now that layout is stable
+    // aim once after settle
     positionBeam(laserLeft,  leftEye,  summary);
     positionBeam(laserRight, rightEye, summary);
 
     laserLeft.classList.add('shot');
     laserRight.classList.add('shot');
 
-    // QUICK disappearance of the beam
     setTimeout(() => {
       laserLeft.classList.remove('shot');
       laserRight.classList.remove('shot');
     }, SHOT_MS);
 
-    // open the details a bit after the shot starts
     setTimeout(() => {
       detailsEl.open = true;
       isShootingDetails = false;
+      currentDetailsSummary = null;  // <--- clear when opened
     }, OPEN_DELAY);
 
   }, SETTLE_MS);
@@ -1580,6 +1579,7 @@ const observer = new IntersectionObserver((entries) => {
   </script>
 </body>
 </html>
+
 
 
 
