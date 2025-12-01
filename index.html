@@ -26,16 +26,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
+  <!-- vis-network for animated hierarchy view -->
+  <link rel="stylesheet" href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" />
+  <script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js" defer></script>
+
   <style>
     :root{
       --brand:#0a66c2;
+      --brand-dark:#074c91;
       --bg:#f5f7fb;
       --card:#ffffff;
       --muted:#6b7280;
       --text:#111827;
       --ring:rgba(10,102,194,.35);
+      --shadow-soft:0 6px 18px rgba(15,23,42,.10);
       --shadow:0 14px 40px rgba(15,23,42,.10);
+      --shadow-strong:0 18px 40px rgba(15,23,42,.17);
       --radius:18px;
+      --pill-radius:999px;
     }
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%}
@@ -53,6 +61,17 @@
       outline-offset:2px;
       border-radius:10px;
     }
+
+    /* Simple utilities */
+    .text-muted{color:var(--muted)}
+    .text-sm{font-size:.9rem}
+    .text-xs{font-size:.8rem}
+    .fw-bold{font-weight:700}
+    .mt-0{margin-top:0}
+    .mt-1{margin-top:.25rem}
+    .mt-2{margin-top:.5rem}
+    .mt-3{margin-top:.75rem}
+    .mt-4{margin-top:1rem}
 
     /* Reveal animation */
     .reveal{
@@ -116,13 +135,13 @@
       opacity:.96;
     }
     .role-line{
-      margin-top:.4rem;
+      margin-top:.6rem;
       font-size:1.05rem;
       font-weight:700;
       letter-spacing:.01em;
     }
     .tagline{
-      margin-top:10px;
+      margin-top:16px;
       font-weight:500;
       opacity:.96;
       font-size:.9rem;
@@ -147,6 +166,7 @@
       font-size:.95rem;
       color:#111827;
       padding:4px 0;
+      white-space:nowrap;
     }
 
     main{
@@ -172,7 +192,7 @@
     }
     .card:hover{
       transform:translateY(-4px);
-      box-shadow:0 18px 40px rgba(15,23,42,.15);
+      box-shadow:var(--shadow-strong);
     }
 
     .hero-card h2{
@@ -184,6 +204,12 @@
       color:var(--muted);
       margin-bottom:.8rem;
     }
+    .hero-text{
+      font-size:.95rem;
+      color:#374151;
+      line-height:1.6;
+    }
+
     .hero-highlights{
       display:flex;
       flex-wrap:wrap;
@@ -191,7 +217,7 @@
       margin:.9rem 0 1.2rem;
     }
     .pill{
-      border-radius:999px;
+      border-radius:var(--pill-radius);
       border:1px solid #e5e7eb;
       padding:6px 11px;
       font-size:.8rem;
@@ -222,11 +248,12 @@
       font-size:.95rem;
       box-shadow:0 6px 18px rgba(10,102,194,.30);
       border:none;
+      cursor:pointer;
       transition:transform .2s ease-out, box-shadow .2s ease-out;
     }
     .btn.secondary{
       background:#fff;
-      color:#0a66c2;
+      color:var(--brand);
       border:1px solid rgba(147,197,253,.8);
       box-shadow:none;
     }
@@ -251,10 +278,6 @@
       padding:18px 18px 20px;
       text-align:center;
     }
-    .photo-card h2{
-      margin:0 0 10px;
-      font-size:1.05rem;
-    }
     .profile-photo-row{
       display:flex;
       justify-content:center;
@@ -277,7 +300,6 @@
       object-fit:cover;
       object-position:center;
       display:block;
-      border-radius:0;
     }
 
     section{
@@ -294,7 +316,7 @@
       color:#374151;
     }
 
-    /* EXPERIENCE TIMELINE ONLY */
+    /* EXPERIENCE TIMELINE */
     .timeline-wrapper{
       position:relative;
       margin-top:8px;
@@ -325,7 +347,7 @@
       width:12px;
       height:12px;
       border-radius:999px;
-      background:#0a66c2;
+      background:var(--brand);
       box-shadow:0 0 0 4px rgba(37,99,235,.15);
     }
     .timeline-year{
@@ -348,56 +370,43 @@
       font-size:.9rem;
     }
 
-/* Company and project logo alignment */
-.company-meta-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:2px;
-}
-.company-logo-row{
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-.company-logo{
-  height:80px;
-  width:auto;
-  border-radius:4px;
-  object-fit:contain;
-}
+    .company-meta-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:2px;
+    }
+    .company-logo-row{
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .company-logo,
+    .project-logo{
+      height:80px;
+      width:auto;
+      border-radius:4px;
+      object-fit:contain;
+    }
+    img[src*="Burns.jpg"],
+    img[src*="First energy.jpg"]{
+      height:40px;
+    }
 
-.project-meta-row{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.project-meta{
-  margin:0;
-  font-size:.86rem;
-  color:#6b7280;
-}
-.project-logo{
-  height:80px;
-  width:auto;
-  border-radius:4px;
-  object-fit:contain;
-}
-
-/* Slightly shrink Burns logo everywhere */
-img[src*="Burns.jpg"] {
-  height:40px;   /* smaller than default */
-}
-/* Slightly shrink FirstEnergy logo everywhere */
-img[src*="First energy.jpg"] {
-  height:40px;   /* match Burns */
-}
-
-
+    .project-meta-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .project-meta{
+      margin:0;
+      font-size:.86rem;
+      color:#6b7280;
+    }
 
     /* Project cards & grids */
     .project-grid{
@@ -421,7 +430,7 @@ img[src*="First energy.jpg"] {
     }
     .project-card:hover{
       transform:translateY(-4px);
-      box-shadow:0 18px 40px rgba(15,23,42,.17);
+      box-shadow:var(--shadow-strong);
     }
     .project-label{
       font-size:.72rem;
@@ -437,7 +446,7 @@ img[src*="First energy.jpg"] {
       position:relative;
       display:block;
       padding:6px 12px;
-      border-radius:999px;
+      border-radius:var(--pill-radius);
       color:#ffffff;
       background:linear-gradient(90deg,#0a66c2,#2563eb);
       box-shadow:0 4px 10px rgba(15,23,42,.18);
@@ -468,7 +477,7 @@ img[src*="First energy.jpg"] {
       border-radius:var(--radius);
       padding:13px 14px 14px;
       border:1px solid rgba(209,213,219,.9);
-      box-shadow:0 6px 18px rgba(15,23,42,.06);
+      box-shadow:var(--shadow-soft);
       display:flex;
       flex-direction:column;
       gap:7px;
@@ -508,7 +517,7 @@ img[src*="First energy.jpg"] {
       background:var(--brand);
       color:#fff;
       padding:12px 16px;
-      border-radius:999px;
+      border-radius:var(--pill-radius);
       font-weight:600;
       font-size:.9rem;
       z-index:1000;
@@ -537,7 +546,7 @@ img[src*="First energy.jpg"] {
       gap:8px;
       font-weight:600;
       font-size:.9rem;
-      color:#0a66c2;
+      color:var(--brand);
       cursor:pointer;
     }
     details.fe-toggle summary::-webkit-details-marker{display:none}
@@ -597,6 +606,19 @@ img[src*="First energy.jpg"] {
         margin-top:-12px;
       }
       #mascot-wrapper{display:none}
+      nav{
+        flex-wrap:wrap;
+        row-gap:6px;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *{
+        scroll-behavior:auto !important;
+        animation-duration:0.01ms !important;
+        animation-iteration-count:1 !important;
+        transition:none !important;
+      }
     }
   </style>
 
@@ -617,11 +639,6 @@ img[src*="First energy.jpg"] {
     ]
   }
   </script>
-
-  <!-- vis-network for animated hierarchy view -->
-  <script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
-  <link rel="stylesheet"
-        href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" />
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -630,8 +647,6 @@ img[src*="First energy.jpg"] {
     <h1>Sandeep Nair</h1>
     <p>Transmission Planning · PSS®E · PowerGEM TARA · GE PSLF · ETAP · HOMER Grid · Python Automation</p>
     <p class="role-line"><strong>Associate Sr. Engineer (Burns &amp; McDonnell) · 5.5+ years of experience</strong></p>
-    <p> <br> </p>
-    <p> <br> </p>
     <p class="tagline"><q>Stability is engineered; reliability is earned.</q></p>
   </header>
 
@@ -657,37 +672,38 @@ img[src*="First energy.jpg"] {
           North America–focused transmission planning, interconnection studies, and model automation.
         </p>
 
-        <p>
-          Proud Employee Owner(Fully Vested) at Burns & McDonnell Engineering India Pvt. Ltd <br><br>
-          Power systems engineer specializing in Siemens PTI PSS®E, PowerGEM TARA, GE PSLF, ETAP, HOMER Grid,
-          Python-based automation, and transmission planning studies for North American utilities and developers.
-        </p>
-        <p>
-          My work spans interconnection application support, steady-state and voltage performance studies,
-          reactive power compensation, short-circuit assessments, and injection analysis for large-scale
-          renewable and grid modernization projects. I focus on turning complex study workflows into
-          repeatable, automated pipelines that engineers trust and decision-makers can act on.
-        </p>
-        <p>
-          I also bring experience with transient stability, harmonic and relay coordination studies, grid code
-          compliance, and load forecasting. Day to day, that means PSS®E and ASPEN at the core, supported by
-          ETAP, ArcGIS, AutoCAD, and Python tooling that ties everything together.
-        </p>
-
-        <div class="hero-highlights" aria-label="Key focus areas">
-              <span class="pill"><i class="fa-solid fa-wave-square"></i> PSS®E &amp; steady-state studies</span>
-              <span class="pill"><i class="fa-solid fa-bolt"></i> Load Interconnection (Network level)</span>
-              <span class="pill"><i class="fa-solid fa-shield-halved"></i> N-1 / N-1-1 reliability</span>
-              <span class="pill"><i class="fa-solid fa-diagram-project"></i> TARA · PTDF/OTDF analytics</span>
-              <span class="pill"><i class="fa-solid fa-gears"></i> Model building · IDV automation</span>
-              <span class="pill"><i class="fa-solid fa-code"></i> Python + batch automation</span>
-              <span class="pill"><i class="fa-solid fa-gauge-high"></i> VAR & POI performance</span>
-              <span class="pill"><i class="fa-solid fa-solar-panel"></i> Renewable integration</span>
-              <span class="pill"><i class="fa-solid fa-bolt-lightning"></i> Short-circuit analysis</span>
-              <span class="pill"><i class="fa-solid fa-ranking-star"></i> One-line diagrams (Visio/GIS)</span>
-              <span class="pill"><i class="fa-solid fa-bolt"></i> Interconnection applications</span>
+        <div class="hero-text">
+          <p>
+            Proud Employee Owner (fully vested) at Burns &amp; McDonnell Engineering India Pvt. Ltd.
+            Power systems engineer specializing in Siemens PTI PSS®E, PowerGEM TARA, GE PSLF, ETAP, HOMER Grid,
+            Python-based automation, and transmission planning studies for North American utilities and developers.
+          </p>
+          <p>
+            My work spans interconnection application support, steady-state and voltage performance studies,
+            reactive power compensation, short-circuit assessments, and injection analysis for large-scale
+            renewable and grid modernization projects. I focus on turning complex study workflows into
+            repeatable, automated pipelines that engineers trust and decision-makers can act on.
+          </p>
+          <p>
+            I also bring experience with transient stability, harmonic and relay coordination studies, grid code
+            compliance, and load forecasting. Day to day, that means PSS®E and ASPEN at the core, supported by
+            ETAP, ArcGIS, AutoCAD, and Python tooling that ties everything together.
+          </p>
         </div>
 
+        <div class="hero-highlights" aria-label="Key focus areas">
+          <span class="pill"><i class="fa-solid fa-wave-square"></i> PSS®E &amp; steady-state studies</span>
+          <span class="pill"><i class="fa-solid fa-bolt"></i> Load Interconnection (Network level)</span>
+          <span class="pill"><i class="fa-solid fa-shield-halved"></i> N-1 / N-1-1 reliability</span>
+          <span class="pill"><i class="fa-solid fa-diagram-project"></i> TARA · PTDF/OTDF analytics</span>
+          <span class="pill"><i class="fa-solid fa-gears"></i> Model building · IDV automation</span>
+          <span class="pill"><i class="fa-solid fa-code"></i> Python + batch automation</span>
+          <span class="pill"><i class="fa-solid fa-gauge-high"></i> VAR &amp; POI performance</span>
+          <span class="pill"><i class="fa-solid fa-solar-panel"></i> Renewable integration</span>
+          <span class="pill"><i class="fa-solid fa-bolt-lightning"></i> Short-circuit analysis</span>
+          <span class="pill"><i class="fa-solid fa-ranking-star"></i> One-line diagrams (Visio/GIS)</span>
+          <span class="pill"><i class="fa-solid fa-bolt"></i> Interconnection applications</span>
+        </div>
 
         <div class="cta-row" role="group" aria-label="Primary calls to action">
           <a class="btn" href="#project-experience"><i class="fa-solid fa-diagram-project"></i> View Projects</a>
@@ -705,7 +721,7 @@ img[src*="First energy.jpg"] {
               <span>View animated team structure and support relationships</span>
             </summary>
             <div style="margin-top:10px;">
-              <p style="font-size:.9rem;color:#4b5563;margin-top:0;">
+              <p class="text-sm text-muted mt-0">
                 This view shows my direct team members (solid links) and additional resources I support
                 on a dotted-line basis across Load Interconnection and Plant-level studies groups.
               </p>
@@ -718,8 +734,7 @@ img[src*="First energy.jpg"] {
 
       <!-- Right: photo card + at-a-glance -->
       <div style="display:flex;flex-direction:column;gap:14px;">
-        <aside class="card photo-card" aria-label="Profile photo">
-          <h2></h2>
+        <aside class="card photo-card" aria-label="Profile photos">
           <div class="profile-photo-row">
             <div class="profile-photo-wrap">
               <img src="sandeep_nair.jpg" alt="Sandeep Nair at a mountain summit" class="profile-photo">
@@ -728,10 +743,10 @@ img[src*="First energy.jpg"] {
               <img src="Sansai_9.jpeg" alt="Professional headshot of Sandeep Nair" class="profile-photo">
             </div>
           </div>
-          <p style="font-size:.9rem;color:#4b5563;margin:6px 0 0;">
-            Delivering dependable grids by day, <br> pursuing demanding climbs by passion
+          <p class="text-sm text-muted mt-1">
+            Delivering dependable grids by day,<br> pursuing demanding climbs by passion –
+            discipline connects both.
           </p>
-          <p>: discipline connects both</p>
         </aside>
 
         <aside class="card" aria-label="Professional details">
@@ -764,16 +779,17 @@ img[src*="First energy.jpg"] {
               <div class="company-logo-row">
                 <img src="logos/Burns.jpg" alt="1898 &amp; Co. logo" class="company-logo">
               </div>
+            </div>
             <ul class="timeline-bullets">
-                <li>Lead transmission planning studies for interconnection applications from preliminary screening through commissioning support.</li>
-                <li>Drive study scope, methodology, and documentation for North American utility and developer clients.</li>
-                <li>Guide Python-based automation and review of multi-scenario result sets for decision-ready insights.</li>
-                <li>Progressed from plant-level work to network-level studies (FCITC, Load Interconnection, outage planning) following promotion.</li>
-                <li>Coordinate closely with ISO/RTO stakeholders to align assumptions, criteria, and planning deliverables.</li>
-                <li>Review and validate model builds (IDV, case updates, contingency sets) for accuracy and compliance with FE/PJM standards.</li>
-                <li>Support multi-site portfolios by standardizing workflows, improving repeatability, and reducing study turnaround time.</li>
+              <li>Lead transmission planning studies for interconnection applications from preliminary screening through commissioning support.</li>
+              <li>Drive study scope, methodology, and documentation for North American utility and developer clients.</li>
+              <li>Guide Python-based automation and review of multi-scenario result sets for decision-ready insights.</li>
+              <li>Progressed from plant-level work to network-level studies (FCITC, Load Interconnection, outage planning) following promotion.</li>
+              <li>Coordinate closely with ISO/RTO stakeholders to align assumptions, criteria, and planning deliverables.</li>
+              <li>Review and validate model builds (IDV, case updates, contingency sets) for accuracy and compliance with FE/PJM standards.</li>
+              <li>Support multi-site portfolios by standardizing workflows, improving repeatability, and reducing study turnaround time.</li>
             </ul>
-
+          </div>
 
           <div class="timeline-item">
             <div class="timeline-dot" aria-hidden="true"></div>
@@ -782,7 +798,7 @@ img[src*="First energy.jpg"] {
             <div class="company-meta-row">
               <div class="timeline-meta">1898 &amp; Co. (Burns &amp; McDonnell India)</div>
               <div class="company-logo-row">
-                <img src="logos/Burns.jpg" alt="1898 &amp; Co. logo" class="company-logo">
+                <img src="logos/Burns.jpg" alt="Burns &amp; McDonnell logo" class="company-logo">
               </div>
             </div>
             <ul class="timeline-bullets">
@@ -819,8 +835,8 @@ img[src*="First energy.jpg"] {
             <div class="company-meta-row">
               <div class="timeline-meta">Haldia Petrochemicals</div>
               <div class="company-logo-row">
-                <img src="logos/haldia.png" alt="Haldia Petrochemicals logo 1" class="company-logo">
-                <img src="logos/OMS.jpg" alt="OMS Solutions" class="company-logo">
+                <img src="logos/haldia.png" alt="Haldia Petrochemicals logo" class="company-logo">
+                <img src="logos/OMS.jpg" alt="OMS Solutions logo" class="company-logo">
               </div>
             </div>
             <ul class="timeline-bullets">
@@ -848,11 +864,11 @@ img[src*="First energy.jpg"] {
 
         <!-- Tool ecosystem -->
         <h3 style="font-size:1rem;margin:20px 0 8px;">Tool Proficiency &amp; Study Ecosystem</h3>
-        <p style="font-size:.92rem;color:#374151;line-height:1.55;">
+        <p class="text-sm" style="color:#374151;line-height:1.55;">
           Along with PSS®E–Python automation, my work frequently intersects with industry-standard planning
           and modeling platforms:
         </p>
-        <ul style="font-size:.9rem;color:#4b5563;margin:6px 0 0 18px;line-height:1.55;">
+        <ul class="text-sm" style="color:#4b5563;margin:6px 0 0 18px;line-height:1.55;">
           <li><strong>PowerGEM TARA</strong> – screening studies, PTDF/OTDF analytics, and identifying stressed interfaces.</li>
           <li><strong>GE PSLF</strong> – steady-state and contingency analysis used in WECC-aligned transmission planning studies.</li>
           <li><strong>ETAP</strong> – AC load flow, short-circuit, and protective coordination in industrial &amp; captive generation networks.</li>
@@ -886,7 +902,7 @@ img[src*="First energy.jpg"] {
 
       <div class="project-grid">
         <!-- FirstEnergy Load Interconnection Study -->
-        <article class="project-card" style="position:relative;">
+        <article class="project-card">
           <div class="project-label">Network-Level Interconnection</div>
           <h3>FirstEnergy Load Interconnection Study</h3>
 
@@ -895,7 +911,7 @@ img[src*="First energy.jpg"] {
               <strong>Transmission Planner – Planning &amp; Coordination Studies</strong>
             </p>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-              <span style="font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
+              <span class="text-xs" style="color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
                 47+ sites · from 3&nbsp;MW to 1200&nbsp;MW · 69&nbsp;kV to 345&nbsp;kV datacenter / mining loads
               </span>
               <img src="logos/First energy.jpg" alt="FirstEnergy logo" class="project-logo">
@@ -938,7 +954,7 @@ img[src*="First energy.jpg"] {
               <strong>Transmission Planner – FE Generation Interconnection Support</strong>
             </p>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-              <span style="font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
+              <span class="text-xs" style="color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
                 One-month support across PJM GenDeliv window
               </span>
               <img src="logos/First energy.jpg" alt="FirstEnergy logo" class="project-logo">
@@ -970,7 +986,7 @@ img[src*="First energy.jpg"] {
         </article>
 
         <!-- NextEra VAR & Fault Study Portfolio -->
-        <article class="project-card" style="position:relative;">
+        <article class="project-card">
           <div class="project-label">Programme Support · Reactive Studies</div>
           <h3>NextEra Energy Resources – VAR &amp; Fault Study Portfolio</h3>
 
@@ -979,7 +995,7 @@ img[src*="First energy.jpg"] {
               <strong>Associate Senior Engineer – Portfolio Study Lead</strong>
             </p>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-              <span style="font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
+              <span class="text-xs" style="color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
                 40+ sites · up to 1200&nbsp;MW and voltage levels up to 345&nbsp;kV
               </span>
               <img src="logos/Nextera.jpg" alt="NextEra Energy Resources logo" class="project-logo">
@@ -1062,7 +1078,6 @@ img[src*="First energy.jpg"] {
             reinforcement and protection coordination.
           </p>
         </article>
-
       </div>
     </section>
 
@@ -1129,7 +1144,6 @@ img[src*="First energy.jpg"] {
           <a class="go btn" href="experimental-tools.html" aria-label="Open Experimental Tools">Open</a>
         </article>
 
-        <!-- PYTHON TOOL WIDGET -->
         <article class="tool-card">
           <h3>TARA Load Comparison Tool</h3>
           <p>
@@ -1159,136 +1173,109 @@ img[src*="First energy.jpg"] {
   </div>
 
   <script>
-    // Mascot micro-interactions
-    const eyes = document.querySelectorAll('.eye');
-    const leftLid = document.querySelector('.eyelid-left');
-    const rightLid = document.querySelector('.eyelid-right');
+    // -------- Mascot micro-interactions (rAF-driven) --------
+    (function(){
+      const eyes = document.querySelectorAll('.eye');
+      const leftLid = document.querySelector('.eyelid-left');
+      const rightLid = document.querySelector('.eyelid-right');
+      let mouseX = null, mouseY = null;
+      let animating = false;
 
-    document.addEventListener('mousemove', (e) => {
-      eyes.forEach(eye => {
-        const rect = eye.getBoundingClientRect();
-        const eyeX = rect.left + rect.width / 2;
-        const eyeY = rect.top + rect.height / 2;
-        const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-        const offset = 4;
-        eye.style.transform = `translate(${Math.cos(angle)*offset}px, ${Math.sin(angle)*offset}px)`;
-      });
-    });
+      function updateEyes(){
+        if (!animating) return;
+        if (mouseX !== null && mouseY !== null){
+          eyes.forEach(eye => {
+            const rect = eye.getBoundingClientRect();
+            const eyeX = rect.left + rect.width / 2;
+            const eyeY = rect.top + rect.height / 2;
+            const angle = Math.atan2(mouseY - eyeY, mouseX - eyeX);
+            const offset = 4;
+            eye.style.transform =
+              'translate(' + (Math.cos(angle)*offset) + 'px,' +
+                             (Math.sin(angle)*offset) + 'px)';
+          });
+        }
+        requestAnimationFrame(updateEyes);
+      }
 
-    setInterval(() => {
-      leftLid.classList.add('blink');
-      rightLid.classList.add('blink');
-      setTimeout(() => {
-        leftLid.classList.remove('blink');
-        rightLid.classList.remove('blink');
-      }, 1000);
-    }, 4000);
-
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!animating){
+          animating = true;
+          requestAnimationFrame(updateEyes);
         }
       });
-    }, { threshold: 0.15 });
 
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      setInterval(() => {
+        leftLid.classList.add('blink');
+        rightLid.classList.add('blink');
+        setTimeout(() => {
+          leftLid.classList.remove('blink');
+          rightLid.classList.remove('blink');
+        }, 1000);
+      }, 4000);
+    })();
+
+    // -------- Scroll reveal --------
+    (function(){
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    })();
 
     // -------- Team Network (vis-network) --------
-    const container = document.getElementById('org-network-vis');
-    if (container && window.vis) {
+    window.addEventListener('DOMContentLoaded', function () {
+      const container = document.getElementById('org-network-vis');
+      if (!container || !window.vis) return;
+
       const nodes = new vis.DataSet([
-        // Group blocks (same level)
-        {
-          id: 'LIG',
-          label: 'Load Interconnection\ngroup',
-          shape: 'box',
-          level: 0,
+        { id: 'LIG', label: 'Load Interconnection\ngroup', shape: 'box', level: 0,
           color: { background: '#f9fafb', border: '#0a66c2' },
-          font: { size: 12, color: '#0f172a', bold: true }
-        },
-        {
-          id: 'PLANT',
-          label: 'Plant level\nstudies group',
-          shape: 'box',
-          level: 0,
+          font: { size: 12, color: '#0f172a', bold: true } },
+        { id: 'PLANT', label: 'Plant level\nstudies group', shape: 'box', level: 0,
           color: { background: '#f9fafb', border: '#059669' },
-          font: { size: 12, color: '#022c22', bold: true }
-        },
+          font: { size: 12, color: '#022c22', bold: true } },
 
-        // Leads
-        {
-          id: 'SMN',
-          label: 'Sandeep\n(Lead – Load Int.)',
-          shape: 'circle',
-          level: 1,
+        { id: 'SMN', label: 'Sandeep\n(Lead – Load Int.)', shape: 'circle', level: 1,
           color: {
-            background: '#0a66c2',
-            border: '#0a66c2',
-            highlight: { background: '#074c91', border: '#074c91' }
-          },
-          font: { color: '#ffffff', bold: true }
-        },
-        {
-          id: 'PL_LEAD',
-          label: 'Plant Lead',
-          shape: 'circle',
-          level: 1,
+            background: '#0a66c2', border: '#0a66c2',
+            highlight: { background: '#074c91', border: '#074c91' } },
+          font: { color: '#ffffff', bold: true } },
+
+        { id: 'PL_LEAD', label: 'Plant Lead', shape: 'circle', level: 1,
           color: {
-            background: '#10b981',
-            border: '#059669',
-            highlight: { background: '#059669', border: '#047857' }
-          },
-          font: { color: '#ffffff', bold: true }
-        },
+            background: '#10b981', border: '#059669',
+            highlight: { background: '#059669', border: '#047857' } },
+          font: { color: '#ffffff', bold: true } },
 
-        // Load Interconnection direct reportees
-        {
-          id: 'LDR1',
-          label: 'Load DR 1\n(~2–3 yrs)',
-          shape: 'circle',
-          level: 2,
-          color: { background: '#d1f2ff', border: '#0a66c2' }
-        },
-        {
-          id: 'LDR2',
-          label: 'Load DR 2\n(~2–3 yrs)',
-          shape: 'circle',
-          level: 2,
-          color: { background: '#d1f2ff', border: '#0a66c2' }
-        },
+        { id: 'LDR1', label: 'Load DR 1\n(~2–3 yrs)', shape: 'circle', level: 2,
+          color: { background: '#d1f2ff', border: '#0a66c2' } },
+        { id: 'LDR2', label: 'Load DR 2\n(~2–3 yrs)', shape: 'circle', level: 2,
+          color: { background: '#d1f2ff', border: '#0a66c2' } },
 
-        // Plant-level reportees
-        {
-          id: 'PDR1',
-          label: 'Plant DR 1\n(~2–3 yrs)',
-          shape: 'circle',
-          level: 2,
-          color: { background: '#dcfce7', border: '#059669' }
-        },
-        {
-          id: 'PDR2',
-          label: 'Plant DR 2\n(~2–3 yrs)',
-          shape: 'circle',
-          level: 2,
-          color: { background: '#dcfce7', border: '#059669' }
-        }
+        { id: 'PDR1', label: 'Plant DR 1\n(~2–3 yrs)', shape: 'circle', level: 2,
+          color: { background: '#dcfce7', border: '#059669' } },
+        { id: 'PDR2', label: 'Plant DR 2\n(~2–3 yrs)', shape: 'circle', level: 2,
+          color: { background: '#dcfce7', border: '#059669' } }
       ]);
 
       const edges = new vis.DataSet([
-        // Group to lead
         { from: 'LIG', to: 'SMN', width: 2, color: { color: '#0a66c2' } },
         { from: 'PLANT', to: 'PL_LEAD', width: 2, color: { color: '#059669' } },
 
-        // Lead to direct reports
         { from: 'SMN', to: 'LDR1', width: 2, color: { color: '#0a66c2' } },
         { from: 'SMN', to: 'LDR2', width: 2, color: { color: '#0a66c2' } },
         { from: 'PL_LEAD', to: 'PDR1', width: 2, color: { color: '#059669' } },
         { from: 'PL_LEAD', to: 'PDR2', width: 2, color: { color: '#059669' } },
 
-        // Cross-group technical support from Sandeep
         { from: 'SMN', to: 'PDR1', dashes: true, width: 2, color: { color: '#6b7280' } },
         { from: 'SMN', to: 'PDR2', dashes: true, width: 2, color: { color: '#6b7280' } }
       ]);
@@ -1303,16 +1290,16 @@ img[src*="First energy.jpg"] {
           zoomView: true
         },
         physics: {
-          enabled: false  // we will animate positions manually
+          enabled: false
         },
         layout: {
           improvedLayout: true,
           hierarchical: {
             enabled: true,
-            direction: 'LR',      // left → right
+            direction: 'LR',
             sortMethod: 'directed',
-            levelSeparation: 130, // distance between columns
-            nodeSpacing: 140      // distance between nodes in same column
+            levelSeparation: 130,
+            nodeSpacing: 140
           }
         },
         edges: {
@@ -1326,7 +1313,6 @@ img[src*="First energy.jpg"] {
 
       const network = new vis.Network(container, data, options);
 
-      // Gentle horizontal "spring" on the four DR nodes
       network.once('afterDrawing', function () {
         network.fit({
           animation: { duration: 400, easingFunction: 'easeInOutQuad' }
@@ -1335,8 +1321,8 @@ img[src*="First energy.jpg"] {
         const springNodes = ['LDR1', 'LDR2', 'PDR1', 'PDR2'];
         const basePos = network.getPositions(springNodes);
 
-        const amplitude = 10;          // pixels left/right
-        const baseSpeed = 0.0007;      // smaller = slower
+        const amplitude = 10;
+        const baseSpeed = 0.0007;
         const phases = {
           LDR1: 0,
           LDR2: Math.PI / 2,
@@ -1358,30 +1344,12 @@ img[src*="First energy.jpg"] {
             network.moveNode(id, p.x + dx, p.y);
           });
 
-        requestAnimationFrame(animate);
+          requestAnimationFrame(animate);
         }
 
         requestAnimationFrame(animate);
       });
-    }
+    });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
