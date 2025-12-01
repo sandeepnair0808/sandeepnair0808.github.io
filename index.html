@@ -643,7 +643,7 @@
           <a class="btn secondary" href="mailto:sandeep.nair@1898andco.com"><i class="fa-solid fa-envelope"></i> Contact</a>
         </div>
 
-        <!-- INLINE TEAM SUPPORT VIEW (under hero, left column only) -->
+        <!-- INLINE TEAM SUPPORT VIEW -->
         <section id="team-view" aria-labelledby="team-view-heading">
           <h2 id="team-view-heading" style="font-size:1.1rem;margin:8px 0 6px;">
             Team Support &amp; Hierarchy View
@@ -772,7 +772,7 @@
           Along with PSS®E–Python automation, my work frequently intersects with industry-standard planning
           and modeling platforms:
         </p>
-        <ul style="font-size:.9rem;color:#4b5563;margin:6px 0 0 18px;line-height:1.55%;">
+        <ul style="font-size:.9rem;color:#4b5563;margin:6px 0 0 18px;line-height:1.55;">
           <li><strong>PowerGEM TARA</strong> – screening studies, PTDF/OTDF analytics, and identifying stressed interfaces.</li>
           <li><strong>GE PSLF</strong> – steady-state and contingency analysis used in WECC-aligned transmission planning studies.</li>
           <li><strong>ETAP</strong> – AC load flow, short-circuit, and protective coordination in industrial &amp; captive generation networks.</li>
@@ -846,7 +846,7 @@
               <span class="collapsible-icon">▸</span>
               <span>GenDeliv Workflow (Case Build → Analysis → Results)</span>
             </summary>
-            <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55%;">
+            <ul style="margin:10px 0 0 18px;font-size:.9rem;color:#4b5563;line-height:1.55;">
               <li><strong>Case Development:</strong> Added new generation using PSSE IDV workflows, updated Area settings, Pmax/Qmax limits, and validated machine parameters.</li>
               <li><strong>RTEP Case Integration:</strong> Loaded FE/PJM RTEP cases in TARA Studio, inserted new machine at correct tap/substation bus, and ensured convergence.</li>
               <li><strong>GD Data Preparation:</strong> Created GenDeliv data sheets (bus, area, Pmax, CIR, MW Cap) following FE/PJM templates.</li>
@@ -1085,7 +1085,7 @@
         // Leads
         {
           id: 'SMN',
-          label: 'SMN\n(Lead – Load Int.)',
+          label: 'Sandeep\n(Lead – Load Int.)',
           shape: 'circle',
           level: 1,
           color: {
@@ -1152,7 +1152,7 @@
         { from: 'PL_LEAD', to: 'PDR1', width: 2, color: { color: '#059669' } },
         { from: 'PL_LEAD', to: 'PDR2', width: 2, color: { color: '#059669' } },
 
-        // Cross-group technical support from SMN
+        // Cross-group technical support from Sandeep
         { from: 'SMN', to: 'PDR1', dashes: true, width: 2, color: { color: '#6b7280' } },
         { from: 'SMN', to: 'PDR2', dashes: true, width: 2, color: { color: '#6b7280' } }
       ]);
@@ -1167,7 +1167,7 @@
           zoomView: true
         },
         physics: {
-          enabled: false  // keep positions stable, no overlap
+          enabled: false  // we will animate positions manually
         },
         layout: {
           improvedLayout: true,
@@ -1190,10 +1190,42 @@
 
       const network = new vis.Network(container, data, options);
 
+      // Gentle horizontal "spring" on the four DR nodes
       network.once('afterDrawing', function () {
         network.fit({
           animation: { duration: 400, easingFunction: 'easeInOutQuad' }
         });
+
+        const springNodes = ['LDR1', 'LDR2', 'PDR1', 'PDR2'];
+        const basePos = network.getPositions(springNodes);
+
+        const amplitude = 10;          // pixels left/right
+        const baseSpeed = 0.0007;      // smaller = slower
+        const phases = {
+          LDR1: 0,
+          LDR2: Math.PI / 2,
+          PDR1: Math.PI,
+          PDR2: (3 * Math.PI) / 2
+        };
+
+        function animate() {
+          const t = performance.now();
+
+          springNodes.forEach(id => {
+            const p = basePos[id];
+            if (!p) return;
+
+            const phase = phases[id] || 0;
+            const omega = baseSpeed;
+            const dx = amplitude * Math.sin(omega * t + phase);
+
+            network.moveNode(id, p.x + dx, p.y);
+          });
+
+          requestAnimationFrame(animate);
+        }
+
+        requestAnimationFrame(animate);
       });
     }
   </script>
