@@ -615,11 +615,43 @@
       opacity:1;
       animation:laserPulse .6s ease-in-out infinite;
     }
+    .laser-beam{
+    position:fixed;
+    height:2px;
+    background:linear-gradient(90deg,#0ea5e9,#38bdf8,#0ea5e9);
+    box-shadow:0 0 6px rgba(56,189,248,.7);
+    opacity:0;
+    transform-origin:0 50%;
+    transform:rotate(0deg);
+    transition:opacity .2s ease-out;
+    }
+
+    /* When lasers are ON */
+    .laser-beam.active{
+      opacity:1;
+      animation:laserPulse .6s ease-in-out infinite;
+    }
+
     @keyframes laserPulse{
       0%  { box-shadow:0 0 6px rgba(56,189,248,.7); }
       50% { box-shadow:0 0 18px rgba(56,189,248,1); }
       100%{ box-shadow:0 0 6px rgba(56,189,248,.7); }
     }
+    
+    @keyframes laserPulse{
+      0%{
+        box-shadow:0 0 6px rgba(56,189,248,.7);
+        height:2px;
+       }
+    50%{
+        box-shadow:0 0 18px rgba(56,189,248,1);
+        height:3px;   /* slightly thicker at peak */
+       }
+  100%{
+       box-shadow:0 0 6px rgba(56,189,248,.7);
+       height:2px;
+      }
+  }
 
     @media (max-width:900px){
       .layout{
@@ -1451,6 +1483,7 @@
   </script>
 </body>
 </html>
+
 
 
 
