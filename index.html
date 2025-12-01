@@ -1417,11 +1417,10 @@
       }
 
       let lasersActive = false;
-
       function updateLasers(){
         if (!lasersActive) return;
-        positionBeam(laserLeft,  leftEye,  cardExp);
-        positionBeam(laserRight, rightEye, cardTara);
+        positionBeam(laserLeft,  leftEye,  btnExp);
+        positionBeam(laserRight, rightEye, btnTara);
       }
 
       const observer = new IntersectionObserver((entries)=>{
@@ -1452,6 +1451,7 @@
   </script>
 </body>
 </html>
+
 
 
 
