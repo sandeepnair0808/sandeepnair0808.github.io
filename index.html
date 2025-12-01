@@ -1389,8 +1389,10 @@
       const laserRight = document.getElementById('laser-right');
       const cardExp  = document.getElementById('card-experimental');
       const cardTara = document.getElementById('card-tara');
+      const btnExp   = cardExp  ? cardExp.querySelector('.go')  : null;
+      const btnTara  = cardTara ? cardTara.querySelector('.go') : null;
 
-      if (!leftEye || !rightEye || !laserLeft || !laserRight || !cardExp || !cardTara) {
+      if (!leftEye || !rightEye || !laserLeft || !laserRight || !btnExp || !btnTara) {
         return;
       }
 
@@ -1450,5 +1452,6 @@
   </script>
 </body>
 </html>
+
 
 
