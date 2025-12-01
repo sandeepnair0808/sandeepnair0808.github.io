@@ -536,6 +536,26 @@
       border-color:rgba(37,99,235,.4);
       box-shadow:0 10px 24px rgba(37,99,235,.15);
     }
+    details.fe-toggle > *:not(summary){
+        max-height:0;
+        overflow:hidden;
+        transition:max-height 0.8s ease;  /* slow open/close */
+    }
+    details.fe-toggle[open] > *:not(summary){
+        max-height:1000px;                /* big enough for content */
+    }
+    /* ⬆️ UP TO HERE ⬆️ */
+
+    .collapsible-summary{
+      list-style:none;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:600;
+      font-size:.9rem;
+      color:var(--brand);
+      cursor:pointer;
+    }
     .collapsible-summary{
       list-style:none;
       display:flex;
@@ -1525,5 +1545,6 @@
   </script>
 </body>
 </html>
+
 
 
