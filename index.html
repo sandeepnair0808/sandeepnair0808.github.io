@@ -1450,25 +1450,50 @@
         const detailsList = Array.from(document.querySelectorAll('details.fe-toggle'));
         if (!detailsList.length) return;
 
-        function shootAtDetails(detailsEl){
-          const summary = detailsEl.querySelector('summary');
-          if (!summary) return;
+function shootAtDetails(detailsEl){
+  const summary = detailsEl.querySelector('summary');
+  if (!summary) return;
 
-          isShootingDetails = true;
+  isShootingDetails = true;
 
-          positionBeam(laserLeft,  leftEye,  summary);
-          positionBeam(laserRight, rightEye, summary);
+  // small wait so layout/scroll settles before we aim
+  const SETTLE_MS   = 200;  // time to let page settle
+  const SHOT_MS     = 450;  // how long the laser is visible
+  const OPEN_DELAY  = 900;  // when the details actually opens
 
-          laserLeft.classList.add('shot');
-          laserRight.classList.add('shot');
+  setTimeout(() => {
+    // if user scrolled away during the settle time, abort
+    const rect = detailsEl.getBoundingClientRect();
+    const stillVisible =
+      rect.top < window.innerHeight && rect.bottom > 0;
 
-          setTimeout(() => {
-            detailsEl.open = true;
-            laserLeft.classList.remove('shot');
-            laserRight.classList.remove('shot');
-            isShootingDetails = false;
-          }, 1400);
-        }
+    if (!stillVisible){
+      isShootingDetails = false;
+      return;
+    }
+
+    // aim now that layout is stable
+    positionBeam(laserLeft,  leftEye,  summary);
+    positionBeam(laserRight, rightEye, summary);
+
+    laserLeft.classList.add('shot');
+    laserRight.classList.add('shot');
+
+    // QUICK disappearance of the beam
+    setTimeout(() => {
+      laserLeft.classList.remove('shot');
+      laserRight.classList.remove('shot');
+    }, SHOT_MS);
+
+    // open the details a bit after the shot starts
+    setTimeout(() => {
+      detailsEl.open = true;
+      isShootingDetails = false;
+    }, OPEN_DELAY);
+
+  }, SETTLE_MS);
+}
+
 
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -1545,6 +1570,7 @@
   </script>
 </body>
 </html>
+
 
 
 
