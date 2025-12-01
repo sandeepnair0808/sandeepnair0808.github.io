@@ -208,6 +208,7 @@
       display:flex;
       flex-wrap:wrap;
       gap:10px;
+      margin-bottom:10px;
     }
     .btn{
       display:inline-flex;
@@ -471,7 +472,7 @@
       box-shadow:0 10px 22px rgba(10,102,194,.35);
     }
 
-    /* Collapsible FE workflow styles */
+    /* Collapsible styles */
     details.fe-toggle{
       margin-top:8px;
       border-radius:12px;
@@ -494,6 +495,7 @@
       font-weight:600;
       font-size:.9rem;
       color:#0a66c2;
+      cursor:pointer;
     }
     details.fe-toggle summary::-webkit-details-marker{display:none}
     .collapsible-icon{
@@ -613,8 +615,8 @@
         </p>
 
         <p>
-          Proud Employee Owner(Fully Vested) at Burns & McDonnell Engineering India Pvt. Ltd <br>
-<br><br>          Power systems engineer specializing in Siemens PTI PSS®E, PowerGEM TARA, GE PSLF, ETAP, HOMER Grid,
+          Proud Employee Owner(Fully Vested) at Burns & McDonnell Engineering India Pvt. Ltd <br><br>
+          Power systems engineer specializing in Siemens PTI PSS®E, PowerGEM TARA, GE PSLF, ETAP, HOMER Grid,
           Python-based automation, and transmission planning studies for North American utilities and developers.
         </p>
         <p>
@@ -640,6 +642,27 @@
           <a class="btn" href="#project-experience"><i class="fa-solid fa-diagram-project"></i> View Projects</a>
           <a class="btn secondary" href="mailto:sandeep.nair@1898andco.com"><i class="fa-solid fa-envelope"></i> Contact</a>
         </div>
+
+        <!-- INLINE TEAM SUPPORT VIEW (under hero, left column only) -->
+        <section id="team-view" aria-labelledby="team-view-heading">
+          <h2 id="team-view-heading" style="font-size:1.1rem;margin:8px 0 6px;">
+            Team Support &amp; Hierarchy View
+          </h2>
+          <details class="fe-toggle">
+            <summary class="collapsible-summary">
+              <span class="collapsible-icon">▸</span>
+              <span>View animated team structure and support relationships</span>
+            </summary>
+            <div style="margin-top:10px;">
+              <p style="font-size:.9rem;color:#4b5563;margin-top:0;">
+                This view shows my direct team members (solid links) and additional resources I support
+                on a dotted-line basis across Load Interconnection and Plant-level studies groups.
+              </p>
+              <div id="org-network-vis"
+                   style="height:320px;border:1px solid #e5e7eb;border-radius:18px;"></div>
+            </div>
+          </details>
+        </section>
       </article>
 
       <!-- Right: photo card + at-a-glance -->
@@ -671,26 +694,6 @@
           </ul>
         </aside>
       </div>
-    </section>
-
-    <!-- TEAM SUPPORT / HIERARCHY VIEW (COLLAPSIBLE) -->
-    <section id="team-view" class="reveal" aria-labelledby="team-view-heading">
-      <h2 id="team-view-heading">Team Support &amp; Hierarchy View</h2>
-
-      <details class="fe-toggle" open>
-        <summary class="collapsible-summary">
-          <span class="collapsible-icon">▸</span>
-          <span>View animated team structure and support relationships</span>
-        </summary>
-        <div class="card" style="margin-top:10px;">
-          <p style="font-size:.9rem;color:#4b5563;margin-top:0;">
-            This view shows my direct team members (solid links) and additional resources I support
-            on a dotted-line basis, across Load Interconnection and Plant-level studies groups.
-          </p>
-          <div id="org-network-vis"
-               style="height:360px;border:1px solid #e5e7eb;border-radius:18px;"></div>
-        </div>
-      </details>
     </section>
 
     <!-- EXPERIENCE (TIMELINE) -->
@@ -769,7 +772,7 @@
           Along with PSS®E–Python automation, my work frequently intersects with industry-standard planning
           and modeling platforms:
         </p>
-        <ul style="font-size:.9rem;color:#4b5563;margin:6px 0 0 18px;line-height:1.55;">
+        <ul style="font-size:.9rem;color:#4b5563;margin:6px 0 0 18px;line-height:1.55%;">
           <li><strong>PowerGEM TARA</strong> – screening studies, PTDF/OTDF analytics, and identifying stressed interfaces.</li>
           <li><strong>GE PSLF</strong> – steady-state and contingency analysis used in WECC-aligned transmission planning studies.</li>
           <li><strong>ETAP</strong> – AC load flow, short-circuit, and protective coordination in industrial &amp; captive generation networks.</li>
@@ -793,7 +796,7 @@
       </div>
     </section>
 
-    <!-- PROJECT EXPERIENCE (client/programme) -->
+    <!-- PROJECT EXPERIENCE -->
     <section id="project-experience" class="reveal" aria-labelledby="project-experience-heading">
       <h2 id="project-experience-heading">Project Experience</h2>
       <p>
@@ -802,8 +805,8 @@
       </p>
 
       <div class="project-grid">
+        <!-- (Project cards unchanged; keeping as-is) -->
 
-        <!-- FirstEnergy Load Interconnection Study -->
         <article class="project-card" style="position:relative;">
           <div class="project-label">Network-Level Interconnection</div>
           <h3>FirstEnergy Load Interconnection Study</h3>
@@ -835,7 +838,6 @@
           </ul>
         </article>
 
-        <!-- FE Generation Interconnection – GenDeliv -->
         <article class="project-card">
           <div class="project-label">Generation Interconnection</div>
           <h3>FE Generation Interconnection – GenDeliv Analysis</h3>
@@ -865,7 +867,6 @@
           </ul>
         </article>
 
-        <!-- NextEra VAR & Fault Study Portfolio -->
         <article class="project-card" style="position:relative;">
           <div class="project-label">Programme Support · Reactive Studies</div>
           <h3>NextEra Energy Resources – VAR &amp; Fault Study Portfolio</h3>
@@ -897,7 +898,6 @@
           </ul>
         </article>
 
-        <!-- PowerSouth as a separate project -->
         <article class="project-card">
           <div class="project-label">Cooperative Utility Planning</div>
           <h3>PowerSouth Energy Cooperative</h3>
@@ -908,7 +908,6 @@
           </p>
         </article>
 
-        <!-- AES Clean Energy -->
         <article class="project-card">
           <div class="project-label">NYISO Interconnection</div>
           <h3>AES Clean Energy Development LLC</h3>
@@ -920,7 +919,6 @@
           </p>
         </article>
 
-        <!-- Invenergy -->
         <article class="project-card">
           <div class="project-label">Programme Support</div>
           <h3>Invenergy</h3>
@@ -998,7 +996,7 @@
           <a class="go btn" href="experimental-tools.html" aria-label="Open Experimental Tools">Open</a>
         </article>
 
-        <!-- NEW PYTHON-BASED PLUGIN WIDGET -->
+        <!-- PYTHON TOOL WIDGET -->
         <article class="tool-card">
           <h3>TARA Load Comparison Tool</h3>
           <p>
@@ -1007,7 +1005,6 @@
           </p>
           <a class="go btn" href="python-automation.html" aria-label="Open TARA Load Comparison Tool page">Open</a>
         </article>
-        <!-- END NEW WIDGET -->
       </div>
     </section>
   </main>
@@ -1068,12 +1065,29 @@
 
     // -------- Team Network (vis-network) --------
     const container = document.getElementById('org-network-vis');
-    if (container) {
+    if (container && window.vis) {
       const nodes = new vis.DataSet([
+        // Group blocks
+        {
+          id: 'LIG',
+          label: 'Load Interconnection\ngroup',
+          shape: 'box',
+          color: { background: '#f9fafb', border: '#0a66c2' },
+          font: { size: 12, color: '#0f172a', bold: true }
+        },
+        {
+          id: 'PLANT',
+          label: 'Plant level\nstudies group',
+          shape: 'box',
+          color: { background: '#f9fafb', border: '#059669' },
+          font: { size: 12, color: '#022c22', bold: true }
+        },
+
+        // Leads
         {
           id: 'SMN',
-          label: 'SMN\n(Lead · 5.5+ yrs)',
-          shape: 'box',
+          label: 'SMN\n(Lead – Load Int.)',
+          shape: 'circle',
           color: {
             background: '#0a66c2',
             border: '#0a66c2',
@@ -1081,66 +1095,61 @@
           },
           font: { color: '#ffffff', bold: true }
         },
-
-        // Direct reportees (solid links)
         {
-          id: 'DR1',
-          label: 'Direct Report 1\n(2.5 yrs)',
+          id: 'PL_LEAD',
+          label: 'Plant Lead',
+          shape: 'circle',
+          color: {
+            background: '#10b981',
+            border: '#059669',
+            highlight: { background: '#059669', border: '#047857' }
+          },
+          font: { color: '#ffffff', bold: true }
+        },
+
+        // Your direct reportees
+        {
+          id: 'LDR1',
+          label: 'Load DR 1\n(~2–3 yrs)',
           shape: 'circle',
           color: { background: '#d1f2ff', border: '#0a66c2' }
         },
         {
-          id: 'DR2',
-          label: 'Direct Report 2\n(2.0 yrs)',
+          id: 'LDR2',
+          label: 'Load DR 2\n(~2–3 yrs)',
           shape: 'circle',
           color: { background: '#d1f2ff', border: '#0a66c2' }
         },
 
-        // Supported resources (dotted-line)
+        // Plant-level reportees
         {
-          id: 'SUP1',
-          label: 'Support 1\n(2 yrs)',
+          id: 'PDR1',
+          label: 'Plant DR 1\n(~2–3 yrs)',
           shape: 'circle',
-          color: { background: '#e0e7ff', border: '#4b5563' }
+          color: { background: '#dcfce7', border: '#059669' }
         },
         {
-          id: 'SUP2',
-          label: 'Support 2\n(3 yrs)',
+          id: 'PDR2',
+          label: 'Plant DR 2\n(~2–3 yrs)',
           shape: 'circle',
-          color: { background: '#e0e7ff', border: '#4b5563' }
-        },
-
-        // Optional group labels
-        {
-          id: 'LIG',
-          label: 'Load\nInterconnection\ngroup',
-          shape: 'box',
-          color: { background: '#f9fafb', border: '#9ca3af' },
-          font: { size: 11, color: '#4b5563' }
-        },
-        {
-          id: 'PLANT',
-          label: 'Plant level\nstudies group',
-          shape: 'box',
-          color: { background: '#f9fafb', border: '#9ca3af' },
-          font: { size: 11, color: '#4b5563' }
+          color: { background: '#dcfce7', border: '#059669' }
         }
       ]);
 
       const edges = new vis.DataSet([
-        // Solid: direct reports
-        { from: 'SMN', to: 'DR1', width: 2, color: { color: '#0a66c2' } },
-        { from: 'SMN', to: 'DR2', width: 2, color: { color: '#0a66c2' } },
+        // Group to lead
+        { from: 'LIG', to: 'SMN', width: 2, color: { color: '#0a66c2' } },
+        { from: 'PLANT', to: 'PL_LEAD', width: 2, color: { color: '#059669' } },
 
-        // Dotted line: support
-        { from: 'SMN', to: 'SUP1', dashes: true, width: 2, color: { color: '#6b7280' } },
-        { from: 'SMN', to: 'SUP2', dashes: true, width: 2, color: { color: '#6b7280' } },
+        // Lead to direct reports
+        { from: 'SMN', to: 'LDR1', width: 2, color: { color: '#0a66c2' } },
+        { from: 'SMN', to: 'LDR2', width: 2, color: { color: '#0a66c2' } },
+        { from: 'PL_LEAD', to: 'PDR1', width: 2, color: { color: '#059669' } },
+        { from: 'PL_LEAD', to: 'PDR2', width: 2, color: { color: '#059669' } },
 
-        // Group anchors (optional)
-        { from: 'LIG', to: 'DR1', width: 1, color: { color: '#9ca3af' } },
-        { from: 'LIG', to: 'DR2', width: 1, color: { color: '#9ca3af' } },
-        { from: 'PLANT', to: 'SUP1', width: 1, color: { color: '#9ca3af' } },
-        { from: 'PLANT', to: 'SUP2', width: 1, color: { color: '#9ca3af' } }
+        // Cross-group technical support from SMN
+        { from: 'SMN', to: 'PDR1', dashes: true, width: 2, color: { color: '#6b7280' } },
+        { from: 'SMN', to: 'PDR2', dashes: true, width: 2, color: { color: '#6b7280' } }
       ]);
 
       const data = { nodes, edges };
@@ -1156,12 +1165,12 @@
           solver: 'forceAtlas2Based',
           forceAtlas2Based: {
             gravitationalConstant: -40,
-            centralGravity: 0.02,
-            springLength: 140,
+            centralGravity: 0.03,
+            springLength: 150,
             springConstant: 0.06
           },
           stabilization: {
-            iterations: 120,
+            iterations: 140,
             updateInterval: 25
           }
         },
@@ -1180,7 +1189,7 @@
 
       network.once('stabilizationIterationsDone', function () {
         network.fit({
-          nodes: ['SMN'],
+          nodes: ['LIG', 'PLANT'],
           animation: { duration: 600, easingFunction: 'easeInOutQuad' }
         });
       });
