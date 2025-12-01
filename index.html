@@ -805,8 +805,6 @@
       </p>
 
       <div class="project-grid">
-        <!-- (Project cards unchanged; keeping as-is) -->
-
         <article class="project-card" style="position:relative;">
           <div class="project-label">Network-Level Interconnection</div>
           <h3>FirstEnergy Load Interconnection Study</h3>
@@ -929,7 +927,6 @@
             reinforcement and protection coordination.
           </p>
         </article>
-
       </div>
     </section>
 
@@ -1067,11 +1064,12 @@
     const container = document.getElementById('org-network-vis');
     if (container && window.vis) {
       const nodes = new vis.DataSet([
-        // Group blocks
+        // Group blocks (same level)
         {
           id: 'LIG',
           label: 'Load Interconnection\ngroup',
           shape: 'box',
+          level: 0,
           color: { background: '#f9fafb', border: '#0a66c2' },
           font: { size: 12, color: '#0f172a', bold: true }
         },
@@ -1079,6 +1077,7 @@
           id: 'PLANT',
           label: 'Plant level\nstudies group',
           shape: 'box',
+          level: 0,
           color: { background: '#f9fafb', border: '#059669' },
           font: { size: 12, color: '#022c22', bold: true }
         },
@@ -1088,6 +1087,7 @@
           id: 'SMN',
           label: 'SMN\n(Lead – Load Int.)',
           shape: 'circle',
+          level: 1,
           color: {
             background: '#0a66c2',
             border: '#0a66c2',
@@ -1099,6 +1099,7 @@
           id: 'PL_LEAD',
           label: 'Plant Lead',
           shape: 'circle',
+          level: 1,
           color: {
             background: '#10b981',
             border: '#059669',
@@ -1107,17 +1108,19 @@
           font: { color: '#ffffff', bold: true }
         },
 
-        // Your direct reportees
+        // Load Interconnection direct reportees
         {
           id: 'LDR1',
           label: 'Load DR 1\n(~2–3 yrs)',
           shape: 'circle',
+          level: 2,
           color: { background: '#d1f2ff', border: '#0a66c2' }
         },
         {
           id: 'LDR2',
           label: 'Load DR 2\n(~2–3 yrs)',
           shape: 'circle',
+          level: 2,
           color: { background: '#d1f2ff', border: '#0a66c2' }
         },
 
@@ -1126,12 +1129,14 @@
           id: 'PDR1',
           label: 'Plant DR 1\n(~2–3 yrs)',
           shape: 'circle',
+          level: 2,
           color: { background: '#dcfce7', border: '#059669' }
         },
         {
           id: 'PDR2',
           label: 'Plant DR 2\n(~2–3 yrs)',
           shape: 'circle',
+          level: 2,
           color: { background: '#dcfce7', border: '#059669' }
         }
       ]);
@@ -1156,41 +1161,38 @@
 
       const options = {
         interaction: {
-          dragNodes: true,
+          dragNodes: false,
           hover: true,
-          tooltipDelay: 120
+          tooltipDelay: 120,
+          zoomView: true
         },
         physics: {
-          enabled: true,
-          solver: 'forceAtlas2Based',
-          forceAtlas2Based: {
-            gravitationalConstant: -40,
-            centralGravity: 0.03,
-            springLength: 150,
-            springConstant: 0.06
-          },
-          stabilization: {
-            iterations: 140,
-            updateInterval: 25
+          enabled: false  // keep positions stable, no overlap
+        },
+        layout: {
+          improvedLayout: true,
+          hierarchical: {
+            enabled: true,
+            direction: 'LR',      // left → right
+            sortMethod: 'directed',
+            levelSeparation: 130, // distance between columns
+            nodeSpacing: 140      // distance between nodes in same column
           }
         },
         edges: {
           smooth: {
             enabled: true,
-            type: 'dynamic'
+            type: 'cubicBezier',
+            roundness: 0.4
           }
-        },
-        layout: {
-          improvedLayout: true
         }
       };
 
       const network = new vis.Network(container, data, options);
 
-      network.once('stabilizationIterationsDone', function () {
+      network.once('afterDrawing', function () {
         network.fit({
-          nodes: ['LIG', 'PLANT'],
-          animation: { duration: 600, easingFunction: 'easeInOutQuad' }
+          animation: { duration: 400, easingFunction: 'easeInOutQuad' }
         });
       });
     }
