@@ -348,6 +348,46 @@
       font-size:.9rem;
     }
 
+    /* Company and project logo alignment */
+    .company-meta-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:2px;
+    }
+    .company-logo-row{
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .company-logo{
+      height:22px;
+      width:auto;
+      border-radius:4px;
+      object-fit:contain;
+    }
+
+    .project-meta-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .project-meta{
+      margin:0;
+      font-size:.86rem;
+      color:#6b7280;
+    }
+    .project-logo{
+      height:20px;
+      width:auto;
+      border-radius:4px;
+      object-fit:contain;
+    }
+
     /* Project cards & grids */
     .project-grid{
       display:flex;
@@ -399,14 +439,6 @@
     .project-card p{
       font-size:.9rem;
       color:#4b5563;
-    }
-    .project-meta{
-      margin-top:auto;
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      font-size:.78rem;
-      color:#6b7280;
     }
 
     .tools-note{
@@ -708,7 +740,12 @@
             <div class="timeline-dot" aria-hidden="true"></div>
             <div class="timeline-year">Jan 2025 – Present · Mumbai</div>
             <div class="timeline-title">Associate Senior Engineer – Transmission Planning</div>
-            <div class="timeline-meta">1898 &amp; Co. (Burns &amp; McDonnell India)</div>
+            <div class="company-meta-row">
+              <div class="timeline-meta">1898 &amp; Co. (Burns &amp; McDonnell India)</div>
+              <div class="company-logo-row">
+                <img src="logos/1898co.png" alt="1898 &amp; Co. logo" class="company-logo">
+              </div>
+            </div>
             <ul class="timeline-bullets">
               <li>Lead transmission planning studies for interconnection applications from preliminary screening through commissioning support.</li>
               <li>Drive study scope, methodology, and documentation for North American utility and developer clients.</li>
@@ -720,7 +757,12 @@
             <div class="timeline-dot" aria-hidden="true"></div>
             <div class="timeline-year">Aug 2022 – Dec 2024 · Mumbai</div>
             <div class="timeline-title">Engineer – Transmission Planning</div>
-            <div class="timeline-meta">1898 &amp; Co. (Burns &amp; McDonnell India)</div>
+            <div class="company-meta-row">
+              <div class="timeline-meta">1898 &amp; Co. (Burns &amp; McDonnell India)</div>
+              <div class="company-logo-row">
+                <img src="logos/1898co.png" alt="1898 &amp; Co. logo" class="company-logo">
+              </div>
+            </div>
             <ul class="timeline-bullets">
               <li>Performed steady-state power flow, reactive power compensation, cap bank switching, short-circuit, and RVC analysis in PSS®E.</li>
               <li>Built and maintained Python-driven PSS®E multi-run frameworks to accelerate contingency and scenario evaluations.</li>
@@ -732,14 +774,19 @@
           <div class="timeline-item">
             <div class="timeline-dot" aria-hidden="true"></div>
             <div class="timeline-year">Jan 2022 – Aug 2022 · Bengaluru</div>
-            <div class="timeline-title">Analyst Co-op – Power Systems Analytics</div>
-            <div class="timeline-meta">GE Appliances</div>
+            <div class="timeline-title">Analyst Co-op – GE Appliances</div>
+            <div class="company-meta-row">
+              <div class="timeline-meta">GE Appliances</div>
+              <div class="company-logo-row">
+                <img src="logos/ge-appliances.png" alt="GE Appliances logo" class="company-logo">
+              </div>
+            </div>
             <ul class="timeline-bullets">
               <li>Analyzed commercial grid-connected loads (laundromats, appliance-heavy retail) to improve reliability and energy efficiency.</li>
               <li>Developed load-switching and demand-response strategies aligned with utility signals.</li>
               <li>Worked directly with the Kentucky headquarters on analytics deliverables and control-logic requirements.</li>
-              <li>Supported IP development, contributing to ideation and patent documentation for load-management algorithms.</li>
-              <li>Worked with cross-functional teams on data-driven insights feeding into planning and operations decisions.</li>
+              <li>Contributed to ideation and patent documentation for load-management algorithms.</li>
+              <li>Supported cross-functional teams with data-driven insights influencing planning and operations decisions.</li>
             </ul>
           </div>
 
@@ -747,7 +794,13 @@
             <div class="timeline-dot" aria-hidden="true"></div>
             <div class="timeline-year">Mar 2021 – Dec 2021 · Kolkata</div>
             <div class="timeline-title">GET Engineer – Electrical</div>
-            <div class="timeline-meta">Haldia Petrochemicals</div>
+            <div class="company-meta-row">
+              <div class="timeline-meta">Haldia Petrochemicals</div>
+              <div class="company-logo-row">
+                <img src="logos/haldia1.png" alt="Haldia Petrochemicals logo 1" class="company-logo">
+                <img src="logos/haldia2.png" alt="Haldia Petrochemicals logo 2" class="company-logo">
+              </div>
+            </div>
             <ul class="timeline-bullets">
               <li>Gained hands-on experience with industrial power systems, including captive generation and process loads.</li>
               <li>Assisted with protection coordination checks, equipment loading reviews, and outage planning.</li>
@@ -758,7 +811,12 @@
             <div class="timeline-dot" aria-hidden="true"></div>
             <div class="timeline-year">Jan 2019 – Jul 2019 · Mumbai</div>
             <div class="timeline-title">Research Intern &amp; JRF – Electrical Engineering</div>
-            <div class="timeline-meta">IIT Bombay</div>
+            <div class="company-meta-row">
+              <div class="timeline-meta">IIT Bombay</div>
+              <div class="company-logo-row">
+                <img src="logos/iitb.png" alt="IIT Bombay logo" class="company-logo">
+              </div>
+            </div>
             <ul class="timeline-bullets">
               <li>Worked on IP-driven research and feedback-controlled magnetic levitation at IIT Bombay.</li>
               <li>Built early experience in modeling, control, and analytical thinking applied to electrical systems.</li>
@@ -805,10 +863,22 @@
       </p>
 
       <div class="project-grid">
+        <!-- FirstEnergy Load Interconnection Study -->
         <article class="project-card" style="position:relative;">
           <div class="project-label">Network-Level Interconnection</div>
           <h3>FirstEnergy Load Interconnection Study</h3>
-          <p class="project-meta"><strong>Transmission Planner – Planning &amp; Coordination Studies</strong></p>
+
+          <div class="project-meta-row">
+            <p class="project-meta">
+              <strong>Transmission Planner – Planning &amp; Coordination Studies</strong>
+            </p>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span style="font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
+                47+ sites · from 3&nbsp;MW to 1200&nbsp;MW · 69&nbsp;kV to 345&nbsp;kV datacenter / mining loads
+              </span>
+              <img src="logos/firstenergy.png" alt="FirstEnergy logo" class="project-logo">
+            </div>
+          </div>
 
           <details class="fe-toggle" style="margin-top:8px;">
             <summary class="collapsible-summary">
@@ -836,10 +906,22 @@
           </ul>
         </article>
 
+        <!-- FE Generation Interconnection – GenDeliv -->
         <article class="project-card">
           <div class="project-label">Generation Interconnection</div>
           <h3>FE Generation Interconnection – GenDeliv Analysis</h3>
-          <p class="project-meta"><strong>Transmission Planner – FE Generation Interconnection Support</strong></p>
+
+          <div class="project-meta-row">
+            <p class="project-meta">
+              <strong>Transmission Planner – FE Generation Interconnection Support</strong>
+            </p>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span style="font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
+                One-month support across PJM GenDeliv window
+              </span>
+              <img src="logos/firstenergy.png" alt="FirstEnergy logo" class="project-logo">
+            </div>
+          </div>
 
           <details class="fe-toggle" style="margin-top:8px;">
             <summary class="collapsible-summary">
@@ -865,15 +947,22 @@
           </ul>
         </article>
 
+        <!-- NextEra VAR & Fault Study Portfolio -->
         <article class="project-card" style="position:relative;">
           <div class="project-label">Programme Support · Reactive Studies</div>
           <h3>NextEra Energy Resources – VAR &amp; Fault Study Portfolio</h3>
-          <p class="project-meta">
-            <strong>Associate Senior Engineer – Portfolio Study Lead</strong>
-            <span style="float:right;font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;">
-              40+ sites · up to 1200&nbsp;MW @ 345&nbsp;kV
-            </span>
-          </p>
+
+          <div class="project-meta-row">
+            <p class="project-meta">
+              <strong>Associate Senior Engineer – Portfolio Study Lead</strong>
+            </p>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span style="font-size:.78rem;color:#e5e7eb;background:#0f172a;padding:3px 9px;border-radius:999px;white-space:nowrap;">
+                40+ sites · up to 1200&nbsp;MW and voltage levels up to 345&nbsp;kV
+              </span>
+              <img src="logos/nextera.png" alt="NextEra Energy Resources logo" class="project-logo">
+            </div>
+          </div>
 
           <details class="fe-toggle" style="margin-top:8px;">
             <summary class="collapsible-summary">
@@ -896,20 +985,36 @@
           </ul>
         </article>
 
+        <!-- PowerSouth -->
         <article class="project-card">
           <div class="project-label">Cooperative Utility Planning</div>
           <h3>PowerSouth Energy Cooperative</h3>
-          <p class="project-meta"><strong>Support Engineer – Fleet Management</strong></p>
+
+          <div class="project-meta-row">
+            <p class="project-meta">
+              <strong>Support Engineer – Fleet Management</strong>
+            </p>
+            <img src="logos/powersouth.png" alt="PowerSouth Energy Cooperative logo" class="project-logo">
+          </div>
+
           <p style="font-size:.9rem;color:#4b5563;">
             Supported fleet electrification planning, load impacts, and integration considerations for
             zero-emission transportation initiatives.
           </p>
         </article>
 
+        <!-- AES Clean Energy -->
         <article class="project-card">
           <div class="project-label">NYISO Interconnection</div>
           <h3>AES Clean Energy Development LLC</h3>
-          <p class="project-meta"><strong>Transmission Planner</strong></p>
+
+          <div class="project-meta-row">
+            <p class="project-meta">
+              <strong>Transmission Planner</strong>
+            </p>
+            <img src="logos/aes.png" alt="AES Clean Energy logo" class="project-logo">
+          </div>
+
           <p style="font-size:.9rem;color:#4b5563;">
             Modeled multiple renewable plants in PSS®E, supported interconnection application form
             completion, and provided dynamics study support, delivering a complete interconnection
@@ -917,16 +1022,25 @@
           </p>
         </article>
 
+        <!-- Invenergy -->
         <article class="project-card">
           <div class="project-label">Programme Support</div>
           <h3>Invenergy</h3>
-          <p class="project-meta"><strong>Transmission Planner</strong></p>
+
+          <div class="project-meta-row">
+            <p class="project-meta">
+              <strong>Transmission Planner</strong>
+            </p>
+            <img src="logos/invenergy.png" alt="Invenergy logo" class="project-logo">
+          </div>
+
           <p style="font-size:.9rem;color:#4b5563;">
             Provided conceptual-to-commissioning support for multiple project substations, including
             reactive power studies, short-circuit analysis, and mitigation recommendations for
             reinforcement and protection coordination.
           </p>
         </article>
+
       </div>
     </section>
 
@@ -1222,7 +1336,7 @@
             network.moveNode(id, p.x + dx, p.y);
           });
 
-          requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
         }
 
         requestAnimationFrame(animate);
