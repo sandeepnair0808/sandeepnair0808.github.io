@@ -348,45 +348,56 @@
       font-size:.9rem;
     }
 
-    /* Company and project logo alignment */
-    .company-meta-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:2px;
-    }
-    .company-logo-row{
-      display:flex;
-      align-items:center;
-      gap:6px;
-    }
-    .company-logo{
-      height:80px;
-      width:auto;
-      border-radius:4px;
-      object-fit:contain;
-    }
+/* Company and project logo alignment */
+.company-meta-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:2px;
+}
+.company-logo-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.company-logo{
+  height:80px;
+  width:auto;
+  border-radius:4px;
+  object-fit:contain;
+}
 
-    .project-meta-row{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .project-meta{
-      margin:0;
-      font-size:.86rem;
-      color:#6b7280;
-    }
-    .project-logo{
-      height:80px;
-      width:auto;
-      border-radius:4px;
-      object-fit:contain;
-    }
+.project-meta-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.project-meta{
+  margin:0;
+  font-size:.86rem;
+  color:#6b7280;
+}
+.project-logo{
+  height:80px;
+  width:auto;
+  border-radius:4px;
+  object-fit:contain;
+}
+
+/* Slightly shrink Burns logo everywhere */
+img[src*="Burns.jpg"] {
+  height:60px;   /* smaller than default */
+}
+/* Slightly shrink FirstEnergy logo everywhere */
+img[src*="First energy.jpg"] {
+  height:60px;   /* match Burns */
+}
+
+
 
     /* Project cards & grids */
     .project-grid{
@@ -1345,6 +1356,7 @@
   </script>
 </body>
 </html>
+
 
 
 
