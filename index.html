@@ -155,6 +155,8 @@
       top:0;
       z-index:100;
       box-shadow:0 2px 14px rgba(15,23,42,.06);
+      flex-wrap:wrap;
+      row-gap:6px;
     }
     nav a{
       font-weight:600;
@@ -469,7 +471,7 @@
     }
     .tool-card{
       background:var(--card);
-      border-radius:var(---radius);
+      border-radius:var(--radius);
       padding:13px 14px 14px;
       border:1px solid rgba(209,213,219,.9);
       box-shadow:var(--shadow-soft);
@@ -598,60 +600,37 @@
       position:fixed;
       inset:0;
       pointer-events:none;
-      z-index:1001; /* ABOVE mascot and everything else */
+      z-index:1001; /* above mascot and content */
     }
-
     .laser-beam{
       position:fixed;
       height:2px;
       background:linear-gradient(90deg,#0ea5e9,#38bdf8,#0ea5e9);
-      box-shadow:0 0 10px rgba(56,189,248,.95);
+      box-shadow:0 0 6px rgba(56,189,248,.7);
       opacity:0;
       transform-origin:0 50%;
       transform:rotate(0deg);
       transition:opacity .2s ease-out;
     }
-    .laser-beam.active{
+    .laser-beam.active,
+    .laser-beam.shot{
       opacity:1;
-      animation:laserPulse .6s ease-in-out infinite;
+      animation:laserPulse 0.9s ease-in-out infinite;
     }
-    .laser-beam{
-    position:fixed;
-    height:2px;
-    background:linear-gradient(90deg,#0ea5e9,#38bdf8,#0ea5e9);
-    box-shadow:0 0 6px rgba(56,189,248,.7);
-    opacity:0;
-    transform-origin:0 50%;
-    transform:rotate(0deg);
-    transition:opacity .2s ease-out;
-    }
-
-    /* When lasers are ON */
-    .laser-beam.active{
-      opacity:1;
-      animation:laserPulse .6s ease-in-out infinite;
-    }
-
-    @keyframes laserPulse{
-      0%  { box-shadow:0 0 6px rgba(56,189,248,.7); }
-      50% { box-shadow:0 0 18px rgba(56,189,248,1); }
-      100%{ box-shadow:0 0 6px rgba(56,189,248,.7); }
-    }
-    
     @keyframes laserPulse{
       0%{
         box-shadow:0 0 6px rgba(56,189,248,.7);
         height:2px;
-       }
-    50%{
-        box-shadow:0 0 18px rgba(56,189,248,1);
-        height:3px;   /* slightly thicker at peak */
-       }
-  100%{
-       box-shadow:0 0 6px rgba(56,189,248,.7);
-       height:2px;
       }
-  }
+      50%{
+        box-shadow:0 0 18px rgba(56,189,248,1);
+        height:3px;
+      }
+      100%{
+        box-shadow:0 0 6px rgba(56,189,248,.7);
+        height:2px;
+      }
+    }
 
     @media (max-width:900px){
       .layout{
@@ -662,10 +641,6 @@
       }
       #mascot-wrapper{display:none}
       #laser-layer{display:none}
-      nav{
-        flex-wrap:wrap;
-        row-gap:6px;
-      }
     }
 
     @media (prefers-reduced-motion:reduce){
@@ -741,9 +716,9 @@
             repeatable, automated pipelines that engineers trust and decision-makers can act on.
           </p>
           <p>
-            I also bring experience with dynamic stability(flat & bump test), grid code
+            I also bring experience with transient stability, harmonic and relay coordination studies, grid code
             compliance, and load forecasting. Day to day, that means PSS®E and ASPEN at the core, supported by
-            ETAP, QGIS (similar to ArcGIS), AutoCAD, and Python tooling that ties everything together.
+            ETAP, ArcGIS, AutoCAD, and Python tooling that ties everything together.
           </p>
         </div>
 
@@ -771,7 +746,7 @@
           <h2 id="team-view-heading" style="font-size:1.1rem;margin:8px 0 6px;">
             Team Support &amp; Hierarchy View
           </h2>
-          <details class="fe-toggle">
+          <details class="fe-toggle" id="dt-team">
             <summary class="collapsible-summary">
               <span class="collapsible-icon">▸</span>
               <span>View animated team structure and support relationships</span>
@@ -974,7 +949,7 @@
             </div>
           </div>
 
-          <details class="fe-toggle" style="margin-top:8px;">
+          <details class="fe-toggle" id="dt-fe-load">
             <summary class="collapsible-summary">
               <span class="collapsible-icon">▸</span>
               <span>Detailed Workflow (Folder Creation → Analysis → Report)</span>
@@ -1017,7 +992,7 @@
             </div>
           </div>
 
-          <details class="fe-toggle" style="margin-top:8px;">
+          <details class="fe-toggle" id="dt-gd">
             <summary class="collapsible-summary">
               <span class="collapsible-icon">▸</span>
               <span>GenDeliv Workflow (Case Build → Analysis → Results)</span>
@@ -1035,7 +1010,7 @@
 
           <ul style="margin:12px 0 0 18px;font-size:.9rem;color:#4b5563;">
             <li>Performed FE Generation Interconnection GenDeliv assessments using PJM RTEP cases and FE-approved TARA workflows.</li>
-            <li>Built generation additions in PSSE (Area, Pmax/Qmax, CIR) and verified electrical correctness in TARA Studio.</li>
+            <li>Built generation additions in PSS®E (Area, Pmax/Qmax, CIR) and verified electrical correctness in TARA Studio.</li>
             <li>Executed full GenDeliv runs (Base + Post), processed flowgate results, and identified valid system overloads.</li>
             <li>Prepared FE-formatted deliverables including GD Data, active/all flowgate outputs, and pivot-based violation summaries.</li>
           </ul>
@@ -1058,7 +1033,7 @@
             </div>
           </div>
 
-          <details class="fe-toggle" style="margin-top:8px;">
+          <details class="fe-toggle" id="dt-nextera">
             <summary class="collapsible-summary">
               <span class="collapsible-icon">▸</span>
               <span>Workflow (Conceptual → 30% → IFC VAR &amp; Fault Studies)</span>
@@ -1221,13 +1196,13 @@
 
   <a href="mailto:sandeep.nair@1898andco.com" class="floating-contact" aria-label="Email Sandeep Nair">✉️ Contact</a>
 
-  <!-- Laser overlay (eyes -> tool cards) -->
+  <!-- Laser overlay (eyes -> elements) -->
   <div id="laser-layer" aria-hidden="true">
     <div class="laser-beam" id="laser-left"></div>
     <div class="laser-beam" id="laser-right"></div>
   </div>
 
-  <!-- Mascot (no speech bubble) -->
+  <!-- Mascot -->
   <div id="mascot-wrapper" aria-hidden="true">
     <img id="mascot" src="/engineer-mascot.png" alt="" loading="lazy" decoding="async">
     <div class="eye left-eye"></div>
@@ -1251,8 +1226,8 @@
           eyes.forEach(eye => {
             const rect = eye.getBoundingClientRect();
             const eyeX = rect.left + rect.width / 2;
-            const eyeY = rect.top + rect.height / 2;
-            const angle = Math.atan2(mouseY - eyeY, mouseX - eyeX);
+            const eyeY = rect.top  + rect.height / 2;
+            const angle = Math.atan2(mouseY - eyeY, mouseX - eyeY);
             const offset = 4;
             eye.style.transform =
               'translate(' + (Math.cos(angle)*offset) + 'px,' +
@@ -1413,78 +1388,140 @@
       });
     });
 
-    // -------- Eye Lasers -> two tool cards --------
+    // -------- Shared laser helpers --------
     (function(){
       const leftEye  = document.querySelector('.eye.left-eye');
       const rightEye = document.querySelector('.eye.right-eye');
       const laserLeft  = document.getElementById('laser-left');
       const laserRight = document.getElementById('laser-right');
-      const cardExp  = document.getElementById('card-experimental');
-      const cardTara = document.getElementById('card-tara');
-      const btnExp   = cardExp  ? cardExp.querySelector('.go')  : null;
-      const btnTara  = cardTara ? cardTara.querySelector('.go') : null;
 
-      if (!leftEye || !rightEye || !laserLeft || !laserRight || !btnExp || !btnTara) {
-        return;
-      }
+      if (!leftEye || !rightEye || !laserLeft || !laserRight) return;
+
+      let isShootingDetails = false;
+      let toolsLasersOn = false;
 
       function positionBeam(beam, fromEl, toEl){
         const fromRect = fromEl.getBoundingClientRect();
         const toRect   = toEl.getBoundingClientRect();
 
-        const fromX = fromRect.left + fromRect.width / 2;
-        const fromY = fromRect.top  + fromRect.height / 2;
-        const toX   = toRect.left   + toRect.width / 2;
-        const toY   = toRect.top    + toRect.height / 2;
+        const eyeX = fromRect.left + fromRect.width / 2;
+        const eyeY = fromRect.top  + fromRect.height / 2;
 
-        const dx = toX - fromX;
-        const dy = toY - fromY;
-        const dist  = Math.sqrt(dx*dx + dy*dy);
+        const toX = toRect.left + toRect.width / 2;
+        const toY = toRect.top  + toRect.height / 2;
+
+        const dx = toX - eyeX;
+        const dy = toY - eyeY;
+        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
         const angle = Math.atan2(dy, dx) * 180 / Math.PI;
 
+        const offset = 4;
+        const startX = eyeX + (dx / dist) * offset;
+        const startY = eyeY + (dy / dist) * offset;
+
         beam.style.width = dist + 'px';
-        beam.style.left  = fromX + 'px';
-        beam.style.top   = fromY + 'px';
+        beam.style.left  = startX + 'px';
+        beam.style.top   = startY + 'px';
         beam.style.transform = 'rotate(' + angle + 'deg)';
       }
 
-      let lasersActive = false;
-      function updateLasers(){
-        if (!lasersActive) return;
-        positionBeam(laserLeft,  leftEye,  btnExp);
-        positionBeam(laserRight, rightEye, btnTara);
-      }
+      // ---------- A. Lasers -> details.fe-toggle (open when visible) ----------
+      (function setupDetailsLasers(){
+        const detailsList = Array.from(document.querySelectorAll('details.fe-toggle'));
+        if (!detailsList.length) return;
 
-      const observer = new IntersectionObserver((entries)=>{
-        let visible = 0;
-        entries.forEach(e => { if (e.isIntersecting) visible++; });
+        function shootAtDetails(detailsEl){
+          const summary = detailsEl.querySelector('summary');
+          if (!summary) return;
 
-        const atBottom =
-          (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 40);
+          isShootingDetails = true;
 
-        const shouldTurnOn = (visible === 2) && atBottom;
+          positionBeam(laserLeft,  leftEye,  summary);
+          positionBeam(laserRight, rightEye, summary);
 
-        lasersActive = shouldTurnOn;
-        [laserLeft, laserRight].forEach(b => {
-          b.classList.toggle('active', shouldTurnOn);
+          laserLeft.classList.add('shot');
+          laserRight.classList.add('shot');
+
+          setTimeout(() => {
+            detailsEl.open = true;
+            laserLeft.classList.remove('shot');
+            laserRight.classList.remove('shot');
+            isShootingDetails = false;
+          }, 900);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const d = entry.target;
+            const summary = d.querySelector('summary');
+            if (!summary) return;
+
+            if (entry.isIntersecting){
+              if (!d.dataset.laserOpened){
+                d.dataset.laserOpened = 'true';
+                shootAtDetails(d);
+              }
+            } else {
+              d.open = false;
+              delete d.dataset.laserOpened;
+            }
+          });
+        }, {
+          threshold: 0.7
         });
 
-        if (shouldTurnOn) {
-          updateLasers();
+        detailsList.forEach(d => observer.observe(d));
+      })();
+
+      // ---------- B. Lasers -> bottom Open buttons (Experimental + TARA) ----------
+      (function setupToolLasers(){
+        const cardExp  = document.getElementById('card-experimental');
+        const cardTara = document.getElementById('card-tara');
+        if (!cardExp || !cardTara) return;
+
+        const btnExp  = cardExp.querySelector('.go');
+        const btnTara = cardTara.querySelector('.go');
+        if (!btnExp || !btnTara) return;
+
+        function updateToolsLasers(){
+          if (!toolsLasersOn) return;
+          positionBeam(laserLeft,  leftEye,  btnExp);
+          positionBeam(laserRight, rightEye, btnTara);
         }
-      }, { threshold: 0.6 });
 
-      observer.observe(cardExp);
-      observer.observe(cardTara);
+        const observer = new IntersectionObserver((entries) => {
+          let visible = 0;
+          entries.forEach(e => { if (e.isIntersecting) visible++; });
 
-      window.addEventListener('scroll',  () => { if (lasersActive) updateLasers(); }, { passive:true });
-      window.addEventListener('resize', () => { if (lasersActive) updateLasers(); });
+          const atBottom =
+            (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 40);
+
+          const shouldTurnOn = (visible === 2) && atBottom && !isShootingDetails;
+
+          toolsLasersOn = shouldTurnOn;
+          [laserLeft, laserRight].forEach(b => {
+            b.classList.toggle('active', shouldTurnOn);
+          });
+
+          if (shouldTurnOn) {
+            updateToolsLasers();
+          }
+        }, {
+          threshold: 0.6
+        });
+
+        observer.observe(cardExp);
+        observer.observe(cardTara);
+
+        window.addEventListener('scroll', () => {
+          if (toolsLasersOn && !isShootingDetails) updateToolsLasers();
+        }, { passive:true });
+
+        window.addEventListener('resize', () => {
+          if (toolsLasersOn && !isShootingDetails) updateToolsLasers();
+        });
+      })();
     })();
   </script>
 </body>
 </html>
-
-
-
-
-
