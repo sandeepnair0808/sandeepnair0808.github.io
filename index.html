@@ -1494,26 +1494,36 @@ function shootAtDetails(detailsEl){
   }, SETTLE_MS);
 }
 
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const d = entry.target;
+    const summary = d.querySelector('summary');
+    if (!summary) return;
 
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            const d = entry.target;
-            const summary = d.querySelector('summary');
-            if (!summary) return;
+    if (entry.isIntersecting){
+      // FIRST time it really comes into view: shoot + open
+      if (!d.dataset.laserOpened){
+        d.dataset.laserOpened = 'true';
+        shootAtDetails(d);
+      }
+    } else {
+      // Only close if it's WELL out of view (not just at the edge)
+      const rect = d.getBoundingClientRect();
+      const buffer = 140; // px outside viewport before we auto-close
 
-            if (entry.isIntersecting){
-              if (!d.dataset.laserOpened){
-                d.dataset.laserOpened = 'true';
-                shootAtDetails(d);
-              }
-            } else {
-              d.open = false;
-              delete d.dataset.laserOpened;
-            }
-          });
-        }, {
-          threshold: 0.7
-        });
+      const farAbove = rect.bottom < -buffer;
+      const farBelow = rect.top    > window.innerHeight + buffer;
+
+      if (farAbove || farBelow){
+        d.open = false;
+        delete d.dataset.laserOpened; // so next time we scroll back, it will shoot again
+      }
+    }
+  });
+}, {
+  threshold: 0.55   // a bit more forgiving than 0.7
+});
+
 
         detailsList.forEach(d => observer.observe(d));
       })();
@@ -1570,6 +1580,7 @@ function shootAtDetails(detailsEl){
   </script>
 </body>
 </html>
+
 
 
 
