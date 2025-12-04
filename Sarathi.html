@@ -454,6 +454,7 @@
     <div class="logo-wrap">
       <div class="logo-mark">TP</div>
       <div class="app-title">
+	    <h1>Sarathi</h1>
         <h1>Transmission Planner Vault</h1>
         <span>Top 0.1% Power System Studies Q-Bank</span>
       </div>
@@ -536,7 +537,7 @@
     { id: "gi", name: "GI & System Planning", subtitle: "GI workflow, ISO criteria, outages, upgrades, harmonics.", meta: "ISO GI • POI • Upgrades" },
     { id: "lf", name: "Load Flow & Voltage Stability", subtitle: "LF methods, bus types, voltage/Q, contingencies.", meta: "LF • V–Q • PF Models" },
     { id: "psse", name: "PSS®E Studies", subtitle: "RAW prep, ACCC, PV/QV, Q-limits, automation.", meta: "PSS®E • GI Cases" },
-    { id: "pslf", name: "PSLF Dynamics", subtitle: "RMS stability, Epcl, composite models, events.", meta: "PSLF • Stability" },
+    { id: "pslf", name: "PSLF Studies", subtitle: "Epcl, composite models, events.", meta: "PSLF • Stability" },
     { id: "aspen", name: "ASPEN & Protection", subtitle: "SC calcs, breaker duty, grounding, imports.", meta: "ASPEN • SC • Relays" },
     { id: "cross", name: "Cross-Tool Consistency", subtitle: "Aligning PSS®E, PSLF, ASPEN, PSCAD.", meta: "Tool Interop" },
     { id: "advanced", name: "Advanced Troubleshooting", subtitle: "Edge cases, nonlinear behavior, conflicts.", meta: "Top 0.1% Thinking" }
@@ -1035,220 +1036,417 @@
       q: "How do you document PSS®E study steps so another engineer can replicate them?",
       hint: "Numbered procedure, scripts, case versions, contingency and monitored element lists in appendix." },
 
-        /* =========================
-       SECTION: PSLF  (Planning / Outage / Contingency)
-       ========================= */
-    {
-      id: "pslf-1",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "From a planning perspective, how do you typically use PSLF compared to PSS®E?",
-      hint: "PSLF often used where utility/ISO standard is PSLF; similar steady-state functions but different workflows, reports, and scripting."
+
+  /* =========================
+     SECTION: PSLF  (Planning / Outage / Contingency)
+     ========================= */
+
+
+    { id: "pslf-1", sectionId: "pslf", difficulty: "foundation",
+      q: "What is PSLF primarily used for in a planning context compared to operations tools?",
+      hint: "Steady-state planning studies, outage and path analysis, long-term scenarios rather than real-time control."
     },
-    {
-      id: "pslf-2",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "Walk through your workflow to prepare a PSLF base case for a transmission planning or outage study.",
-      hint: "Start from ISO/TO case, clean topology, update outages, adjust area interchanges, validate flows and voltages, and save study variants."
+    { id: "pslf-2", sectionId: "pslf", difficulty: "foundation",
+      q: "Which basic PSLF views or reports do you use first to understand a case?",
+      hint: "Bus voltage lists, line/transformer loading reports, area summaries, and interface flows."
     },
-    {
-      id: "pslf-3",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you set up and execute N-1 contingency analysis in PSLF for a planning study?",
-      hint: "Build contingency list, define monitored elements, set solution options, run batch analysis, and review loading and voltage violations."
+    { id: "pslf-3", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you open a PSLF case and confirm it has solved successfully?",
+      hint: "Load the case, run power flow if needed, and verify mismatch levels and convergence messages."
     },
-    {
-      id: "pslf-4",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "What’s your approach in PSLF to evaluate N-1-1 or multi-stage outage scenarios?",
-      hint: "Simulate first outage and post-contingency adjustments, save as new case, then apply second outage and repeat contingency checks."
+    { id: "pslf-4", sectionId: "pslf", difficulty: "foundation",
+      q: "What information do bus and branch records in PSLF typically contain for planning studies?",
+      hint: "Bus kV, type, area/zone; branch impedance, ratings, status, and ownership."
     },
-    {
-      id: "pslf-5",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you interpret PSLF contingency analysis results when screening violations across a large network?",
-      hint: "Look at worst overloads, low voltages, critical corridors, and recurring problem elements across multiple contingencies."
+    { id: "pslf-5", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you identify the slack or reference bus in a PSLF planning case?",
+      hint: "Review area or system slack assignments and check which generator balances mismatch."
     },
-    {
-      id: "pslf-6",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you model planned outages (lines, transformers, breakers) in PSLF for outage coordination or construction planning studies?",
-      hint: "Open or disable relevant elements, adjust system configuration to reflect switching plans, then rerun contingencies and flows."
+    { id: "pslf-6", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you check thermal loading of lines and transformers in PSLF?",
+      hint: "Use line/transformer loading reports and compare percent loading to normal and emergency ratings."
     },
-    {
-      id: "pslf-7",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you evaluate transfer capability or path ratings using PSLF?",
-      hint: "Define source/sink areas or buses, ramp transfers, monitor limiting elements and voltages under N-0 and N-1 conditions."
+    { id: "pslf-7", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you view bus voltages and spot potential low- or high-voltage areas in PSLF?",
+      hint: "Sort bus voltage reports by magnitude and flag buses outside planning criteria."
     },
-    {
-      id: "pslf-8",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "What’s your process for checking area interchange and tie-line flows in PSLF?",
-      hint: "Use area summary reports, compare scheduled vs actual interchange, and review key interface flows and losses."
+    { id: "pslf-8", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you save multiple scenario variants of the same network in PSLF?",
+      hint: "Use separate case files or save-as copies with clear naming conventions for each scenario."
     },
-    {
-      id: "pslf-9",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you use PSLF to assess the impact of taking a major EHV line out of service for maintenance?",
-      hint: "Modify topology, run contingencies, examine shift in flows to parallel paths and resulting thermal or voltage issues."
+    { id: "pslf-9", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you represent an outaged transmission line in PSLF?",
+      hint: "Change its status to open or out-of-service and re-run power flow."
     },
-    {
-      id: "pslf-10",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you represent remedial action schemes (RAS) or special protection actions in steady-state studies in PSLF?",
-      hint: "Model post-contingency actions as additional switching or generation/load changes triggered under specific conditions."
+    { id: "pslf-10", sectionId: "pslf", difficulty: "foundation",
+      q: "What does a bus power mismatch indicate in a PSLF planning case?",
+      hint: "Imbalance between modeled injections and withdrawals; could mean bad data or missing elements."
     },
-    {
-      id: "pslf-11",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you identify the most critical elements in a region using PSLF contingency results?",
-      hint: "Look for elements frequently overloaded or binding in multiple contingencies; rank by severity and frequency."
+    { id: "pslf-11", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you adjust total system load up or down for a different planning level in PSLF?",
+      hint: "Scale loads by area/zone/global factors while maintaining realistic patterns."
     },
-    {
-      id: "pslf-12",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you check for islanding conditions in PSLF during planned outages or contingencies?",
-      hint: "Use network connectivity checks, watch for buses with unsolved voltages or mismatches, and ensure each island has adequate sources."
+    { id: "pslf-12", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you check area interchange and confirm it matches scheduled targets?",
+      hint: "Use area summary and interface/area reports comparing scheduled vs actual interchange."
     },
-    {
-      id: "pslf-13",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you perform scenario studies in PSLF for different load levels or renewable output conditions?",
-      hint: "Create separate cases with adjusted loads and generation patterns, maintain consistent assumptions, and run the same contingency sets."
+    { id: "pslf-13", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you see which generators are online and their outputs in PSLF?",
+      hint: "Generator or machine lists showing P, Q, status, limits, and voltage setpoints."
     },
-    {
-      id: "pslf-14",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "What is your process in PSLF to test different network reinforcement options to relieve a particular overload?",
-      hint: "Create case variants with candidate upgrades (reconductoring, new lines, shunts), rerun contingencies, and compare relief and robustness."
+    { id: "pslf-14", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you identify radial lines or single-fed pockets in PSLF?",
+      hint: "Trace connectivity, look for buses with only one in-service path or small islands."
     },
-    {
-      id: "pslf-15",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you use PSLF to evaluate voltage performance under contingencies, not just thermal loading?",
-      hint: "Monitor low/high voltage buses, voltage step changes, and reactive limits on generators or shunt devices for key contingencies."
+    { id: "pslf-15", sectionId: "pslf", difficulty: "foundation",
+      q: "What is the basic purpose of contingency analysis in PSLF?",
+      hint: "Test N-1/N-1-1 outages to see if voltages and loadings remain within criteria."
     },
-    {
-      id: "pslf-16",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you incorporate generator dispatch assumptions into PSLF planning cases for outage and contingency analysis?",
-      hint: "Align with planning assumptions or ISO guidance; ensure realistic dispatch patterns for peak, shoulder, or light load scenarios."
+    { id: "pslf-16", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you enter or modify a contingency (e.g., line trip) in PSLF?",
+      hint: "Use contingency editor to define element outages and associated switching actions."
     },
-    {
-      id: "pslf-17",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you model renewable generation in PSLF planning cases for outage and path rating studies?",
-      hint: "Use appropriate P outputs for scenarios, possibly curtailment levels, and ensure collector/GSU/POI modeling matches planning cases."
+    { id: "pslf-17", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you run a single contingency and inspect post-contingency results in PSLF?",
+      hint: "Apply the contingency, solve, and examine bus voltages and equipment loadings."
     },
-    {
-      id: "pslf-18",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you handle phase-shifting transformers or adjustable taps in PSLF when evaluating flows and contingencies?",
-      hint: "Set realistic tap and phase-shift positions, test alternative settings if needed, and observe impact on interface flows and limits."
+    { id: "pslf-18", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you export PSLF results into files that can be read by Excel?",
+      hint: "Write text or CSV output reports and post-process in Excel or scripts."
     },
-    {
-      id: "pslf-19",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you use PSLF to coordinate with operations/outage planning teams on whether a proposed outage is acceptable?",
-      hint: "Show contingency results with/without outage, highlight risks or needed constraints, and recommend operating limits or redispatch."
+    { id: "pslf-19", sectionId: "pslf", difficulty: "foundation",
+      q: "How do you check transformer tap positions across the system in PSLF?",
+      hint: "Use transformer lists or specialized reports showing present tap and range."
     },
-    {
-      id: "pslf-20",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "What are typical data quality checks you perform on a PSLF planning case before trusting contingency results?",
-      hint: "Check bus voltages, interface flows, area balances, unrealistic taps or shunts, and convergence robustness."
-    },
-    {
-      id: "pslf-21",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you approximate PTDF- or LODF-like insights using PSLF planning tools or reports?",
-      hint: "Use sensitivity or transfer analysis functions, or compare pre/post contingency flows under small changes in injections."
-    },
-    {
-      id: "pslf-22",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you manage large contingency lists in PSLF without being overwhelmed by outputs?",
-      hint: "Use violation filters, severity indices, sorted reports, and focus on top-ranked contingencies by loading or voltage criteria."
-    },
-    {
-      id: "pslf-23",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you use Epcl or other PSLF automation tools for batch contingency or outage studies?",
-      hint: "Script case loading, contingency execution, and result extraction into CSV/tables for systematic review."
-    },
-    {
-      id: "pslf-24",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "Describe how you would use PSLF to evaluate the impact of a new GI project on existing path ratings.",
-      hint: "Compare transfer studies with and without the project, identify new limiting elements or worsened contingencies."
-    },
-    {
-      id: "pslf-25",
-      sectionId: "pslf",
-      difficulty: "core",
-      q: "How do you handle multiple simultaneous outages (e.g., line plus transformer) in PSLF for planning stress tests?",
-      hint: "Create combined contingencies or sequential outage cases, and check if such outages are credible per criteria."
-    },
-    {
-      id: "pslf-26",
-      sectionId: "pslf",
-      difficulty: "expert",
-      q: "How do you construct and interpret nomograms or operating guides from PSLF transfer and contingency results?",
-      hint: "Run multiple transfer levels and system conditions, plot safe operating regions, and show where criteria are violated."
-    },
-    {
-      id: "pslf-27",
-      sectionId: "pslf",
-      difficulty: "expert",
-      q: "How would you design a PSLF study to justify temporary operating procedures instead of immediate capital upgrades?",
-      hint: "Show violations only under certain conditions, evaluate sensitivity to redispatch/limitations, and frame procedures as risk controls."
-    },
-    {
-      id: "pslf-28",
-      sectionId: "pslf",
-      difficulty: "expert",
-      q: "How do you reconcile differences in interface limits obtained in PSLF vs another planning tool like PSS®E?",
-      hint: "Align assumptions, compare limiting contingencies, check load models and control settings, and choose conservative or consensus limits."
-    },
-    {
-      id: "pslf-29",
-      sectionId: "pslf",
-      difficulty: "expert",
-      q: "Describe how you would use PSLF to screen and prioritize network upgrades in a congested region.",
-      hint: "Run baseline contingency analysis, test candidate reinforcement options, compare violation relief and robustness vs cost or complexity."
-    },
-    {
-      id: "pslf-30",
-      sectionId: "pslf",
-      difficulty: "expert",
-      q: "How do you document PSLF outage and contingency studies so another planner or outage coordinator can rely on your results later?",
-      hint: "Include case versions, assumptions, contingency lists, violation tables, rationale for conclusions, and any recommended operating limits."
+    { id: "pslf-20", sectionId: "pslf", difficulty: "foundation",
+      q: "Why is it important to use consistent naming and IDs for buses and branches in PSLF?",
+      hint: "Enables cross-tool matching, easier debugging, and reliable case comparisons."
     },
 
+    { id: "pslf-21", sectionId: "pslf", difficulty: "core",
+      q: "Walk through your workflow to prepare a PSLF base case for a regional planning study.",
+      hint: "Start from latest ISO/TO case, clean topology, update outages and projects, validate flows and voltages."
+    },
+    { id: "pslf-22", sectionId: "pslf", difficulty: "core",
+      q: "How do you organize PSLF case files when you have multiple years, seasons, and scenarios?",
+      hint: "Use folder hierarchy by year/season and clear case naming for base, stressed, and with-project variants."
+    },
+    { id: "pslf-23", sectionId: "pslf", difficulty: "core",
+      q: "How do you set up a full N-1 contingency list in PSLF for a large planning footprint?",
+      hint: "Include all credible single line, transformer, and generator outages per criteria; exclude non-credible ones."
+    },
+    { id: "pslf-24", sectionId: "pslf", difficulty: "core",
+      q: "How do you define and use monitored elements during PSLF contingency runs?",
+      hint: "Specify key lines, transformers, buses, and interfaces whose violations you track under contingencies."
+    },
+    { id: "pslf-25", sectionId: "pslf", difficulty: "core",
+      q: "What solution options or tolerances in PSLF do you typically adjust for large contingency runs?",
+      hint: "Iteration limits, mismatch tolerances, solution method variants for improved robustness."
+    },
+    { id: "pslf-26", sectionId: "pslf", difficulty: "core",
+      q: "How do you interpret and prioritize violations from a large PSLF contingency analysis?",
+      hint: "Rank by severity, frequency, and criticality of elements; focus on recurring or severe overloads/low voltages."
+    },
+    { id: "pslf-27", sectionId: "pslf", difficulty: "core",
+      q: "How do you identify which contingencies most limit a given interface or path?",
+      hint: "Filter contingency results by monitored interface and see which outages drive worst violations."
+    },
+    { id: "pslf-28", sectionId: "pslf", difficulty: "core",
+      q: "How do you handle non-convergent contingencies in PSLF?",
+      hint: "Investigate data issues, stressed conditions, modify solution options, or flag as potential voltage collapse indicators."
+    },
+    { id: "pslf-29", sectionId: "pslf", difficulty: "core",
+      q: "How do you set up N-1-1 (sequential) contingency analysis using PSLF?",
+      hint: "Simulate first outage and corrective actions, save post-first contingency case, then apply and analyze second outage."
+    },
+    { id: "pslf-30", sectionId: "pslf", difficulty: "core",
+      q: "How do you represent planned outages for construction in PSLF and evaluate their risk?",
+      hint: "Take elements out of service, run N-1 with outage in place, and check if remaining system meets criteria."
+    },
+    { id: "pslf-31", sectionId: "pslf", difficulty: "core",
+      q: "How do you evaluate the impact of a major line outage on parallel corridors in PSLF?",
+      hint: "Observe flow redistribution on neighboring lines under the contingency and check loadings vs ratings."
+    },
+    { id: "pslf-32", sectionId: "pslf", difficulty: "core",
+      q: "How do you adjust generator dispatch assumptions in PSLF to reflect planning scenarios?",
+      hint: "Modify generator outputs and commitment patterns to represent peak, light, or renewable-heavy conditions."
+    },
+    { id: "pslf-33", sectionId: "pslf", difficulty: "core",
+      q: "How do you create and compare cases with alternative network upgrades in PSLF?",
+      hint: "Clone base case, add reinforcement options separately, and rerun contingencies to compare violation relief."
+    },
+    { id: "pslf-34", sectionId: "pslf", difficulty: "core",
+      q: "How do you model shunt capacitor additions in PSLF and evaluate their benefit?",
+      hint: "Add shunt devices at candidate buses, solve, and check voltage improvements and reactive margins."
+    },
+    { id: "pslf-35", sectionId: "pslf", difficulty: "core",
+      q: "How do you determine whether a proposed outage is acceptable given existing RAS or remedial actions?",
+      hint: "Include RAS logic as switching or redispatch actions in contingencies and confirm criteria are met."
+    },
+    { id: "pslf-36", sectionId: "pslf", difficulty: "core",
+      q: "How do you verify path ratings or interface limits using PSLF transfer studies?",
+      hint: "Increment transfers from source to sink, run contingencies at each step, and find first limit violation."
+    },
+    { id: "pslf-37", sectionId: "pslf", difficulty: "core",
+      q: "How do you coordinate PSLF outage planning studies with real-time operations groups?",
+      hint: "Share study assumptions, show contingency violations, propose temporary limits or redispatch guidance."
+    },
+    { id: "pslf-38", sectionId: "pslf", difficulty: "core",
+      q: "How do you incorporate renewable output variability into PSLF planning cases?",
+      hint: "Create multiple scenarios with different renewable dispatch levels and evaluate contingency performance."
+    },
+    { id: "pslf-39", sectionId: "pslf", difficulty: "core",
+      q: "How do you interpret voltage performance across an area under multiple contingencies in PSLF?",
+      hint: "Look for patterns of low voltage at particular buses, check Q-limits, and see if shunt or topology changes help."
+    },
+    { id: "pslf-40", sectionId: "pslf", difficulty: "core",
+      q: "How do you check which generators are hitting reactive limits in PSLF planning cases?",
+      hint: "Use generator reports or Q-limit flags to see which units are at Qmax/Qmin and losing voltage control."
+    },
+    { id: "pslf-41", sectionId: "pslf", difficulty: "core",
+      q: "How do you use PSLF to screen multiple candidate upgrades and rank them?",
+      hint: "Run contingency analyses for each candidate configuration and compare number and severity of remaining violations."
+    },
+    { id: "pslf-42", sectionId: "pslf", difficulty: "core",
+      q: "How do you examine the effect of transformer tap changes on corridor flows and voltages in PSLF?",
+      hint: "Adjust taps within realistic bounds, re-solve, and inspect upstream/downstream voltage and loading changes."
+    },
+    { id: "pslf-43", sectionId: "pslf", difficulty: "core",
+      q: "How do you represent phase-shifting transformers and their control in PSLF path studies?",
+      hint: "Model phase shifters with appropriate angles or controls, then test how adjustments relieve or shift flows."
+    },
+    { id: "pslf-44", sectionId: "pslf", difficulty: "core",
+      q: "How do you identify hidden radial pockets that might lose supply under an outage?",
+      hint: "Trace network connectivity in PSLF, apply relevant contingencies, and see where buses become de-energized."
+    },
+    { id: "pslf-45", sectionId: "pslf", difficulty: "core",
+      q: "How do you test the combined impact of GI projects and outages in PSLF?",
+      hint: "Add GI models, rerun N-1/N-1-1 contingencies, and compare violations vs base case without projects."
+    },
+    { id: "pslf-46", sectionId: "pslf", difficulty: "core",
+      q: "How do you use PSLF to evaluate the need for temporary operating procedures during construction outages?",
+      hint: "Identify violations during outage, then test redispatch, switching, or limits as interim mitigations."
+    },
+    { id: "pslf-47", sectionId: "pslf", difficulty: "core",
+      q: "How do you handle seasonal differences (summer vs winter) in PSLF contingency studies?",
+      hint: "Use distinct seasonal load and generation patterns, then run identical contingency sets for both cases."
+    },
+    { id: "pslf-48", sectionId: "pslf", difficulty: "core",
+      q: "How do you ensure that multiple PSLF users remain consistent when editing the same project case?",
+      hint: "Implement version control, change logs, and designated ‘owner’ for the official planning case."
+    },
+    { id: "pslf-49", sectionId: "pslf", difficulty: "core",
+      q: "How do you interpret repeated overload of the same line under many different contingencies in PSLF?",
+      hint: "Treat it as a structural bottleneck; candidate for upgrade, reroute, or operational constraints."
+    },
+    { id: "pslf-50", sectionId: "pslf", difficulty: "core",
+      q: "How do you document PSLF planning results so operations can easily translate them into outage conditions?",
+      hint: "Clear tables of limiting contingencies, affected elements, margins, and recommended limits or conditions."
+    },
+
+    { id: "pslf-51", sectionId: "pslf", difficulty: "core",
+      q: "How do you use scripting (e.g., Epcl or external scripts) to automate PSLF contingency runs?",
+      hint: "Loop through contingencies and scenarios, solve cases, and export key violation metrics programmatically."
+    },
+    { id: "pslf-52", sectionId: "pslf", difficulty: "core",
+      q: "What’s your approach to validating a newly received PSLF case from a utility or ISO?",
+      hint: "Check naming, base MVA, flows vs published reports, and ensure no obvious data anomalies."
+    },
+    { id: "pslf-53", sectionId: "pslf", difficulty: "core",
+      q: "How do you coordinate PSLF planning assumptions with parallel PSS®E studies?",
+      hint: "Align load models, dispatch patterns, network changes, and compare representative contingency results."
+    },
+    { id: "pslf-54", sectionId: "pslf", difficulty: "core",
+      q: "How do you incorporate transmission line ratings (normal, LTE, STE) into PSLF analysis?",
+      hint: "Populate rating fields and evaluate loadings against appropriate rating per contingency type."
+    },
+    { id: "pslf-55", sectionId: "pslf", difficulty: "core",
+      q: "How do you check whether a planned outage violates path rating assumptions in PSLF?",
+      hint: "Simulate outage, run path transfer tests with contingencies, and confirm path remains within rated limits."
+    },
+    { id: "pslf-56", sectionId: "pslf", difficulty: "core",
+      q: "How do you systematically review thousands of PSLF contingency results without missing critical issues?",
+      hint: "Use severity indices, filters, and focused views of top violations and critical elements."
+    },
+    { id: "pslf-57", sectionId: "pslf", difficulty: "core",
+      q: "How do you confirm that outage scenarios used in PSLF match the utility’s outage coordination process?",
+      hint: "Crosswalk outage lists with operations plans and ensure credible combinations are represented."
+    },
+    { id: "pslf-58", sectionId: "pslf", difficulty: "core",
+      q: "How do you assess the impact of a new 500 kV line on existing lower-voltage constraints using PSLF?",
+      hint: "Add the line, rerun contingencies, and check if flows move and relieve or create lower-voltage overloads."
+    },
+    { id: "pslf-59", sectionId: "pslf", difficulty: "core",
+      q: "How do you incorporate transformer LTC and voltage control behavior into PSLF planning studies?",
+      hint: "Set realistic tap limits and bandwidths; verify taps aren’t at extremes or hunting in solutions."
+    },
+    { id: "pslf-60", sectionId: "pslf", difficulty: "core",
+      q: "How do you decide whether to model distribution-level exports/imports explicitly or as net load at PSLF buses?",
+      hint: "Consider study purpose, data availability, and whether distribution behavior significantly affects transmission flows."
+    },
+
+    { id: "pslf-61", sectionId: "pslf", difficulty: "expert",
+      q: "How do you construct a rigorous PSLF study plan for evaluating a new major corridor upgrade?",
+      hint: "Define scenarios, load levels, transfer directions, contingency sets, and performance criteria across all cases."
+    },
+    { id: "pslf-62", sectionId: "pslf", difficulty: "expert",
+      q: "How do you interpret non-convergence in PSLF contingencies as a potential sign of voltage collapse?",
+      hint: "Check nearby voltages and Q-limits; if realistic, treat as instability rather than mere numerical error."
+    },
+    { id: "pslf-63", sectionId: "pslf", difficulty: "expert",
+      q: "How do you design PSLF studies to support a path rating increase request?",
+      hint: "Run systematic transfer and contingency studies for multiple conditions, demonstrate margins against criteria."
+    },
+    { id: "pslf-64", sectionId: "pslf", difficulty: "expert",
+      q: "How do you incorporate uncertainty in future load and generation into PSLF-based upgrade decisions?",
+      hint: "Use scenario ranges, sensitivity studies, and ensure solutions are robust across plausible futures."
+    },
+    { id: "pslf-65", sectionId: "pslf", difficulty: "expert",
+      q: "How do you use PSLF to stress-test the system beyond standard criteria for resilience analysis?",
+      hint: "Layer higher transfers, multi-contingency scenarios, and extreme conditions to identify weak points."
+    },
+    { id: "pslf-66", sectionId: "pslf", difficulty: "expert",
+      q: "How do you reconcile differences between PSLF-based limits and those obtained from other tools or consultants?",
+      hint: "Review assumptions, network data, dispatch, contingency sets, and find where modeling diverges."
+    },
+    { id: "pslf-67", sectionId: "pslf", difficulty: "expert",
+      q: "How would you design a PSLF benchmark case to validate your internal modeling approach?",
+      hint: "Select a representative subsystem with known analytical behavior and compare PSLF outputs to expectations."
+    },
+    { id: "pslf-68", sectionId: "pslf", difficulty: "expert",
+      q: "How do you integrate PSLF contingency results into a comprehensive GI study for a cluster of projects?",
+      hint: "Compare base vs with-project violations, identify incremental impacts, and define network upgrade recommendations."
+    },
+    { id: "pslf-69", sectionId: "pslf", difficulty: "expert",
+      q: "How do you ensure your PSLF outage planning work is auditable years later?",
+      hint: "Maintain versioned cases, scripts, contingency definitions, and a clear narrative of assumptions and decisions."
+    },
+    { id: "pslf-70", sectionId: "pslf", difficulty: "expert",
+      q: "How do you design PSLF studies that are directly usable for nomogram or operating guide development?",
+      hint: "Run systematic multi-dimensional sweeps (load, transfer, generation) and map pass/fail boundaries."
+    },
+    { id: "pslf-71", sectionId: "pslf", difficulty: "expert",
+      q: "How do you incorporate special protection schemes (RAS) logic that depends on complex conditions into PSLF planning?",
+      hint: "Approximate logic via staged contingencies, switching steps, or scripted actions triggered by monitored variables."
+    },
+    { id: "pslf-72", sectionId: "pslf", difficulty: "expert",
+      q: "How do you validate that your PSLF-based recommendations are consistent with NERC and regional reliability standards?",
+      hint: "Trace each criterion back to specific TPL or regional requirements and demonstrate compliance under all required conditions."
+    },
+    { id: "pslf-73", sectionId: "pslf", difficulty: "expert",
+      q: "How do you decide when a PSLF planning result is robust enough to propose a major capital project?",
+      hint: "Check sensitivity to assumptions, cross-tool validation, and repeatability under multiple scenarios."
+    },
+    { id: "pslf-74", sectionId: "pslf", difficulty: "expert",
+      q: "How do you argue for a staged upgrade plan based on PSLF study results?",
+      hint: "Show when constraints first appear, how they worsen with growth, and how partial upgrades defer major works."
+    },
+    { id: "pslf-75", sectionId: "pslf", difficulty: "expert",
+      q: "How do you capture non-wires alternatives in PSLF planning (e.g., redispatch, demand response)?",
+      hint: "Model them as alternative dispatch patterns or reduced load and compare their impact on contingency violations."
+    },
+    { id: "pslf-76", sectionId: "pslf", difficulty: "expert",
+      q: "How do you merge multiple contributor studies (different planners) into one coherent PSLF result set?",
+      hint: "Normalize assumptions, consolidate cases, rerun key contingencies, and reconcile conflicting findings."
+    },
+    { id: "pslf-77", sectionId: "pslf", difficulty: "expert",
+      q: "How do you respond when operations challenge PSLF-planned limits as too conservative or too aggressive?",
+      hint: "Explain assumptions, show margins, test what-if changes, and seek common ground via additional studies."
+    },
+    { id: "pslf-78", sectionId: "pslf", difficulty: "expert",
+      q: "How do you structure PSLF-related training for junior planners?",
+      hint: "Start with case navigation, then contingency analysis, then path studies and scenario design."
+    },
+    { id: "pslf-79", sectionId: "pslf", difficulty: "expert",
+      q: "How do you detect subtle modeling inconsistencies when switching between PSLF and dynamic (RMS/EMT) tools?",
+      hint: "Compare SC strengths, flows, and voltage profiles at key buses and ensure topology aligns."
+    },
+    { id: "pslf-80", sectionId: "pslf", difficulty: "expert",
+      q: "How do you maintain a PSLF case library so that it remains usable over many planning cycles?",
+      hint: "Standard templates, periodic refresh from ISO cases, and strict change-management discipline."
+    },
+
+    { id: "pslf-81", sectionId: "pslf", difficulty: "core",
+      q: "How do you approximate PTDF behavior in PSLF by comparing pre- and post-transfer flows?",
+      hint: "Apply small injection/withdrawal changes and observe incremental flow changes on monitored elements."
+    },
+    { id: "pslf-82", sectionId: "pslf", difficulty: "core",
+      q: "How do you set up a study to test the effect of different generator participation factors on congestion?",
+      hint: "Define alternative dispatch scenarios in PSLF and rerun transfer and contingency analysis for each."
+    },
+    { id: "pslf-83", sectionId: "pslf", difficulty: "core",
+      q: "How do you use PSLF to check whether certain outages violate intertie agreement constraints?",
+      hint: "Monitor specific tie-line flows under outages and compare against contractual or rated limits."
+    },
+    { id: "pslf-84", sectionId: "pslf", difficulty: "core",
+      q: "How do you verify that emergency ratings are used correctly for post-contingency elements in PSLF?",
+      hint: "Ensure contingency reports compare flows against emergency ratings, not only normal limits."
+    },
+    { id: "pslf-85", sectionId: "pslf", difficulty: "core",
+      q: "How do you verify that GI upgrades modeled in PSLF correctly relieve previously identified constraints?",
+      hint: "Re-run original contingency set with upgrades in place and confirm violations are reduced or eliminated."
+    },
+    { id: "pslf-86", sectionId: "pslf", difficulty: "core",
+      q: "How do you detect unrealistic reactive power dispatch or voltage profiles in a PSLF case?",
+      hint: "Look for extreme Q outputs, buses at unusual voltages, and shunts or taps at unrealistic settings."
+    },
+    { id: "pslf-87", sectionId: "pslf", difficulty: "core",
+      q: "How do you ensure that your PSLF outage studies remain traceable back to specific system diagrams and one-lines?",
+      hint: "Maintain consistent naming, cross-reference with GIS/one-lines, and document mapping between study elements and physical assets."
+    },
+    { id: "pslf-88", sectionId: "pslf", difficulty: "core",
+      q: "How do you evaluate whether a temporary line uprate (rating increase) is sufficient to cover outage periods?",
+      hint: "Apply higher rating in PSLF, re-run relevant contingencies, and see if margins remain acceptable."
+    },
+    { id: "pslf-89", sectionId: "pslf", difficulty: "core",
+      q: "How do you set up PSLF cases to represent minimum and maximum hydro or thermal dispatch conditions?",
+      hint: "Create dedicated cases with extreme but realistic dispatch patterns consistent with resource capabilities."
+    },
+    { id: "pslf-90", sectionId: "pslf", difficulty: "core",
+      q: "How do you use PSLF to examine the impact of changed remedial action scheme thresholds?",
+      hint: "Modify tripping or redispatch assumptions in contingencies and observe resulting flows and voltages."
+    },
+
+    { id: "pslf-91", sectionId: "pslf", difficulty: "expert",
+      q: "How do you design PSLF studies to capture rare but high-impact outage combinations (beyond standard N-1-1)?",
+      hint: "Coordinate with operations on credible extreme events, build special contingency sets, and analyze risk vs cost."
+    },
+    { id: "pslf-92", sectionId: "pslf", difficulty: "expert",
+      q: "How do you reconcile PSLF-based capacity expansion recommendations with social, environmental, and permitting constraints?",
+      hint: "Provide multiple technical options, show trade-offs, and be prepared to adapt studies to realistic siting."
+    },
+    { id: "pslf-93", sectionId: "pslf", difficulty: "expert",
+      q: "How do you distinguish between ‘model noise’ and truly binding constraints in large PSLF result sets?",
+      hint: "Look for recurring violations across scenarios, check physical plausibility, and filter out isolated artefacts."
+    },
+    { id: "pslf-94", sectionId: "pslf", difficulty: "expert",
+      q: "How do you use PSLF results to inform long-term grid modernization or resilience programs?",
+      hint: "Aggregate findings into patterns of weak corridors, critical substations, and recurring stress points."
+    },
+    { id: "pslf-95", sectionId: "pslf", difficulty: "expert",
+      q: "How do you ensure your PSLF-based outage guidance remains valid as new GI and load are added over time?",
+      hint: "Periodically refresh cases with new projects, re-run key studies, and track changes in limiting contingencies."
+    },
+    { id: "pslf-96", sectionId: "pslf", difficulty: "expert",
+      q: "How do you communicate PSLF planning results to non-technical stakeholders without oversimplifying risk?",
+      hint: "Use clear visuals, explain what limits mean in operational terms, and describe uncertainty and safety margins honestly."
+    },
+    { id: "pslf-97", sectionId: "pslf", difficulty: "expert",
+      q: "How do you prevent overfitting PSLF studies to a single ‘worst case’ scenario while missing broader risk?",
+      hint: "Use families of scenarios, ensure conclusions hold across variations, and avoid tuning solely to one case."
+    },
+    { id: "pslf-98", sectionId: "pslf", difficulty: "expert",
+      q: "How do you retrospectively review PSLF studies after real system events to improve future practice?",
+      hint: "Compare actual outages and flows to predicted behavior, identify gaps, and update modeling standards."
+    },
+    { id: "pslf-99", sectionId: "pslf", difficulty: "expert",
+      q: "How do you maintain your PSLF skill set at a top 0.1% level over the long term?",
+      hint: "Continuous study of tool features, scripting, peer comparison, post-event backchecking, and mentoring others."
+    },
+    { id: "pslf-100", sectionId: "pslf", difficulty: "expert",
+      q: "If you had to build a minimal but robust PSLF planning workflow from scratch at a new utility, what would it include?",
+      hint: "Standard base cases, N-1/N-1-1 contingency analysis, path studies, scenario sets, documentation, and QA processes."
+    }
 
     /* =========================
        SECTION: ASPEN
