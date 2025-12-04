@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Network Layout (.raw aware) — orthogonal, volt-colored</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --ink:#101828;--muted:#667085;--panel:#f6faff;--grid:#e5efff;--accent:#2563eb;
+      --edge-branch:#ef4444; --edge-xfmr:#0ea5a0; /* branch red, transformer teal */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#f7fbff;color:var(--ink)}
+    header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid #dbe7ff;position:sticky;top:0;background:#fff;z-index:5}
+    .group{display:flex;flex-direction:column;gap:6px}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    label{font-size:12px;color:var(--muted)}
+    input[type="number"],input[type="text"],select{height:36px;border:1px solid #d7e3ff;border-radius:10px;padding:0 10px;min-width:120px}
+    button{height:36px;border:0;border-radius:10px;background:var(--accent);color:#fff;padding:0 12px;font-weight:600;cursor:pointer}
+    button.secondary{background:#eef2ff;color:#1e293b}
+    button.ghost{background:transparent;border:1px solid #d7e3ff;color:#1e293b}
+    #stats{margin-left:auto;font-size:12px;color:var(--muted)}
+    #stage{position:relative;height:calc(100vh - 116px);overflow:hidden}
+    canvas{width:100%;height:100%;display:block;background:linear-gradient(0deg,transparent calc(100% - 1px),var(--grid) calc(100% - 1px))}
+    #toast{position:absolute;right:12px;bottom:12px;background:#000a;color:#fff;padding:8px 10px;border-radius:10px;font-size:12px;opacity:0;transform:translateY(10px);transition:.25s}
+    #toast.show{opacity:1;transform:none}
+    .legend{display:flex;gap:12px;align-items:center;margin-left:8px;font-size:12px;color:var(--muted)}
+    .key{display:inline-flex;align-items:center;gap:6px}
+    .seg{width:18px;height:3px;border-radius:2px;display:inline-block}
+    .chip{padding:2px 8px;border-radius:999px;border:1px solid #d7e3ff;background:#fff}
+    .stack{display:grid;grid-template-columns:repeat(6,auto);gap:10px;align-items:end}
+    @media (max-width:1100px){.stack{grid-template-columns:repeat(3,auto)}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="group">
+      <label>Upload PSS/E .raw</label>
+      <input id="rawFile" type="file" accept=".raw,.RAW,.txt" />
+      <small style="color:var(--muted)">Bus <b>100</b> is fixed at origin when present. Branches & transformers define connectivity.</small>
+    </div>
+
+    <div class="group"><label>Layer Spacing (px)</label><input id="layerPx" type="number" value="120"></div>
+    <div class="group"><label>Feeder Spacing (px)</label><input id="feederPx" type="number" value="160"></div>
+    <div class="group"><label>Min Bus Bar (px)</label><input id="minBusPx" type="number" value="140"></div>
+    <div class="group"><label>Edge Fan-out (px)</label><input id="edgeFan" type="number" value="10"></div>
+    <div class="group"><label>Orientation</label>
+      <select id="orient">
+        <option value="top">Root at top (grow down)</option>
+        <option value="bottom">Root at bottom (grow up)</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <button id="autoBtn">Auto-Layout from .raw</button>
+      <button id="fitBtn" class="secondary">Fit to Screen</button>
+      <button id="resetBtn" class="ghost">Reset View</button>
+      <button id="dlLoc" class="ghost">Download .loc</button>
+      <button id="dlBus" class="ghost">Download bus.idv</button>
+      <button id="dlBranch" class="ghost">Download branch.idv</button>
+
+      <div class="legend">
+        <span class="key"><i class="seg" style="background:var(--edge-branch)"></i>Branch</span>
+        <span class="key"><i class="seg" style="background:var(--edge-xfmr)"></i>Transformer</span>
+        <span class="chip">Bus color = voltage (kV)</span>
+      </div>
+    </div>
+
+    <div class="stack" style="width:100%">
+      <div class="group"><label>.loc: First line label</label><input id="locLabel" type="text" value="GEOPHYSICAL"></div>
+      <div class="group"><label>.loc: px per ° (lon)</label><input id="pxPerDegX" type="number" value="600" step="1" min="1"></div>
+      <div class="group"><label>.loc: px per ° (lat)</label><input id="pxPerDegY" type="number" value="600" step="1" min="1"></div>
+      <div class="group"><label>.loc origin</label>
+        <select id="locOrigin">
+          <option value="center">Layout center</option>
+          <option value="bus100">Bus 100 (if present)</option>
+          <option value="topleft">Top-left bounds</option>
+        </select>
+      </div>
+      <div class="group"><label>.loc: 3rd column (deg)</label><input id="locCol3" type="number" value="90" step="0.1"></div>
+      <div class="group"><label>.loc: 4th column</label><input id="locCol4" type="number" value="0.00" step="0.01"></div>
+    </div>
+
+    <div id="stats">Source: – | Buses: 0 | Edges: 0</div>
+  </header>
+
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div id="toast"></div>
+  </div>
+
+  <script>
+  /* ----------------------------- Utilities ----------------------------- */
+  const byId=(id)=>document.getElementById(id)
+  const toast=(msg)=>{const el=byId('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1500)}
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v))
+
+  /* ------------------------------ RAW parser --------------------------- */
+  function splitCsvQuotes(line){
+    const out=[]; let cur='', q=false
+    for(const ch of line){
+      if(ch==="'"){ q=!q; cur+=ch }
+      else if(ch===',' && !q){ out.push(cur.trim()); cur='' }
+      else cur+=ch
+    }
+    if(cur.length) out.push(cur.trim())
+    return out
+  }
+
+  // Returns {buses:Map<num,{num,name,kv}>, edges:[{a,b,type}], root}
+  function parseRAW(text){
+    const buses = new Map()
+    const edges = [] // {a,b,type:'branch'|'xfmr'}
+
+    let inBus=false, inBr=false, inXf=false
+    for (let raw of text.split(/\r?\n/)) {
+      let line = raw.replace(/\t/g,' ').trim()
+      if(!line) continue
+
+      // section markers
+      if(/BEGIN\s+BUS\s+DATA|BUS\s+DATA\s+FOLLOWS|^BEGIN BUS/i.test(line)){inBus=true;inBr=false;inXf=false;continue}
+      if(/BEGIN\s+BRANCH\s+DATA|BRANCH\s+DATA\s+FOLLOWS|^BEGIN BRANCH/i.test(line)){inBr=true;inBus=false;inXf=false;continue}
+      if(/BEGIN\s+TRANSFORMER\s+DATA|TRANSFORMER\s+DATA\s+FOLLOWS|^BEGIN TRANSFORMER/i.test(line)){inXf=true;inBus=false;inBr=false;continue}
+      if(/END\s+OF\s+BUS\s+DATA/i.test(line)){inBus=false;continue}
+      if(/END\s+OF\s+BRANCH\s+DATA/i.test(line)){inBr=false;continue}
+      if(/END\s+OF\s+TRANSFORMER\s+DATA/i.test(line)){inXf=false;continue}
+      if(/^0\s*\//.test(line)) continue // comment card
+
+      if(inBus){
+        const p = splitCsvQuotes(line)
+        if(p.length>=3){
+          const i=parseInt(p[0])
+          if(Number.isFinite(i)){
+            const name=p[1].replace(/^'|'$/g,'')
+            const kv=parseFloat(p[2]); buses.set(i,{num:i,name,kv:isFinite(kv)?kv:null})
+          }
+        }
+        continue
+      }
+      if(inBr){
+        const p=splitCsvQuotes(line)
+        if(p.length>=2){
+          const i=parseInt(p[0]), j=parseInt(p[1])
+          if(Number.isFinite(i)&&Number.isFinite(j)&&i!==j){
+            edges.push({a:i,b:j,type:'branch'})
+          }
+        }
+        continue
+      }
+      if(inXf){
+        const p=splitCsvQuotes(line)
+        // first card has i,j,k (k may be 0 for 2W)
+        if(p.length>=2){
+          const i=parseInt(p[0]), j=parseInt(p[1])
+          const k=p.length>2?parseInt(p[2]):0
+          const terms=[i,j].concat(Number.isFinite(k)&&k!==0?[k]:[]).filter(Number.isFinite)
+          for(let x=0;x<terms.length;x++){
+            for(let y=x+1;y<terms.length;y++){
+              const a=terms[x], b=terms[y]
+              if(a!==b) edges.push({a,b,type:'xfmr'})
+            }
+          }
+        }
+        continue
+      }
+    }
+    const root = buses.has(100) ? 100 : (buses.size ? [...buses.keys()].sort((a,b)=>a-b)[0] : null)
+    return {buses,edges,root}
+  }
+
+  /* --------------------------- Graph & layout -------------------------- */
+  function buildAdj(buses, edges){
+    const adj=new Map(); for(const k of buses.keys()) adj.set(k,new Set())
+    for(const e of edges){
+      const {a,b}=e; if(adj.has(a)&&adj.has(b)){ adj.get(a).add(b); adj.get(b).add(a) }
+    }
+    return adj
+  }
+
+  function bfsTree(adj, root){
+    const parent=new Map(), depth=new Map(); depth.set(root,0); parent.set(root,null)
+    const q=[root]
+    while(q.length){
+      const u=q.shift()
+      for(const v of adj.get(u)||[]){
+        if(!depth.has(v)){ depth.set(v,depth.get(u)+1); parent.set(v,u); q.push(v) }
+      }
+    }
+    return {parent,depth}
+  }
+
+  // Compute orthogonal positions with bar extension (no gaps)
+  function computeOrtho(buses, edges, root, layerPx, feederPx, minBus, orientTop){
+    const adj=buildAdj(buses,edges)
+    if(!root || !adj.has(root)) return {pos:new Map(), bars:new Map(), ordered:[], children:new Map(), parent:new Map()}
+
+    const {parent,depth}=bfsTree(adj,root)
+    const children=new Map(); for(const k of adj.keys()) children.set(k,[])
+    for(const [node,p] of parent.entries()) if(p!==null) children.get(p).push(node)
+
+    // subtree width (in feeder “slots”)
+    const post=[...parent.keys()].sort((a,b)=>depth.get(b)-depth.get(a))
+    const width=new Map()
+    for(const v of post){
+      const ch=children.get(v)
+      width.set(v, ch.length? ch.map(c=>width.get(c)).reduce((a,b)=>a+b,0) : 1)
+    }
+
+    const pos=new Map()
+    function place(node,xLeft,level){
+      const w=width.get(node)
+      const xCenter=xLeft + (w*feederPx - feederPx)/2
+      pos.set(node,{x:xCenter,y:level*layerPx})
+      let cur=xLeft
+      for(const c of children.get(node)){
+        const cw=width.get(c)
+        place(c, cur, level+1)
+        cur += cw*feederPx
+      }
+    }
+    place(root,0,0)
+
+    // Bus bars – extended so all child taps fall *on* the bar (no gaps)
+    const bars=new Map()
+    for(const v of parent.keys()){
+      const ch=children.get(v); if(!ch.length) continue
+      const cx=pos.get(v).x
+      const xs=ch.map(c=>pos.get(c).x)
+      let L=Math.min(...xs), R=Math.max(...xs)
+      const margin=40                      // extra margin at both ends
+      L -= margin; R += margin
+      // ensure minimum length centered at node
+      const half = Math.max(minBus/2, (R-L)/2)
+      L = cx - half; R = cx + half
+      // double-check that every child lies inside
+      if(Math.min(...xs) < L) L = Math.min(...xs) - 10
+      if(Math.max(...xs) > R) R = Math.max(...xs) + 10
+      bars.set(v,{L,R})
+    }
+
+    if(!orientTop){
+      const maxY=Math.max(...[...pos.values()].map(p=>p.y))
+      for(const [k,p] of pos){ p.y = maxY - p.y; pos.set(k,p) }
+    }
+
+    const ordered=[...parent.keys()].sort((a,b)=>depth.get(a)-depth.get(b))
+    return {pos,bars,ordered,children,parent}
+  }
+
+  /* --------------------------- Voltage coloring ------------------------ */
+  function kvToColor(kv){
+    if(kv==null || isNaN(kv)) return '#111827'          // unknown -> dark
+    if(kv >= 230) return '#6a00ff'                      // EHV
+    if(kv >= 161) return '#3b82f6'                      // 161–229 kV
+    if(kv >= 69)  return '#10b981'                      // 69–160 kV
+    if(kv >= 13)  return '#f59e0b'                      // 13–68 kV (MV)
+    return '#6b7280'                                    // LV / misc
+  }
+
+  /* ------------------------------ Renderer ----------------------------- */
+  const cv=byId('cv'); const ctx=cv.getContext('2d')
+  let zoom=1, pan={x:0,y:0}
+  function resize(){ cv.width=cv.clientWidth*devicePixelRatio; cv.height=cv.clientHeight*devicePixelRatio; draw() }
+  window.addEventListener('resize',resize)
+
+  let model={buses:new Map(),edges:[],root:null}
+  let layout={pos:new Map(),bars:new Map(),ordered:[],children:new Map(),parent:new Map()}
+
+  function draw(){
+    ctx.setTransform(1,0,0,1,0,0)
+    ctx.clearRect(0,0,cv.width,cv.height)
+    ctx.scale(zoom*devicePixelRatio, zoom*devicePixelRatio)
+    ctx.translate(pan.x, pan.y)
+
+    const orientTop = byId('orient').value==='top'
+    const fan = +byId('edgeFan').value || 0
+
+    // 1) Bus bars (colored by bus KV)
+    for(const v of layout.ordered){
+      const bar=layout.bars.get(v); if(!bar) continue
+      const bus = model.buses.get(v)
+      ctx.strokeStyle = kvToColor(bus?.kv)
+      ctx.lineWidth = 2.2/devicePixelRatio
+      ctx.beginPath()
+      ctx.moveTo(bar.L, layout.pos.get(v).y)
+      ctx.lineTo(bar.R, layout.pos.get(v).y)
+      ctx.stroke()
+    }
+
+    // 2) Vertical ties from bus tag to its bar (small)
+    ctx.lineWidth = 1.8/devicePixelRatio
+    for(const v of layout.ordered){
+      const p=layout.pos.get(v)
+      const bar=layout.bars.get(v)
+      if(bar){
+        ctx.strokeStyle = kvToColor(model.buses.get(v)?.kv)
+        ctx.beginPath()
+        ctx.moveTo(p.x, p.y - (orientTop?0:0))
+        ctx.lineTo(p.x, p.y)
+        ctx.stroke()
+      }
+    }
+
+    // 3) Branches / transformers from parent bar to child drop (with fan-out)
+    for(const v of layout.ordered){
+      const kids = layout.children.get(v)||[]
+      if(!kids.length) continue
+      const y0 = layout.pos.get(v).y
+      const {L,R} = layout.bars.get(v)
+      const span = R-L
+      const step = kids.length>1 ? span/(kids.length-1) : 0
+      kids.forEach((c,idx)=>{
+        const cx=layout.pos.get(c).x
+        const edge = model.edges.find(e=>(e.a===v&&e.b===c)||(e.a===c&&e.b===v))
+        ctx.strokeStyle = edge?.type==='xfmr' ? getComputedStyle(document.documentElement).getPropertyValue('--edge-xfmr') : getComputedStyle(document.documentElement).getPropertyValue('--edge-branch')
+        ctx.lineWidth = 1.6/devicePixelRatio
+        // place tap along the bar; adjust toward child but keep on bar
+        const ax = kids.length===1 ? (L+R)/2 : (L + idx*step)
+        const dx = clamp(cx-ax, -40, 40)
+        const xTap = ax + dx
+        const yTap = y0
+        const cy = layout.pos.get(c).y
+        const jog = orientTop ? fan : -fan
+        ctx.beginPath()
+        ctx.moveTo(xTap, yTap)
+        ctx.lineTo(xTap, yTap + jog)
+        ctx.lineTo(cx, yTap + jog)
+        ctx.lineTo(cx, cy - jog)
+        ctx.lineTo(cx, cy)
+        ctx.stroke()
+      })
+    }
+
+    // 4) Bus labels and small center marker
+    for(const [b,p] of layout.pos){
+      ctx.fillStyle = kvToColor(model.buses.get(b)?.kv)
+      ctx.fillRect(p.x-36, p.y-1.1, 72, 2.2) // tiny center marker (cosmetic)
+      ctx.font='12px Inter, sans-serif'; ctx.textAlign='left'; ctx.textBaseline='middle'
+      ctx.fillStyle='#111827'
+      ctx.fillText(String(b), p.x+44, p.y)
+    }
+  }
+
+  /* --------------------------- Interaction ----------------------------- */
+  let isDrag=false, last={x:0,y:0}
+  cv.addEventListener('mousedown',e=>{isDrag=true; last.x=e.clientX; last.y=e.clientY})
+  window.addEventListener('mouseup',()=>isDrag=false)
+  window.addEventListener('mousemove',e=>{
+    if(!isDrag) return
+    pan.x += (e.clientX-last.x)/ (zoom*devicePixelRatio)
+    pan.y += (e.clientY-last.y)/ (zoom*devicePixelRatio)
+    last.x=e.clientX; last.y=e.clientY; draw()
+  })
+  cv.addEventListener('wheel',e=>{
+    const factor=e.deltaY<0?1.1:0.9
+    const rect=cv.getBoundingClientRect()
+    const mx=(e.clientX-rect.left)/devicePixelRatio
+    const my=(e.clientY-rect.top)/devicePixelRatio
+    const wx=(mx/zoom)-pan.x
+    const wy=(my/zoom)-pan.y
+    zoom=clamp(zoom*factor,0.1,4)
+    pan.x=(mx/zoom)-wx; pan.y=(my/zoom)-wy
+    draw()
+  },{passive:true})
+
+  /* ------------------------------ Exporters ---------------------------- */
+  function formatEW(xdeg){
+    const abs=Math.abs(xdeg).toFixed(6)
+    return xdeg>=0?`${abs}E`:`${abs}W`
+  }
+  function formatNS(ydeg){
+    const abs=Math.abs(ydeg).toFixed(6)
+    return ydeg>=0?`${abs}N`:`${abs}S`
+  }
+  function getBounds(){
+    const xs=[...layout.pos.values()].map(p=>p.x), ys=[...layout.pos.values()].map(p=>p.y)
+    return {minX:Math.min(...xs), maxX:Math.max(...xs), minY:Math.min(...ys), maxY:Math.max(...ys)}
+  }
+  function calcOrigin(){
+    const mode=byId('locOrigin').value
+    if(layout.pos.size===0) return {x:0,y:0}
+    if(mode==='bus100' && layout.pos.has(100)) return layout.pos.get(100)
+    const b=getBounds()
+    if(mode==='topleft') return {x:b.minX,y:b.minY}
+    // center
+    return {x:(b.minX+b.maxX)/2, y:(b.minY+b.maxY)/2}
+  }
+  function makeLocGeophysical(){
+    const label = (byId('locLabel').value||'GEOPHYSICAL').trim()
+    const pxPerDegX = Math.max(1, +byId('pxPerDegX').value||600)
+    const pxPerDegY = Math.max(1, +byId('pxPerDegY').value||600)
+    const col3 = +byId('locCol3').value || 90
+    const col4 = (+byId('locCol4').value).toFixed(2)
+
+    const origin = calcOrigin()
+    const lines=[label]
+    // y increases downward on canvas; latitude increases northward -> invert sign when converting
+    for(const [bus,p] of [...layout.pos.entries()].sort((a,b)=>a[0]-b[0])){
+      const lonDeg = (p.x - origin.x) / pxPerDegX
+      const latDeg = (origin.y - p.y) / pxPerDegY
+      lines.push(`${bus}  ${formatEW(lonDeg)}  ${formatNS(latDeg)}  ${col3}  ${col4}`)
+    }
+    return lines.join('\n')+'\n'
+  }
+
+  function makeDownloads(){
+    const locTxt = makeLocGeophysical()
+    const idvBus=['; BUS,name,x,y'], idvBr=['; BRANCH,from,to']
+    for(const [b,p] of layout.pos){
+      idvBus.push(`BUS,${b},${Math.round(p.x)},${Math.round(p.y)}`)
+    }
+    for(const e of model.edges){ idvBr.push(`BRANCH,${e.a},${e.b}`) }
+    return {loc:locTxt, bus:idvBus.join('\n')+'\n', branch:idvBr.join('\n')+'\n'}
+  }
+  function download(filename,text){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'})); a.download=filename; a.click(); URL.revokeObjectURL(a.href) }
+
+  /* ------------------------------ Wire up ------------------------------ */
+  function refreshStats(){ byId('stats').textContent=`Source: ${model.root??'–'} | Buses: ${model.buses.size} | Edges: ${model.edges.length}` }
+
+  function recompute(){
+    layout = computeOrtho(
+      model.buses, model.edges, model.root,
+      +byId('layerPx').value||120,
+      +byId('feederPx').value||160,
+      +byId('minBusPx').value||140,
+      byId('orient').value==='top'
+    )
+    draw(); refreshStats()
+  }
+
+  byId('autoBtn').addEventListener('click',async()=>{
+    const f=byId('rawFile').files?.[0]
+    if(!f){ toast('Choose a .raw file first'); return }
+    const text=await f.text()
+    model=parseRAW(text)
+    if(!model.root){ toast('No buses found in .raw'); return }
+    pan={x:0,y:0}; zoom=1
+    recompute(); toast('Parsed & laid out')
+  })
+
+  byId('fitBtn').addEventListener('click',()=>{
+    if(layout.pos.size===0) return
+    const xs=[...layout.pos.values()].map(p=>p.x)
+    const ys=[...layout.pos.values()].map(p=>p.y)
+    const minX=Math.min(...xs)-140, maxX=Math.max(...xs)+140
+    const minY=Math.min(...ys)-140, maxY=Math.max(...ys)+140
+    const w=maxX-minX, h=maxY-minY
+    const sx=(cv.clientWidth-40)/w, sy=(cv.clientHeight-40)/h
+    zoom=clamp(Math.min(sx,sy),0.1,4)
+    pan.x=(-minX)+(20/zoom); pan.y=(-minY)+(20/zoom)
+    draw()
+  })
+  byId('resetBtn').addEventListener('click',()=>{zoom=1; pan={x:0,y:0}; draw()})
+  ;['layerPx','feederPx','minBusPx','edgeFan','orient','pxPerDegX','pxPerDegY','locOrigin','locLabel','locCol3','locCol4'].forEach(id=>byId(id).addEventListener('change',()=>{}))
+
+  byId('dlLoc').addEventListener('click',()=>{const t=makeDownloads(); download('layout.loc',t.loc)})
+  byId('dlBus').addEventListener('click',()=>{const t=makeDownloads(); download('bus.idv',t.bus)})
+  byId('dlBranch').addEventListener('click',()=>{const t=makeDownloads(); download('branch.idv',t.branch)})
+
+  resize()
+  </script>
+</body>
+</html>
