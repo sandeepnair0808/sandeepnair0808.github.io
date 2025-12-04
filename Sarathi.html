@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Transmission Planner Interview Vault</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-elevated: rgba(15, 23, 42, 0.85);
+      --bg-elevated-soft: rgba(15, 23, 42, 0.6);
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.08);
+      --accent-strong: #0ea5e9;
+      --accent-alt: #a855f7;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.25);
+      --danger: #f97373;
+      --radius-lg: 18px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 18px 45px rgba(15,23,42,0.75);
+      --shadow-pill: 0 0 0 1px rgba(148,163,184,0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 40%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 16px;
+      gap: 16px;
+    }
+
+    .sidebar {
+      width: 260px;
+      min-width: 240px;
+      max-width: 280px;
+      background: linear-gradient(145deg, rgba(15,23,42,0.95), rgba(15,23,42,0.75));
+      border-radius: var(--radius-xl);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148,163,184,0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #e0f2fe, #0ea5e9 45%, #1d4ed8 90%);
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.25), 0 0 24px rgba(56,189,248,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #0b1120;
+    }
+
+    .app-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .app-title h1 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .app-title span {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 0, rgba(56,189,248,0.28), rgba(15,23,42,0.95));
+      border: 1px solid rgba(56,189,248,0.55);
+      color: #e0f2fe;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.9);
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      margin-bottom: 6px;
+    }
+
+    .section-card {
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.08), rgba(15,23,42,0.95));
+      border-radius: var(--radius-lg);
+      padding: 10px 11px;
+      border: 1px solid rgba(148,163,184,0.3);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 8px;
+    }
+
+    .stat-pill {
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(148,163,184,0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .stat-value {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .nav-btn {
+      border-radius: 12px;
+      border: 1px solid rgba(51,65,85,0.8);
+      background: rgba(15,23,42,0.9);
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-btn span.title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .nav-btn span.meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav-btn.active {
+      border-color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.28), rgba(15,23,42,0.95));
+      box-shadow: var(--shadow-pill);
+    }
+
+    .nav-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(148,163,184,0.25) 40%, transparent 80%);
+      opacity: 0;
+      transform: translateX(-30%);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+
+    .nav-btn:hover::after {
+      opacity: 0.4;
+      transform: translateX(40%);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-footer code {
+      font-size: 11px;
+      background: rgba(15,23,42,0.9);
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.8);
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-wrap {
+      flex: 1 1 220px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 9px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15,23,42,0.8);
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      box-shadow: var(--shadow-pill);
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      border: 1px solid rgba(148,163,184,0.45);
+      background: rgba(15,23,42,0.85);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .chip.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #e0f2fe;
+    }
+
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .question-list {
+      flex: 1;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(15,23,42,0.92), rgba(15,23,42,0.85));
+      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: var(--shadow-soft);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(51,65,85,0.9);
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+    }
+
+    .section-header-left h2 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .section-header-left p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .section-header-right {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 3px 8px;
+      border: 1px solid rgba(148,163,184,0.5);
+      font-size: 11px;
+    }
+
+    .questions-scroll {
+      overflow-y: auto;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .question-card {
+      border-radius: 16px;
+      background: radial-gradient(circle at top, rgba(56,189,248,0.06), rgba(15,23,42,0.96));
+      border: 1px solid rgba(51,65,85,0.9);
+      padding: 10px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+    }
+
+    .question-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .question-meta span.difficulty {
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+    }
+
+    .question-text {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .question-hint {
+      font-size: 12px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .badge-small {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 24px 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 960px) {
+      .app-shell {
+        flex-direction: column;
+        padding: 10px;
+      }
+      .sidebar {
+        width: 100%;
+        max-width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .nav-tabs {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .nav-btn {
+        flex: 1 1 calc(50% - 6px);
+      }
+      .sidebar-footer {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sidebar {
+        flex-direction: column;
+      }
+      .nav-btn {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="logo-wrap">
+      <div class="logo-mark">TP</div>
+      <div class="app-title">
+        <h1>Transmission Planner Vault</h1>
+        <span>Top 0.1% Power System Studies Q-Bank</span>
+      </div>
+    </div>
+
+    <div class="badge-top">
+      <span class="badge-dot"></span>
+      <span>Interview Mode • Ready</span>
+    </div>
+
+    <div class="section-card">
+      <div class="section-label">Snapshot</div>
+      <div class="stats-grid">
+        <div class="stat-pill">
+          <div class="stat-label">Questions Loaded</div>
+          <div class="stat-value" id="stat-total">0</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-label">Current Section</div>
+          <div class="stat-value" id="stat-section">–</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">Sections</div>
+      <div class="nav-tabs" id="navTabs"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div>Shortcuts: <code>Ctrl + K</code> search • <code>↑↓</code> navigate</div>
+      <div>Extend this vault by editing the <code>questions[]</code> array in the script.</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top-bar">
+      <div class="search-wrap">
+        <input
+          id="searchInput"
+          class="search-input"
+          type="text"
+          placeholder="Search questions & hints (e.g., 'IEEE 2800', 'PV bus', 'ASPEN breaker duty')..."
+        />
+      </div>
+      <div class="chip-row" id="difficultyChips">
+        <button class="chip active" data-diff="all">
+          <span class="chip-dot"></span> All levels
+        </button>
+        <button class="chip" data-diff="foundation">Foundation</button>
+        <button class="chip" data-diff="core">Core</button>
+        <button class="chip" data-diff="expert">Expert</button>
+      </div>
+    </div>
+
+    <section class="question-list">
+      <div class="section-header">
+        <div class="section-header-left">
+          <h2 id="sectionTitle">Select a section</h2>
+          <p id="sectionSubtitle">Use the tabs on the left to choose a topic cluster.</p>
+        </div>
+        <div class="section-header-right">
+          <span id="sectionCount" class="pill">0 questions</span>
+          <span class="badge-small">Repository Mode</span>
+        </div>
+      </div>
+
+      <div class="questions-scroll" id="questionsContainer">
+        <div class="empty-state">
+          Pick a section from the left to start.  
+          Use search + filters to drill down like a system study.
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  const sections = [
+    { id: "gi", name: "GI & System Planning", subtitle: "GI workflow, ISO criteria, outages, upgrades, harmonics.", meta: "ISO GI • POI • Upgrades" },
+    { id: "lf", name: "Load Flow & Voltage Stability", subtitle: "LF methods, bus types, voltage/Q, contingencies.", meta: "LF • V–Q • PF Models" },
+    { id: "psse", name: "PSS®E Studies", subtitle: "RAW prep, ACCC, PV/QV, Q-limits, automation.", meta: "PSS®E • GI Cases" },
+    { id: "pslf", name: "PSLF Dynamics", subtitle: "RMS stability, Epcl, composite models, events.", meta: "PSLF • Stability" },
+    { id: "aspen", name: "ASPEN & Protection", subtitle: "SC calcs, breaker duty, grounding, imports.", meta: "ASPEN • SC • Relays" },
+    { id: "cross", name: "Cross-Tool Consistency", subtitle: "Aligning PSS®E, PSLF, ASPEN, PSCAD.", meta: "Tool Interop" },
+    { id: "advanced", name: "Advanced Troubleshooting", subtitle: "Edge cases, nonlinear behavior, conflicts.", meta: "Top 0.1% Thinking" }
+  ];
+
+  const questions = [
+    /* =========================
+       SECTION: GI & PLANNING
+       ========================= */
+    { id: "gi-1", sectionId: "gi", difficulty: "core",
+      q: "Can you walk through your end-to-end workflow when preparing a GI package for submission?",
+      hint: "Base case selection, data validation, POI modeling, LF/SC/stability, reports, ISO templates." },
+    { id: "gi-2", sectionId: "gi", difficulty: "core",
+      q: "What differences have you observed between ERCOT, PJM, and CAISO in GI study requirements?",
+      hint: "Study stages, modeling formats, reactive/voltage criteria, EMT needs, report structure." },
+    { id: "gi-3", sectionId: "gi", difficulty: "core",
+      q: "What are typical data items you require from a renewable developer to start a GI study?",
+      hint: "Plant size, POI, single-line, transformer specs, collector layout, inverter models, control settings." },
+    { id: "gi-4", sectionId: "gi", difficulty: "core",
+      q: "How do you determine capacitor bank sizing and placement to meet power factor and voltage support targets?",
+      hint: "Compute kvar deficit, run sensitivities, place near weak buses/POI, check overvoltage risk." },
+    { id: "gi-5", sectionId: "gi", difficulty: "core",
+      q: "How do you treat large industrial load interconnections in GI studies?",
+      hint: "Motor fraction, starting conditions, voltage dip, impact on nearby transformers and lines." },
+    { id: "gi-6", sectionId: "gi", difficulty: "core",
+      q: "Which steady-state acceptance criteria do you typically apply for voltage and thermal limits in GI studies?",
+      hint: "Normal/emergency ratings, pre/post-contingency voltage bands, N-1/N-1-1 requirements." },
+    { id: "gi-7", sectionId: "gi", difficulty: "core",
+      q: "How do you check whether a GI project worsens congestion on key interfaces?",
+      hint: "Run transfers, use PTDF/LODF, inspect monitored elements before vs after project." },
+    { id: "gi-8", sectionId: "gi", difficulty: "foundation",
+      q: "What is the difference between a feasibility, system impact, and facility study in GI processes?",
+      hint: "Progression from screening → detailed impacts → facility-level design and upgrades." },
+    { id: "gi-9", sectionId: "gi", difficulty: "core",
+      q: "How do you handle multiple queued GI projects that impact the same area?",
+      hint: "Cluster studies, common base case, incremental modeling, queue priority rules." },
+    { id: "gi-10", sectionId: "gi", difficulty: "core",
+      q: "Tell us about a time an outage scenario predicted overloads. How did you propose mitigation?",
+      hint: "Describe contingency, violated elements, and remedies like reconductoring, new lines, RAS, caps." },
+    { id: "gi-11", sectionId: "gi", difficulty: "core",
+      q: "What parameters do you examine first when assessing N-1 and N-1-1 contingencies?",
+      hint: "Line/transformer loading, bus voltages, reactive reserves, phase angles, islanding." },
+    { id: "gi-12", sectionId: "gi", difficulty: "core",
+      q: "How do you incorporate planned generation retirements and additions in long-term planning cases?",
+      hint: "Use planning assumptions, ISO/TO roadmaps, scenario cases, keep consistent baselines." },
+    { id: "gi-13", sectionId: "gi", difficulty: "core",
+      q: "How do you assess the impact of a new GI project on existing remedial action schemes (RAS)?",
+      hint: "Test RAS logic with project in/out, check arming conditions, ensure post-RAS criteria are met." },
+    { id: "gi-14", sectionId: "gi", difficulty: "core",
+      q: "What role does short-circuit strength at the POI play in assessing inverter-based GI projects?",
+      hint: "SCR/ESCR, weak-grid behavior, control stability, harmonic risk, need for EMT studies." },
+    { id: "gi-15", sectionId: "gi", difficulty: "core",
+      q: "How do you use Q–V or PV curves in planning to evaluate need for reactive support?",
+      hint: "Determine margin to collapse, identify critical buses, check effect of shunts and new lines." },
+    { id: "gi-16", sectionId: "gi", difficulty: "expert",
+      q: "Describe how you would screen for potential voltage collapse scenarios in a multi-area system.",
+      hint: "High loading, long EHV corridors, weak generation pockets, run PV/QV scans at key buses." },
+    { id: "gi-17", sectionId: "gi", difficulty: "core",
+      q: "What is a transfer limit, and how does a GI project potentially change it?",
+      hint: "Thermal, voltage, and stability constraints; incremental injections modify flows on limiting paths." },
+    { id: "gi-18", sectionId: "gi", difficulty: "core",
+      q: "How do you rank candidate network upgrades when multiple options resolve the same violation?",
+      hint: "Severity reduction, multi-constraint coverage, cost, constructability, timeline, staging." },
+    { id: "gi-19", sectionId: "gi", difficulty: "foundation",
+      q: "What is the purpose of a one-line diagram in GI and planning reports?",
+      hint: "Communicate topology, voltages, key elements and project integration to technical/non-technical readers." },
+    { id: "gi-20", sectionId: "gi", difficulty: "core",
+      q: "How do you reflect seasonal load and renewable variations in GI studies?",
+      hint: "Separate summer/winter/high/low load cases, different renewable output, sensitivity cases." },
+    { id: "gi-21", sectionId: "gi", difficulty: "expert",
+      q: "How do you incorporate probabilistic or scenario-based approaches into traditionally deterministic planning?",
+      hint: "Multiple scenarios, stress tests, range of outcomes, planning margins, risk-based thinking." },
+    { id: "gi-22", sectionId: "gi", difficulty: "core",
+      q: "What are the typical reactive power and power factor requirements for a renewable plant at the POI?",
+      hint: "P–Q capability envelope, +/- power factor range over operating voltage band, per grid code/ISO rules." },
+    { id: "gi-23", sectionId: "gi", difficulty: "core",
+      q: "How do you check for thermal overloads under generator or line outages in planning studies?",
+      hint: "Run contingency analysis, monitor lines and transformers vs normal/emergency ratings." },
+    { id: "gi-24", sectionId: "gi", difficulty: "core",
+      q: "What inputs do you need to build a basic harmonic model for a GI project in PSCAD or similar tools?",
+      hint: "System impedance vs frequency, converter harmonic spectra, filters, transformer models, cables." },
+    { id: "gi-25", sectionId: "gi", difficulty: "expert",
+      q: "Describe how you’d evaluate whether a new GI project triggers an N-1-1 reliability concern.",
+      hint: "Sequence contingencies, check criteria, see if project materially worsens flows/voltages under double outages." },
+    { id: "gi-26", sectionId: "gi", difficulty: "core",
+      q: "How do you confirm that a GI developer’s model is consistent with manufacturer datasheets?",
+      hint: "Cross-check ratings, transformer impedances, P–Q curves, control limits, dynamic parameters." },
+    { id: "gi-27", sectionId: "gi", difficulty: "core",
+      q: "In what cases would you recommend an auto-transformer addition as part of GI upgrades?",
+      hint: "EHV step-down needs, relieving long-line loading, supporting local voltage and transfers." },
+    { id: "gi-28", sectionId: "gi", difficulty: "core",
+      q: "How do you coordinate GI study assumptions with distribution planners when POI is at transmission–distribution interface?",
+      hint: "Align load models, feeder exports/imports, DG assumptions, and coincident peak conditions." },
+    { id: "gi-29", sectionId: "gi", difficulty: "expert",
+      q: "How would you handle multiple large GI projects in a very weak grid pocket from a stability standpoint?",
+      hint: "ESC/SCR checks, EMT assessments, staged commissioning, additional synchronous support or STATCOMs." },
+    { id: "gi-30", sectionId: "gi", difficulty: "foundation",
+      q: "What’s the difference between planning-level and operational-level studies for the same GI project?",
+      hint: "Planning is long-term, worst-case; operations is nearer term, with real-time tools, redispatch options." },
+    {
+      id: "gi-31",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "How do you validate that a developer’s proposed POI is actually suitable from a planning perspective?",
+      hint: "Check nearby thermal margins, SC strength, available voltage support, and potential for future expansion."
+    },
+    {
+      id: "gi-32",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "What’s your approach if the project’s preferred POI creates severe overloading but a nearby alternative does not?",
+      hint: "Compare technical impacts, propose alternate POIs, show trade-offs using flow and voltage results."
+    },
+    {
+      id: "gi-33",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "How do you represent network reconfiguration options when evaluating GI upgrades?",
+      hint: "Test bus splits, normally open/closed switches, new tie lines, and their impact under contingencies."
+    },
+    {
+      id: "gi-34",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "How do you account for voltage regulator actions at lower voltages when studying a transmission-level GI project?",
+      hint: "Coordinate distribution/regulator models or treat LV voltages as boundary conditions with sensitivity checks."
+    },
+    {
+      id: "gi-35",
+      sectionId: "gi",
+      difficulty: "foundation",
+      q: "What is the purpose of using multiple load levels (light, shoulder, peak) in a GI study?",
+      hint: "Each level may reveal different constraints: voltage at light load, thermal at peak, etc."
+    },
+    {
+      id: "gi-36",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "How do you handle GI projects that are geographically close and may share the same upgrade paths?",
+      hint: "Cluster them, evaluate combined impact, and avoid double-counting upgrades or benefits."
+    },
+    {
+      id: "gi-37",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "When you propose reconductoring as an upgrade, what factors do you evaluate besides pure ampacity?",
+      hint: "Tower strength, sag/clearance, outage windows, cost, and compatibility with existing hardware."
+    },
+    {
+      id: "gi-38",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "How do you justify a new line versus uprating existing lines as part of GI network reinforcements?",
+      hint: "Compare long-term capacity, N-1 robustness, cost, constructability, right-of-way, and future load/generation."
+    },
+    {
+      id: "gi-39",
+      sectionId: "gi",
+      difficulty: "expert",
+      q: "How do you incorporate non-wires alternatives into GI or planning decisions?",
+      hint: "Consider demand response, re-dispatch, storage, and remedial operating procedures alongside traditional upgrades."
+    },
+    {
+      id: "gi-40",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "What checks do you perform to ensure your GI study doesn’t unintentionally violate neighboring system agreements?",
+      hint: "Review tie-line flows, interconnection agreements, and interface limits with adjacent utilities/ISOs."
+    },
+    {
+      id: "gi-41",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "How do you evaluate if a GI project creates unfavorable reverse power flows toward a substation not designed for it?",
+      hint: "Examine directional flows, transformer loading direction, protection schemes, and station design limits."
+    },
+    {
+      id: "gi-42",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "How do you factor generator forced outage rates or availability into long-term planning conclusions, if at all?",
+      hint: "Typically planning is deterministic, but you may consider availability in scenario analysis and probabilistic planning."
+    },
+    {
+      id: "gi-43",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "What are typical red flags in a GI application that you would push back on before detailed studies?",
+      hint: "Incomplete data, unrealistic equipment ratings, no collector details, missing control philosophies."
+    },
+    {
+      id: "gi-44",
+      sectionId: "gi",
+      difficulty: "expert",
+      q: "How do you handle overlapping timelines between construction of upgrades and COD of a GI project?",
+      hint: "Develop staged operating solutions, temporary ratings, or curtailment until upgrades are complete."
+    },
+    {
+      id: "gi-45",
+      sectionId: "gi",
+      difficulty: "core",
+      q: "How do you ensure your GI and long-term planning recommendations remain consistent with NERC and regional reliability standards?",
+      hint: "Align criteria with TPL standards, regional documents, and ISO planning manuals; cross-check results against them."
+    },
+
+    /* =========================
+       SECTION: LOAD FLOW / V-STAB
+       ========================= */
+    { id: "lf-1", sectionId: "lf", difficulty: "foundation",
+      q: "What are the main types of load flow methods and when would you use each?",
+      hint: "Newton–Raphson, Fast-Decoupled, Gauss–Seidel, DC LF; trade-offs in speed vs robustness." },
+    { id: "lf-2", sectionId: "lf", difficulty: "foundation",
+      q: "Explain the difference between PQ, PV, and Slack buses.",
+      hint: "PQ: load; PV: generator controlling V; Slack: balances P/Q and sets reference angle." },
+    { id: "lf-3", sectionId: "lf", difficulty: "core",
+      q: "Why is a slack bus necessary in power flow analysis?",
+      hint: "To absorb net mismatch between generation, load, and losses and define reference angle." },
+    { id: "lf-4", sectionId: "lf", difficulty: "core",
+      q: "What happens when a PV bus hits its reactive power limits during a solution?",
+      hint: "It converts to a PQ bus, losing voltage control at its setpoint." },
+    { id: "lf-5", sectionId: "lf", difficulty: "core",
+      q: "What is the difference between constant P, constant I, and constant Z load models?",
+      hint: "P: fixed active power; I: current-based; Z: impedance-based; affects how P,Q vary with voltage." },
+    { id: "lf-6", sectionId: "lf", difficulty: "core",
+      q: "If system voltage is low in a particular area, what corrective actions do you consider first?",
+      hint: "Shunt capacitors, transformer taps, generator V setpoint increase, network reconfiguration." },
+    { id: "lf-7", sectionId: "lf", difficulty: "core",
+      q: "Explain why reactive power cannot travel long distances efficiently.",
+      hint: "Causes significant voltage drops across reactance and I²X losses; effectiveness decays with distance." },
+    { id: "lf-8", sectionId: "lf", difficulty: "core",
+      q: "What is the significance of V–Q curves at critical buses?",
+      hint: "Show relationship between voltage and reactive injection; reveal proximity to voltage collapse." },
+    { id: "lf-9", sectionId: "lf", difficulty: "core",
+      q: "How do you interpret a flat vs steep V–Q curve?",
+      hint: "Flat: poor reactive support, close to instability; steep: robust voltage support margin." },
+    { id: "lf-10", sectionId: "lf", difficulty: "core",
+      q: "What does it practically mean when a load flow solution diverges after applying a contingency?",
+      hint: "System is heavily stressed, near collapse, or has bad data/controls; solver cannot find stable operating point." },
+    { id: "lf-11", sectionId: "lf", difficulty: "core",
+      q: "How do you systematically troubleshoot load flow non-convergence?",
+      hint: "Check model errors, slack placement, taps/shunts limits, step size, islanding, extreme loading." },
+    { id: "lf-12", sectionId: "lf", difficulty: "core",
+      q: "What assumptions underlie Fast-Decoupled Load Flow?",
+      hint: "High X/R, weak P–V and Q–δ coupling, relatively flat voltage profile." },
+    { id: "lf-13", sectionId: "lf", difficulty: "expert",
+      q: "When would Fast-Decoupled Load Flow fail or give poor results?",
+      hint: "Low-voltage states, high R/X, heavily stressed systems, strong P–Q coupling." },
+    { id: "lf-14", sectionId: "lf", difficulty: "foundation",
+      q: "What is DC load flow and what are its main limitations?",
+      hint: "Linearized P–θ approximation; ignores voltages and reactive power, valid for small angle differences and high X/R." },
+    { id: "lf-15", sectionId: "lf", difficulty: "core",
+      q: "How do you judge whether slack bus placement is reasonable?",
+      hint: "Choose strong source, central location, realistic generator; avoid weak ends or radial buses." },
+    { id: "lf-16", sectionId: "lf", difficulty: "core",
+      q: "What happens to system losses allocation if you move the slack bus?",
+      hint: "Total losses same, but slack generator’s P changes; per-element flows largely unchanged in AC, exactly same in DC model." },
+    { id: "lf-17", sectionId: "lf", difficulty: "core",
+      q: "How do high-MW load additions influence system power flows and voltages under N-1?",
+      hint: "Higher currents, heavier corridor loading, lower voltages, reduced margins under outages." },
+    { id: "lf-18", sectionId: "lf", difficulty: "core",
+      q: "If a branch overloads in an N-1 contingency, what is your diagnostic approach?",
+      hint: "Analyze pre-contingency flows, PTDF/LODF, alternate paths, and which injections are driving the overload." },
+    { id: "lf-19", sectionId: "lf", difficulty: "core",
+      q: "What is the difference between high-voltage and low-voltage load flow solutions?",
+      hint: "Nonlinear equations may have multiple solutions; high-V typically stable and desired, low-V near collapse." },
+    { id: "lf-20", sectionId: "lf", difficulty: "core",
+      q: "How does load modeling affect voltage stability margin?",
+      hint: "Constant-P loads are most demanding at low voltages; constant-Z reduce demand as voltage drops, increasing margin." },
+    { id: "lf-21", sectionId: "lf", difficulty: "expert",
+      q: "What indicators do you look at to say the system is close to voltage collapse?",
+      hint: "Reactive margin exhaustion, highly negative V–Q sensitivity, low voltages, non-convergence near small disturbances." },
+    { id: "lf-22", sectionId: "lf", difficulty: "core",
+      q: "How do you model shunt banks that switch in stages in load flow studies?",
+      hint: "Use switched shunt models with discrete steps, check each switching level’s impact on voltage." },
+    { id: "lf-23", sectionId: "lf", difficulty: "core",
+      q: "How can transformer tap settings cause convergence or voltage issues in a study?",
+      hint: "Extreme taps, conflicting controls, tap hunting, unrealistic voltage targets." },
+    { id: "lf-24", sectionId: "lf", difficulty: "core",
+      q: "What’s your workflow to build and verify an N-1-1 contingency set?",
+      hint: "Define credible sequences, ensure each step represents realistic operations and recovery actions." },
+    { id: "lf-25", sectionId: "lf", difficulty: "core",
+      q: "What’s the practical difference between planning LF cases and real-time/operations LF cases?",
+      hint: "Planning: worst-case, forecasted; operations: near-term, current topology, redispatch options." },
+    { id: "lf-26", sectionId: "lf", difficulty: "expert",
+      q: "How do you connect modal analysis or eigenvalue analysis to voltage stability beyond standard LF?",
+      hint: "Use Jacobian eigenvalues to analyze modes contributing to collapse, guiding targeted reinforcement." },
+    { id: "lf-27", sectionId: "lf", difficulty: "foundation",
+      q: "Why is angle difference between neighboring buses important?",
+      hint: "Large differences indicate stressed corridors, potential transient or small-signal stability issues." },
+    { id: "lf-28", sectionId: "lf", difficulty: "core",
+      q: "How do you use PTDFs in assessing impact of redispatch on congested lines?",
+      hint: "Evaluate sensitivity of line flows to injection changes, inform redispatch or controlling GI output." },
+    { id: "lf-29", sectionId: "lf", difficulty: "core",
+      q: "What is the role of distributed slack in power flow, and when would you use it?",
+      hint: "Share mismatch across multiple generators according to participation; more realistic system-wide behavior." },
+    { id: "lf-30", sectionId: "lf", difficulty: "core",
+      q: "How does voltage control mode (POI vs local bus) for renewables affect load flow results?",
+      hint: "Controls where Q is injected/absorbed; POI control shapes local/regional voltages differently than local terminal control." },
+    {
+      id: "lf-31",
+      sectionId: "lf",
+      difficulty: "foundation",
+      q: "Why is it important to start Newton–Raphson load flow from a reasonable initial guess?",
+      hint: "Poor starting points can cause divergence or convergence to non-physical solutions."
+    },
+    {
+      id: "lf-32",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How do transformer phase-shifting taps influence active power flows in load flow?",
+      hint: "They change the effective phase angle across the transformer and thus redirect real power flows."
+    },
+    {
+      id: "lf-33",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "What is the impact of shunt reactors on lightly loaded long transmission lines?",
+      hint: "They absorb reactive power and prevent excessive overvoltage due to line charging."
+    },
+    {
+      id: "lf-34",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How do you detect hidden radial or weakly connected pockets in a large load flow model?",
+      hint: "Look for buses with single paths, high impedance corridors, and very sensitive voltage behavior."
+    },
+    {
+      id: "lf-35",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "Why might a system with plenty of total reactive capability still experience local voltage problems?",
+      hint: "Reactive support might be far from the problem area or constrained by network impedance and controls."
+    },
+    {
+      id: "lf-36",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How do you decide where to place shunt capacitors versus static VAR compensators (SVCs) for voltage support?",
+      hint: "Static caps suit predictable needs; SVCs where dynamic, continuous control is beneficial."
+    },
+    {
+      id: "lf-37",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How does high R/X ratio in lower-voltage networks affect the validity of decoupled load flow assumptions?",
+      hint: "Coupling between P–V and Q–δ becomes stronger, making decoupling less accurate and robust."
+    },
+    {
+      id: "lf-38",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How can you approximate maximum transferable power across a corridor using load flow and simple formulas?",
+      hint: "Use P = V1·V2·sinδ / X approximations and confirm with AC load flow and contingency checks."
+    },
+    {
+      id: "lf-39",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How do you interpret the participation of individual branches in a voltage collapse scenario?",
+      hint: "Use modal or sensitivity analysis to see which branches are most involved in critical modes."
+    },
+    {
+      id: "lf-40",
+      sectionId: "lf",
+      difficulty: "foundation",
+      q: "What is the relationship between power factor at load buses and system losses?",
+      hint: "Low power factor increases current, raising I²R losses and stressing equipment."
+    },
+    {
+      id: "lf-41",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How would you approximate the effect of adding a capacitor bank at a remote bus on upstream substation voltage?",
+      hint: "Run LF with and without the bank and look at ∆V; conceptually, reactive support reduces upstream voltage drop."
+    },
+    {
+      id: "lf-42",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How do you use contingency ranking to reduce the number of detailed cases you have to manually inspect?",
+      hint: "Rank by severity index (loading/voltage) and focus on top-ranked contingencies."
+    },
+    {
+      id: "lf-43",
+      sectionId: "lf",
+      difficulty: "expert",
+      q: "How do you identify the ‘weakest bus’ in a region from a voltage stability perspective?",
+      hint: "Run QV curves and compare margins; the bus with smallest margin and flattest slope is usually weakest."
+    },
+    {
+      id: "lf-44",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "When you change load representation from constant P to ZIP, what differences do you expect in LF results?",
+      hint: "Voltage sensitivity of load changes; margins and voltages can improve or worsen depending on exponents."
+    },
+    {
+      id: "lf-45",
+      sectionId: "lf",
+      difficulty: "core",
+      q: "How do generator voltage control limits interact with OLTC transformer controls in a load flow?",
+      hint: "Both try to regulate voltage; poor coordination can cause hunting or unrealistic tap positions."
+    },
+
+    /* =========================
+       SECTION: PSS®E
+       ========================= */
+    { id: "psse-1", sectionId: "psse", difficulty: "core",
+      q: "What is your typical workflow in PSS®E to prepare a base case for a GI study?",
+      hint: "Load ISO case, clean data, model project, adjust slack/areas, run LF, save scenario variants." },
+    { id: "psse-2", sectionId: "psse", difficulty: "core",
+      q: "How do you create and validate a RAW file in PSS®E when merging multiple subsystems?",
+      hint: "Consistent base MVA, unique bus IDs, consistent voltage levels, verify flows/voltages vs originals." },
+    { id: "psse-3", sectionId: "psse", difficulty: "core",
+      q: "How do you identify generators that hit Q-limits and become PQ buses in PSS®E?",
+      hint: "Use Q-limit reports, bus type listing, and solution messages flagged by PSS®E." },
+    { id: "psse-4", sectionId: "psse", difficulty: "core",
+      q: "How do you check area interchange, tie-line flows, and losses in PSS®E?",
+      hint: "Use area/zone summary reports, tie-line flow reports, and loss tables in solved case output." },
+    { id: "psse-5", sectionId: "psse", difficulty: "core",
+      q: "What troubleshooting steps do you take in PSS®E when load flow fails to converge?",
+      hint: "Check islands, taps/shunts, loosen controls, adjust solution options, debug specific buses." },
+    { id: "psse-6", sectionId: "psse", difficulty: "core",
+      q: "What is the meaning of Qmax/Qmin limit violation messages in PSS®E?",
+      hint: "They indicate generator reactive limits reached; bus no longer maintains voltage setpoint." },
+    { id: "psse-7", sectionId: "psse", difficulty: "core",
+      q: "How do you model a renewable plant collector system in PSS®E?",
+      hint: "Equivalent feeders, collector buses, padmount and GSU transformers, aggregated machine or multiple units." },
+    { id: "psse-8", sectionId: "psse", difficulty: "core",
+      q: "How do you perform reactive power capability checks in PSS®E to meet IEEE 2800/TO criteria?",
+      hint: "Test P–Q points at POI, vary voltage, ensure operations within required PF band under specified conditions." },
+    { id: "psse-9", sectionId: "psse", difficulty: "core",
+      q: "Describe your process for running ACCC (AC contingency analysis) in PSS®E.",
+      hint: "Build contingency and monitored lists, configure solution options, run ACCC, interpret violation outputs." },
+    { id: "psse-10", sectionId: "psse", difficulty: "expert",
+      q: "How do you set up and interpret PV curves in PSS®E for a stressed corridor?",
+      hint: "Select transfer pair, ramp transfers, observe voltage at critical bus, find collapse point and margin." },
+    { id: "psse-11", sectionId: "psse", difficulty: "core",
+      q: "How do you script automated studies in PSS®E using Python?",
+      hint: "Use PSS®E API, sequence: load case, apply changes, solve, export data, loop over scenarios." },
+    { id: "psse-12", sectionId: "psse", difficulty: "core",
+      q: "What checks do you perform after importing a modified RAW file from another team?",
+      hint: "Convergence, unusual voltages/flows, bus/branch mismatches, base MVA, area/slack settings." },
+    { id: "psse-13", sectionId: "psse", difficulty: "core",
+      q: "How can you use PSS®E to assess interface transfer capability for planning?",
+      hint: "Define source/sink, ramp transfers, track overload/voltage limits, note limiting contingencies." },
+    { id: "psse-14", sectionId: "psse", difficulty: "expert",
+      q: "How do you combine ACCC and PV analysis in PSS®E for comprehensive N-1 security studies?",
+      hint: "ACCC to find worst contingencies, then PV at critical buses under those contingencies to see margins." },
+    { id: "psse-15", sectionId: "psse", difficulty: "core",
+      q: "How do you troubleshoot weird voltage at a single bus in a PSS®E case?",
+      hint: "Check connectivity, controls, taps, shunts, generator setpoints, and local loads." },
+    { id: "psse-16", sectionId: "psse", difficulty: "core",
+      q: "How do you export results from PSS®E for use in Excel or reporting templates?",
+      hint: "Use report export, RAW dumps, PSS®E Python to write CSV/Excel, or bus/branch extract functions." },
+    { id: "psse-17", sectionId: "psse", difficulty: "core",
+      q: "What steps are involved in preparing a PSS®E solved case as a starting point for dynamic simulations?",
+      hint: "Ensure no large mismatches, correct Q-limits, realistic voltages, stable operating point." },
+    { id: "psse-18", sectionId: "psse", difficulty: "core",
+      q: "How do you handle generator redispatch in PSS®E to relieve overloads?",
+      hint: "Adjust generator outputs within limits, rerun LF/ACCC, test PTDF-based redispatch strategies." },
+    { id: "psse-19", sectionId: "psse", difficulty: "core",
+      q: "In PSS®E, how do you implement distributed slack and why might you choose it?",
+      hint: "Set participation factors in area/interchange controls to share mismatch among multiple units." },
+    { id: "psse-20", sectionId: "psse", difficulty: "expert",
+      q: "What are common mistakes you’ve seen in PSS®E GI models that cause misleading results?",
+      hint: "Wrong voltage control bus, missing shunt devices, bad transformer data, Q-limits not modeled." },
+    { id: "psse-21", sectionId: "psse", difficulty: "core",
+      q: "How do you confirm that your PSS®E case and ASPEN case represent the same topology?",
+      hint: "Compare bus kV, line/transformer lists, flows/voltages, and key SC currents." },
+    { id: "psse-22", sectionId: "psse", difficulty: "core",
+      q: "How do you structure your PSS®E case naming and folder hierarchy for a large GI portfolio?",
+      hint: "Clear naming: base vs with-project, scenario tags, versioning; separate input and results." },
+    { id: "psse-23", sectionId: "psse", difficulty: "expert",
+      q: "How would you use PSS®E to explore impact of different shunt placement strategies on voltage stability?",
+      hint: "Create variants with shunts at different buses, run PV/QV, compare margins and cost-benefit qualitatively." },
+    { id: "psse-24", sectionId: "psse", difficulty: "foundation",
+      q: "What is the difference between a RAW file and a SAV file in PSS®E?",
+      hint: "RAW is text network data; SAV is binary solved case with additional states." },
+    { id: "psse-25", sectionId: "psse", difficulty: "core",
+      q: "How do you check for islands using PSS®E tools?",
+      hint: "Use bus/area connectivity checks, examine isolated buses/branches and mismatch patterns." },
+    { id: "psse-26", sectionId: "psse", difficulty: "expert",
+      q: "How would you automate an N-1-1 analysis harness in PSS®E with Python?",
+      hint: "Nested loops over first and second contingencies, with intermediate solve and remedial actions." },
+    { id: "psse-27", sectionId: "psse", difficulty: "core",
+      q: "How do you validate that your Q–V results in PSS®E are numerically reliable?",
+      hint: "Reasonable steps, no abrupt jumps, consistent with physical intuition and LF snapshots." },
+    { id: "psse-28", sectionId: "psse", difficulty: "core",
+      q: "How do you translate a one-line drawing into PSS®E elements correctly?",
+      hint: "Map each line, transformer, shunt, and generator; use consistent bus IDs and voltages." },
+    { id: "psse-29", sectionId: "psse", difficulty: "expert",
+      q: "How do you reconcile differences between PSS®E PV curve results and PSLF or other tools?",
+      hint: "Check load curves, transfer definitions, step sizes, model details; ensure apples-to-apples settings." },
+    { id: "psse-30", sectionId: "psse", difficulty: "core",
+      q: "How do you document PSS®E study steps so another engineer can replicate them?",
+      hint: "Numbered procedure, scripts, case versions, contingency and monitored element lists in appendix." },
+
+    /* =========================
+       SECTION: PSLF
+       ========================= */
+    { id: "pslf-1", sectionId: "pslf", difficulty: "core",
+      q: "What are the key differences between PSS®E and PSLF from a planner’s perspective?",
+      hint: "Different UI, data formats, scripting (Python vs Epcl), stability toolsets, and typical users." },
+    { id: "pslf-2", sectionId: "pslf", difficulty: "core",
+      q: "How does PSLF handle dynamic simulations differently from PSS®E?",
+      hint: "Different integration engine, model library, initialization, and time-step controls." },
+    { id: "pslf-3", sectionId: "pslf", difficulty: "core",
+      q: "What is Epcl in PSLF, and when do you use it?",
+      hint: "Scripting language to automate data edits, batch studies, stability runs, and reporting." },
+    { id: "pslf-4", sectionId: "pslf", difficulty: "core",
+      q: "How do you build a dynamic case in PSLF starting from a solved power flow?",
+      hint: "Attach dynamic models, check initialization, choose time-step, define events, validate response." },
+    { id: "pslf-5", sectionId: "pslf", difficulty: "core",
+      q: "How do you represent inverter-based resources in PSLF dynamic studies?",
+      hint: "Use vendor or generic models, plant controllers, dynamic limits, validated against EMT or benchmarks." },
+    { id: "pslf-6", sectionId: "pslf", difficulty: "core",
+      q: "How does PSLF detect and handle network islanding during simulations?",
+      hint: "Reports islands, may require additional slack definitions or adjustment of case topology." },
+    { id: "pslf-7", sectionId: "pslf", difficulty: "core",
+      q: "How do you choose an appropriate time-step for PSLF stability runs?",
+      hint: "Consider fastest control dynamics, numerical stability, vendor recommendations, typical 1–5 ms or more." },
+    { id: "pslf-8", sectionId: "pslf", difficulty: "core",
+      q: "How do you model faults and clearing sequences in PSLF?",
+      hint: "Specify location, fault type, impedance, duration, clearing actions and new post-fault topology." },
+    { id: "pslf-9", sectionId: "pslf", difficulty: "core",
+      q: "How do you interpret poorly damped oscillations seen in PSLF simulations?",
+      hint: "Identify oscillation modes/frequencies, possible inter-area oscillations, need for PSS or system reconfiguration." },
+    { id: "pslf-10", sectionId: "pslf", difficulty: "expert",
+      q: "How would you calibrate a generator’s governor and exciter models in PSLF to match observed behavior?",
+      hint: "Use event data or tests, adjust gains/time constants, run simulations and compare responses." },
+    { id: "pslf-11", sectionId: "pslf", difficulty: "core",
+      q: "How do you model composite loads (with motors) in PSLF?",
+      hint: "Use composite load models with motor fractions, voltage/frequency dependence, industrial vs residential patterns." },
+    { id: "pslf-12", sectionId: "pslf", difficulty: "core",
+      q: "How do you set up a batch of stability scenarios using Epcl?",
+      hint: "Loop over events and starting conditions, run simulations, store metrics in output files." },
+    { id: "pslf-13", sectionId: "pslf", difficulty: "core",
+      q: "What typical issues cause dynamic initialization failures in PSLF?",
+      hint: "Mismatch between static and dynamic data, invalid parameters, improper controls or missing models." },
+    { id: "pslf-14", sectionId: "pslf", difficulty: "core",
+      q: "How do you coordinate RMS dynamic studies in PSLF with EMT studies in PSCAD?",
+      hint: "Use RMS to screen, choose worst cases, ensure parameter alignment and operating points for EMT." },
+    { id: "pslf-15", sectionId: "pslf", difficulty: "expert",
+      q: "How would you test the impact of a new STATCOM on system stability in PSLF?",
+      hint: "Model STATCOM, run faults and disturbances, compare voltage recovery and oscillation damping." },
+    { id: "pslf-16", sectionId: "pslf", difficulty: "core",
+      q: "How do you export PSLF simulation results for advanced analysis?",
+      hint: "Save channel data to files, use external tools (Python, MATLAB) for signal processing." },
+    { id: "pslf-17", sectionId: "pslf", difficulty: "core",
+      q: "How do you check frequency nadir and ROCOF in PSLF simulations?",
+      hint: "Monitor system frequency channels, measure minimum frequency and slope after events." },
+    { id: "pslf-18", sectionId: "pslf", difficulty: "core",
+      q: "How can PSLF dynamic simulations help with inertia and frequency response studies?",
+      hint: "Model inertia constants, governor response, synthetic inertia, observe frequency behavior." },
+    { id: "pslf-19", sectionId: "pslf", difficulty: "expert",
+      q: "How do you validate that an inverter plant’s LVRT/HVRT behavior in PSLF matches grid code curves?",
+      hint: "Apply faults with specified depths/durations, check voltage and current response vs standards." },
+    { id: "pslf-20", sectionId: "pslf", difficulty: "core",
+      q: "What steps do you take to ensure stability results are not overly sensitive to timestep choice?",
+      hint: "Run with different timesteps, compare waveforms, ensure no spurious numerical oscillations." },
+    { id: "pslf-21", sectionId: "pslf", difficulty: "core",
+      q: "How do you model RAS or special protection schemes in PSLF dynamic studies?",
+      hint: "Add event logic for generator tripping, load shedding, switching actions triggered by measurements." },
+    { id: "pslf-22", sectionId: "pslf", difficulty: "core",
+      q: "How do you connect PSLF dynamic cases back to the planning team’s PSS®E cases?",
+      hint: "Ensure matching network data, similar operating points, consistent project modeling across tools." },
+    { id: "pslf-23", sectionId: "pslf", difficulty: "expert",
+      q: "How would you diagnose an oscillatory instability affecting multiple areas in PSLF?",
+      hint: "Use mode analysis, identify participating generators/areas, consider PSS retuning or reinforcement." },
+    { id: "pslf-24", sectionId: "pslf", difficulty: "foundation",
+      q: "What is the difference between small-signal stability and transient stability?",
+      hint: "Small-signal: response to small perturbations; transient: large disturbances like faults." },
+    { id: "pslf-25", sectionId: "pslf", difficulty: "core",
+      q: "How do you verify that a PSLF dynamic model from a vendor is implemented correctly?",
+      hint: "Test simple cases, compare against vendor-provided benchmarks, check limits and steady-state match." },
+    { id: "pslf-26", sectionId: "pslf", difficulty: "core",
+      q: "How do you treat load-shedding schemes (UFLS) in PSLF simulations?",
+      hint: "Implement block shedding vs frequency thresholds and time delays; monitor under/over shedding." },
+    { id: "pslf-27", sectionId: "pslf", difficulty: "core",
+      q: "How do you document PSLF stability scenarios in a planning study report?",
+      hint: "Describe disturbances, clearing times, models used, time-step, criteria, and key waveform observations." },
+    { id: "pslf-28", sectionId: "pslf", difficulty: "expert",
+      q: "How do you model weak-grid impacts in PSLF when multiple inverter plants are present?",
+      hint: "Low SCR/bus strength, check for control interactions, include detailed plant controllers or equivalents." },
+    { id: "pslf-29", sectionId: "pslf", difficulty: "core",
+      q: "How do you calibrate composite load parameters to approximate field measurements?",
+      hint: "Use load demonstrations or disturbance data, tune motor shares, static exponents, and dynamic parameters." },
+    { id: "pslf-30", sectionId: "pslf", difficulty: "core",
+      q: "How do you decide which contingencies to run in detailed dynamic simulations after screening many with steady-state tools?",
+      hint: "Select those with worst voltage dips, highest transfers, or closeness to stability limits." },
+    {
+      id: "pslf-31",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you ensure that a PSLF dynamic case is numerically stable over long simulation times (e.g., 60–90 s)?",
+      hint: "Use appropriate timestep, avoid extreme control gains, and validate with shorter runs first."
+    },
+    {
+      id: "pslf-32",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you organize your Epcl scripts for readability and reuse?",
+      hint: "Modularize into functions, comment heavily, and separate configuration from logic."
+    },
+    {
+      id: "pslf-33",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "What steps do you take if an inverter plant model in PSLF fails to initialize at full output?",
+      hint: "Check P–Q limits, POI voltage settings, initial operating point, and control parameter consistency."
+    },
+    {
+      id: "pslf-34",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you evaluate damping of oscillations in PSLF without formal modal analysis tools?",
+      hint: "Visually inspect waveform envelopes, measure decay per cycle, and compare to criteria."
+    },
+    {
+      id: "pslf-35",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you represent turbine-governor deadbands and droop settings in PSLF models?",
+      hint: "Use governor blocks with appropriate droop percentages and deadband parameters from data sheets."
+    },
+    {
+      id: "pslf-36",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "When a PSLF run shows bus voltage overshoot after fault clearing, how do you diagnose whether it’s model-related or numerical?",
+      hint: "Check timestep sensitivity, compare with other tools, and verify control limits and saturation."
+    },
+    {
+      id: "pslf-37",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you use PSLF to test under-frequency load shedding schemes?",
+      hint: "Simulate generation loss events, monitor frequency channels, and observe shedding triggers and restoration."
+    },
+    {
+      id: "pslf-38",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you integrate PSLF stability results into your planning report conclusions?",
+      hint: "Summarize key disturbances, stability margins, critical buses, and any required controls or upgrades."
+    },
+    {
+      id: "pslf-39",
+      sectionId: "pslf",
+      difficulty: "expert",
+      q: "How would you set up a wide-area oscillation case in PSLF to test new PSS tuning?",
+      hint: "Create multi-area model, excite weak modes via disturbances, adjust PSS parameters, and compare damping."
+    },
+    {
+      id: "pslf-40",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do composite load model parameters impact voltage and frequency behavior in PSLF simulations?",
+      hint: "Motor fractions influence stalling; static exponents affect voltage sensitivity; all impact dynamic response."
+    },
+    {
+      id: "pslf-41",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "What checks do you perform on PSLF channel outputs before trusting waveforms for decision-making?",
+      hint: "Verify units and scaling, confirm steady-state values, and ensure no obvious numerical artifacts."
+    },
+    {
+      id: "pslf-42",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you handle multiple event sequences (fault, line trip, generator trip) in a single PSLF run?",
+      hint: "Define a timetable of events, assign actions and times, and monitor the system response throughout."
+    },
+    {
+      id: "pslf-43",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you validate PSLF against post-event oscillography or PMU data, if available?",
+      hint: "Compare magnitudes, frequency, and damping of key signals; adjust models to match behavior."
+    },
+    {
+      id: "pslf-44",
+      sectionId: "pslf",
+      difficulty: "core",
+      q: "How do you organize and label PSLF dynamic model libraries for a large utility or consulting practice?",
+      hint: "Separate generic vs vendor models, version tag them, and maintain a master library index."
+    },
+    {
+      id: "pslf-45",
+      sectionId: "pslf",
+      difficulty: "expert",
+      q: "How would you design a PSLF study to test the impact of high penetration of grid-forming inverters?",
+      hint: "Use appropriate inverter models, weak grid scenarios, frequency and voltage disturbances, and analyze stability margins."
+    },
+
+    /* =========================
+       SECTION: ASPEN
+       ========================= */
+    { id: "aspen-1", sectionId: "aspen", difficulty: "core",
+      q: "When performing a short-circuit study in ASPEN, what do you check first for model accuracy?",
+      hint: "Bus kV, line/transformer impedances, sequence data, grounding, network import consistency." },
+    { id: "aspen-2", sectionId: "aspen", difficulty: "core",
+      q: "How do you evaluate breaker duty violations in ASPEN OneLiner?",
+      hint: "Compare SC currents with breaker interrupting and momentary ratings with X/R corrections." },
+    { id: "aspen-3", sectionId: "aspen", difficulty: "core",
+      q: "How do you compute and interpret 3LG, 1LG, LLG, and LL faults in ASPEN?",
+      hint: "Use SC analysis for each fault type; 3LG often governs interrupting duty, 1LG for protection settings." },
+    { id: "aspen-4", sectionId: "aspen", difficulty: "core",
+      q: "How do you import a PSS®E or PSLF network into ASPEN and preserve equivalencing?",
+      hint: "Use supported import, align base MVA and IDs, check major buses and flows vs original case." },
+    { id: "aspen-5", sectionId: "aspen", difficulty: "foundation",
+      q: "What is meant by superposition in ASPEN’s unbalanced fault calculations?",
+      hint: "Unbalanced faults are solved by adding positive, negative, and zero sequence networks." },
+    { id: "aspen-6", sectionId: "aspen", difficulty: "core",
+      q: "How do you verify that generator and transformer contributions are correctly modeled in ASPEN?",
+      hint: "Check sequence data, grounding, fault contributions at terminals and at remote buses." },
+    { id: "aspen-7", sectionId: "aspen", difficulty: "core",
+      q: "What are signs that a short-circuit model has grounding or zero-sequence modeling issues?",
+      hint: "Unrealistically high or low 1LG currents, zero-sequence anomalies, inconsistent ground currents." },
+    { id: "aspen-8", sectionId: "aspen", difficulty: "core",
+      q: "A breaker shows over-duty in ASPEN. What mitigation strategies would you consider?",
+      hint: "Breaker replacement, bus split, adding reactors, changing configuration, limiting fault contributions." },
+    { id: "aspen-9", sectionId: "aspen", difficulty: "core",
+      q: "How do you model current-limiting reactors in ASPEN?",
+      hint: "Add series reactors with proper impedance ratings at strategic points (lines or buses)." },
+    { id: "aspen-10", sectionId: "aspen", difficulty: "core",
+      q: "What limitations should you be aware of when importing RAW files into ASPEN regarding taps and shunts?",
+      hint: "Not all control modes or switches transfer; some need manual adjustments or simplifications." },
+    { id: "aspen-11", sectionId: "aspen", difficulty: "core",
+      q: "How do you model contribution from inverter-based resources in fault studies?",
+      hint: "Limited magnitude current injections, per vendor guidance, not classical synchronous contributions." },
+    { id: "aspen-12", sectionId: "aspen", difficulty: "core",
+      q: "How do you use ASPEN results to set or verify relay pickup and time-dial settings?",
+      hint: "Use SC currents for minimum/maximum fault cases to confirm sensitivity and coordination." },
+    { id: "aspen-13", sectionId: "aspen", difficulty: "core",
+      q: "How do you handle multiple operating scenarios in ASPEN (e.g., different switching states)?",
+      hint: "Create cases or scenario variants with elements switched in/out and compare fault duties." },
+    { id: "aspen-14", sectionId: "aspen", difficulty: "core",
+      q: "How do you reconcile differences if ASPEN and PSS®E short-circuit levels don’t match?",
+      hint: "Check sequence data, transformer connections, base MVA, modeling of shunts and generators." },
+    { id: "aspen-15", sectionId: "aspen", difficulty: "foundation",
+      q: "How do symmetrical components relate to per-unit modeling in PSS®E?",
+      hint: "PSS®E primarily uses positive sequence for LF; ASPEN builds full sequence networks for faults." },
+    { id: "aspen-16", sectionId: "aspen", difficulty: "core",
+      q: "What aspects of transformer modeling are especially important in ASPEN for accurate SC results?",
+      hint: "Winding connections, grounding, leakage impedance in sequence form, tap settings." },
+    { id: "aspen-17", sectionId: "aspen", difficulty: "core",
+      q: "How do you document SC results and breaker duty findings for a GI report?",
+      hint: "Tabulate SC currents, duty vs ratings, highlight over-duties, describe assumptions and mitigation options." },
+    { id: "aspen-18", sectionId: "aspen", difficulty: "core",
+      q: "How do high X/R ratios affect breaker duty assessment in ASPEN?",
+      hint: "Increase DC offset and asymmetrical currents; standards require X/R correction in duty checks." },
+    { id: "aspen-19", sectionId: "aspen", difficulty: "core",
+      q: "How do you ensure that recent network changes are reflected in your ASPEN model?",
+      hint: "Regularly update from latest PSS®E/PSLF cases, maintain change logs, re-check key buses." },
+    { id: "aspen-20", sectionId: "aspen", difficulty: "expert",
+      q: "How would you evaluate the impact of adding a series reactor on both SC currents and power flows?",
+      hint: "In ASPEN check reduced SC; in PSS®E check impacts on flows, losses, and voltages." },
+    { id: "aspen-21", sectionId: "aspen", difficulty: "core",
+      q: "What are typical data quality issues you’ve seen in ASPEN models?",
+      hint: "Missing sequence data, mis-labeled kV levels, incorrect transformer connections, ungrounded lines." },
+    { id: "aspen-22", sectionId: "aspen", difficulty: "core",
+      q: "How do you ensure that ASPEN and operations protection settings remain aligned as the system evolves?",
+      hint: "Periodic model review, compare with as-left relay settings, coordinate with protection engineers." },
+    { id: "aspen-23", sectionId: "aspen", difficulty: "core",
+      q: "How do you compute and interpret fault MVA from ASPEN outputs?",
+      hint: "MVA = √3 × V × I; compare with equipment MVA ratings for breakers/transformers." },
+    { id: "aspen-24", sectionId: "aspen", difficulty: "core",
+      q: "How do you verify that recently added lines or transformers in ASPEN haven’t introduced modeling errors?",
+      hint: "Check SC at terminals vs expectations, inspect sequence parameters, ensure proper connectivity." },
+    { id: "aspen-25", sectionId: "aspen", difficulty: "core",
+      q: "How do you handle the difference between ANSI and IEC SC calculation methods when using ASPEN?",
+      hint: "Choose method according to local standards; note differences in reported currents and margins." },
+    { id: "aspen-26", sectionId: "aspen", difficulty: "core",
+      q: "How can ASPEN help identify potential miscoordination between transmission and distribution protection?",
+      hint: "Run faults at various locations, compare relay operating times, identify overlap or gaps." },
+    { id: "aspen-27", sectionId: "aspen", difficulty: "expert",
+      q: "How do you treat HVDC or FACTS devices in SC studies conducted in ASPEN?",
+      hint: "Often modeled with limited or no SC contribution; might need equivalent representation or vendor guidance." },
+    { id: "aspen-28", sectionId: "aspen", difficulty: "core",
+      q: "How would you check the incremental impact of a new GI project on short-circuit levels at nearby buses?",
+      hint: "Compare SC results with and without project in ASPEN for key buses, note changes in duty." },
+    { id: "aspen-29", sectionId: "aspen", difficulty: "core",
+      q: "How do you deal with a bus where SC current exceeds all realistic breaker options?",
+      hint: "Consider system reconfiguration, series reactors, bus splitting, or limiting generation sources." },
+    { id: "aspen-30", sectionId: "aspen", difficulty: "core",
+      q: "How do you ensure reproducibility of ASPEN studies by other engineers?",
+      hint: "Share model versions, SC study files, scenario descriptions, and documentation of assumptions." },
+    {
+      id: "aspen-31",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you represent breaker failure protection logic when evaluating system response to faults?",
+      hint: "Simulate uncleared faults, subsequent backup operations, and evaluate duty on alternate breakers."
+    },
+    {
+      id: "aspen-32",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you handle tap-changing transformer impacts in SC studies when some details are unknown?",
+      hint: "Use nominal taps, reasonable assumptions, and test sensitivity if tap position significantly affects duties."
+    },
+    {
+      id: "aspen-33",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you treat series-compensated lines in ASPEN short-circuit models?",
+      hint: "Include series capacitors and protective gaps per data; verify their effect on fault currents and protection."
+    },
+    {
+      id: "aspen-34",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do SC levels affect CT sizing and relay accuracy in practice?",
+      hint: "High currents push CTs to saturation; must ensure adequate CT class and ratio for accuracy."
+    },
+    {
+      id: "aspen-35",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you coordinate transmission distance relays using ASPEN outputs?",
+      hint: "Use line impedance data, expected fault currents, and set zone reaches and time delays."
+    },
+    {
+      id: "aspen-36",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "What additional checks are needed when new generation is added near a station with aging breakers?",
+      hint: "Recalculate SC levels, compare with existing breaker ratings, and check interrupting and momentary duties."
+    },
+    {
+      id: "aspen-37",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you verify correct zero-sequence impedance representation for lines and transformers in ASPEN?",
+      hint: "Cross-check with manufacturer data or typical values; confirm results with 1LG fault currents."
+    },
+    {
+      id: "aspen-38",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you document the basis for using specific SC calculation standards (ANSI/IEC) in a project?",
+      hint: "Reference applicable codes, describe method, and explain its impact on duty values in the report."
+    },
+    {
+      id: "aspen-39",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you use ASPEN to screen for potential CT saturation issues under high SC conditions?",
+      hint: "Review ratio, burden, X/R, and predicted currents to see if CT limits are exceeded."
+    },
+    {
+      id: "aspen-40",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you confirm that directional elements in protection schemes still operate correctly after SC level changes?",
+      hint: "Run forward and reverse fault simulations in ASPEN, confirm torque and directional behavior."
+    },
+    {
+      id: "aspen-41",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you manage multiple network states in ASPEN (e.g., breaker open, line out) when checking duties?",
+      hint: "Create different study cases or use switching states, then compare duties across configurations."
+    },
+    {
+      id: "aspen-42",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you incorporate GIS (gas-insulated switchgear) equipment ratings into ASPEN studies?",
+      hint: "Input manufacturer ratings as breaker data and ensure SC at GIS buses respect those limits."
+    },
+    {
+      id: "aspen-43",
+      sectionId: "aspen",
+      difficulty: "expert",
+      q: "How would you model and check for ferroresonance risk using ASPEN and complementary tools?",
+      hint: "ASPEN for SC and grounding conditions, plus transient studies in EMT tools for detailed ferroresonance behavior."
+    },
+    {
+      id: "aspen-44",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you deal with missing manufacturer SC data for older equipment in ASPEN?",
+      hint: "Use conservative typical values, verify with asset management, and clearly document assumptions."
+    },
+    {
+      id: "aspen-45",
+      sectionId: "aspen",
+      difficulty: "core",
+      q: "How do you keep ASPEN models in sync with GIS/asset management databases over time?",
+      hint: "Periodic data reconciliation, import/export routines, and governance over changes."
+    },
+
+    /* =========================
+       SECTION: CROSS-TOOL
+       ========================= */
+    { id: "cross-1", sectionId: "cross", difficulty: "core",
+      q: "How do you maintain consistency when using the same network across PSS®E, PSLF, and ASPEN?",
+      hint: "Align base MVA, IDs, parameter changes, and regularly cross-check voltages, flows, SC levels." },
+    { id: "cross-2", sectionId: "cross", difficulty: "core",
+      q: "How do you resolve differences in short-circuit currents between PSS®E and ASPEN?",
+      hint: "Check sequence data, method (ANSI/IEC), transformer connections, and grounding in both tools." },
+    { id: "cross-3", sectionId: "cross", difficulty: "core",
+      q: "In a GI workflow, how do PSS®E, PSLF, and ASPEN complement each other?",
+      hint: "PSS®E: LF/ACCC/PV; PSLF: RMS stability; ASPEN: SC and protection." },
+    { id: "cross-4", sectionId: "cross", difficulty: "core",
+      q: "What information must be consistent when validating a renewable plant across PSS®E, PSLF, and PSCAD?",
+      hint: "Ratings, transformer data, control limits, P–Q behavior, operating points, approximate dynamic response." },
+    { id: "cross-5", sectionId: "cross", difficulty: "core",
+      q: "Why is MVA base alignment so critical when sharing data between tools?",
+      hint: "Per-unit values depend on base; misalignment leads to incorrect impedances and currents." },
+    { id: "cross-6", sectionId: "cross", difficulty: "core",
+      q: "You see low voltages in PSS®E but not in PSLF at the same bus. How do you diagnose?",
+      hint: "Compare load models, shunt status, taps, solver tolerances, and import differences." },
+    { id: "cross-7", sectionId: "cross", difficulty: "core",
+      q: "How do you reconcile differences between RMS stability in PSLF and EMT results in PSCAD?",
+      hint: "Recognize RMS limitations; ensure same operating point, parameters, and events; use EMT for fast phenomena." },
+    { id: "cross-8", sectionId: "cross", difficulty: "expert",
+      q: "What are common pitfalls in mapping models between PSLF and PSS®E?",
+      hint: "Different model libraries, parameter definitions, load representations, and available controls." },
+    { id: "cross-9", sectionId: "cross", difficulty: "core",
+      q: "How do you apply transformer phase shift consistently across PSS®E, PSLF, and ASPEN?",
+      hint: "Use same sign convention and angles, verify flows and voltages after import in each tool." },
+    { id: "cross-10", sectionId: "cross", difficulty: "core",
+      q: "How do you keep track of model versioning when multiple tools and teams are involved?",
+      hint: "Central change log, disciplined naming, version tags, and limited number of ‘official’ base cases." },
+    { id: "cross-11", sectionId: "cross", difficulty: "core",
+      q: "What is distributed slack and why is its treatment across tools important?",
+      hint: "Mismatch sharing among generators; affects flows and PTDF/LODF; must be consistent for cross-tool comparisons." },
+    { id: "cross-12", sectionId: "cross", difficulty: "core",
+      q: "How do you ensure relay and protection changes suggested by ASPEN feed back into planning models?",
+      hint: "Communicate breakpoints and constraints; update planning assumptions about allowable flows and short-circuit limits." },
+    { id: "cross-13", sectionId: "cross", difficulty: "expert",
+      q: "How would you validate that a new GI project’s impact is consistent across LF, SC, and stability tools?",
+      hint: "Compare flows, SC increments, and stability margins; resolve any large deviations in assumptions." },
+    { id: "cross-14", sectionId: "cross", difficulty: "core",
+      q: "How do you coordinate base-case updates when the ISO publishes a new planning case?",
+      hint: "Adopt as new reference, reapply project models, propagate to PSLF and ASPEN, redo key analyses." },
+    { id: "cross-15", sectionId: "cross", difficulty: "core",
+      q: "How do you manage differences in load modeling when comparing PSS®E and PSLF results?",
+      hint: "Use similar ZIP/composite parameters or create matched load models; document any known differences." },
+    { id: "cross-16", sectionId: "cross", difficulty: "core",
+      q: "How do you structure your workflow so each tool has a clear role and avoids duplication?",
+      hint: "Define primary tool per study type, document boundaries, only cross-check where necessary." },
+    { id: "cross-17", sectionId: "cross", difficulty: "expert",
+      q: "How do PTDFs and LODFs depend on the choice of slack and how does that affect cross-tool comparison?",
+      hint: "Slack changes reference distribution; interpret PTDF/LODF results accordingly across tools." },
+    { id: "cross-18", sectionId: "cross", difficulty: "core",
+      q: "If PSCAD shows control instability not seen in PSLF, how do you proceed?",
+      hint: "Assume EMT reveals real fast dynamics, adjust controls/hardware, then ensure RMS approximations remain valid." },
+    { id: "cross-19", sectionId: "cross", difficulty: "core",
+      q: "How do you integrate SC-based constraints from ASPEN into planning decisions done in PSS®E?",
+      hint: "Impose breaker ratings as limits, consider reactor/bus split solutions, and account for cost/feasibility." },
+    { id: "cross-20", sectionId: "cross", difficulty: "core",
+      q: "How do you communicate cross-tool study results in a single coherent GI report?",
+      hint: "High-level story with separate sections: LF, SC, stability; consistent assumptions and key findings." },
+    { id: "cross-21", sectionId: "cross", difficulty: "core",
+      q: "What do you do if cross-tool validations reveal small but consistent differences in voltages and flows?",
+      hint: "Confirm within tolerance; document differences; align key assumptions where practical." },
+    { id: "cross-22", sectionId: "cross", difficulty: "expert",
+      q: "How would you design a validation benchmark case to test consistency between PSS®E and PSLF?",
+      hint: "Small but representative network, known hand-calculated results, systematic param sweeps." },
+    { id: "cross-23", sectionId: "cross", difficulty: "core",
+      q: "How do you ensure that EMT-level design changes (e.g., converter control tweaks) are reflected in RMS models?",
+      hint: "Update RMS model limits/gains based on EMT insights; keep simplified but consistent." },
+    { id: "cross-24", sectionId: "cross", difficulty: "core",
+      q: "How do you build trust with internal stakeholders that your multi-tool workflow is reliable?",
+      hint: "Repeatable results, peer reviews, side-by-side comparisons, clear documentation." },
+    { id: "cross-25", sectionId: "cross", difficulty: "core",
+      q: "What is your personal checklist before declaring a cross-tool study set ‘final’?",
+      hint: "Data alignment, convergence in all tools, reasonability checks, complete documentation." },
+    {
+      id: "cross-26",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "How do you set up a consistent naming convention for buses and branches shared across PSS®E, PSLF, and ASPEN?",
+      hint: "Use same IDs/kV labels wherever possible, with mapping tables if needed, and avoid ad-hoc renaming."
+    },
+    {
+      id: "cross-27",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "How do you ensure changes made in planning tools are communicated to the protection group that owns ASPEN models?",
+      hint: "Formal change management: change logs, coordination meetings, and periodic model syncs."
+    },
+    {
+      id: "cross-28",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "When PSCAD reveals a control interaction issue not visible in PSLF, how do you fold that insight into planning criteria?",
+      hint: "Translate EMT findings into operating limits, additional controls, or hardware changes reflected in RMS planning."
+    },
+    {
+      id: "cross-29",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "How do you organize shared folders/repositories for multi-tool studies to avoid confusion?",
+      hint: "Standard hierarchy by project, then by tool and study type, with read-me files and clear naming."
+    },
+    {
+      id: "cross-30",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "How do you respond if different tools give slightly different transfer limits for the same interface?",
+      hint: "Investigate modeling differences, ensure consistent assumptions, then adopt a conservative limit."
+    },
+    {
+      id: "cross-31",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "How do you validate that your SC strengths used in EMT studies match those used in planning LF cases?",
+      hint: "Compare short-circuit levels and equivalent impedances at key buses between EMT and LF models."
+    },
+    {
+      id: "cross-32",
+      sectionId: "cross",
+      difficulty: "expert",
+      q: "How would you design a minimal benchmark case to demonstrate cross-tool consistency to a skeptical reviewer?",
+      hint: "Use a small 3–5 bus system with known analytical results and show each tool reproduces key values."
+    },
+    {
+      id: "cross-33",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "How do you keep your own mental model clear when switching between different sign conventions and angle references in tools?",
+      hint: "Take notes, rely on documentation, and always sanity-check results with physical intuition."
+    },
+    {
+      id: "cross-34",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "How do you choose which tool becomes the ‘source of truth’ for a particular type of data (e.g., network vs SC vs dynamics)?",
+      hint: "Assign ownership: PSS®E/PSLF for network, ASPEN for SC/protection, EMT for detailed converter behavior."
+    },
+    {
+      id: "cross-35",
+      sectionId: "cross",
+      difficulty: "core",
+      q: "How do you prevent subtle errors when exporting/importing data through multiple format conversions?",
+      hint: "Minimize conversions, test round-trip consistency, and spot-check key parameters after each step."
+    },
+
+    /* =========================
+       SECTION: ADVANCED / TROUBLESHOOTING
+       ========================= */
+    { id: "adv-1", sectionId: "advanced", difficulty: "expert",
+      q: "When a load flow converges in PSLF but not in PSS®E for the same case, how do you debug it?",
+      hint: "Compare solution options, slack, taps, shunts, and find modeling differences or solver sensitivities." },
+    { id: "adv-2", sectionId: "advanced", difficulty: "expert",
+      q: "What are common root causes of severe convergence issues in large transmission models?",
+      hint: "Bad data, zero/very low impedances, ill-conditioned networks, unrealistic controls or taps." },
+    { id: "adv-3", sectionId: "advanced", difficulty: "expert",
+      q: "How do you decide whether to relax solver tolerances or fix the model itself for a tough case?",
+      hint: "Prefer fixing model; relaxing tolerances only for sensitivity checks, not final results." },
+    { id: "adv-4", sectionId: "advanced", difficulty: "expert",
+      q: "How do you distinguish between numerical artefacts and true physical problems in borderline solutions?",
+      hint: "Check across tools, vary steps/tolerances, test simplified models; see if issue persists consistently." },
+    { id: "adv-5", sectionId: "advanced", difficulty: "expert",
+      q: "How would you identify and mitigate a potential voltage collapse region in a large grid?",
+      hint: "Locate weak buses, run PV/QV, assess reactive margins, plan reinforcement and local support." },
+    { id: "adv-6", sectionId: "advanced", difficulty: "expert",
+      q: "How do you recognize when a result is driven more by modeling limitations than real-world physics?",
+      hint: "Sensitivity to small modeling changes, large discrepancies between tools, unrealistic states." },
+    { id: "adv-7", sectionId: "advanced", difficulty: "expert",
+      q: "How do you handle conflicting results from different consultants or internal teams on the same GI project?",
+      hint: "Compare assumptions, tools, input data; run joint benchmark; align methods and converge on shared view." },
+    { id: "adv-8", sectionId: "advanced", difficulty: "expert",
+      q: "How do you design stress test scenarios to see where a system ‘breaks’ under contingencies?",
+      hint: "Progressively increase load/transfers, stack contingencies, monitor margins and stability." },
+    { id: "adv-9", sectionId: "advanced", difficulty: "expert",
+      q: "How do you prioritize which modeling improvements (data cleanup, more detailed models) to do first?",
+      hint: "Target buses/lines affecting constraints, GI locations, weak pockets, and high-impact corridors." },
+    { id: "adv-10", sectionId: "advanced", difficulty: "expert",
+      q: "How do you think about trade-offs between detailed EMT modeling and simpler RMS modeling?",
+      hint: "Balance fidelity vs time; use EMT only where RMS cannot capture critical fast dynamics." },
+    { id: "adv-11", sectionId: "advanced", difficulty: "expert",
+      q: "How do you interpret cases where SC analysis demands breaker upgrades but planners resist due to cost?",
+      hint: "Explain risk, explore reactors or reconfiguration, justify upgrades or alternative mitigations." },
+    { id: "adv-12", sectionId: "advanced", difficulty: "expert",
+      q: "How do you ensure your study files and scripts are robust enough to hand over to a new engineer?",
+      hint: "Clear structure, comments, modular scripts, sample runs, and documentation." },
+    { id: "adv-13", sectionId: "advanced", difficulty: "expert",
+      q: "How do you incorporate uncertainty (load growth, renewable variability, policy changes) into your planning recommendations?",
+      hint: "Scenario sets, probabilistic thinking, flexible solutions, robust margins." },
+    { id: "adv-14", sectionId: "advanced", difficulty: "expert",
+      q: "How do you use planning studies to propose staged or phased network upgrades?",
+      hint: "Identify near-term fixes vs long-term reinforcements, align with load and project timelines." },
+    { id: "adv-15", sectionId: "advanced", difficulty: "expert",
+      q: "Describe a situation where you challenged an initial study conclusion and found a better alternative.",
+      hint: "Example of scrutinizing assumptions, rerunning cases, finding more efficient upgrade or control solution." },
+    { id: "adv-16", sectionId: "advanced", difficulty: "expert",
+      q: "How do you decide when a stability or voltage issue requires control tuning vs hard network reinforcement?",
+      hint: "Assess severity, root cause (controls vs topology), operational vs structural levers." },
+    { id: "adv-17", sectionId: "advanced", difficulty: "expert",
+      q: "How do you manage and communicate model limitations to non-technical stakeholders?",
+      hint: "Explain ranges, assumptions, uncertainties; avoid overconfidence; focus on risk and robustness." },
+    { id: "adv-18", sectionId: "advanced", difficulty: "expert",
+      q: "What practices help you stay at ‘top 0.1%’ level as a transmission planner?",
+      hint: "Deep tool knowledge, curiosity, cross-discipline learning, code/scripting, and mentoring others." },
+    { id: "adv-19", sectionId: "advanced", difficulty: "expert",
+      q: "How would you structure a mentoring plan for a junior engineer growing into GI and planning work?",
+      hint: "Progressive exposure: LF basics → contingency → GI modeling → stability → SC and cross-tool workflows." },
+    { id: "adv-20", sectionId: "advanced", difficulty: "expert",
+      q: "How do you ensure your technical decisions always remain auditable years later?",
+      hint: "Versioning, clear documentation, rationales for choices, storing input and output files reliably." },
+    { id: "adv-21", sectionId: "advanced", difficulty: "expert",
+      q: "How do you think about system resilience (not just reliability) in planning studies?",
+      hint: "Multi-contingency survival, flexible topology, fast restoration paths, and adaptability." },
+    { id: "adv-22", sectionId: "advanced", difficulty: "expert",
+      q: "When results are borderline, how do you recommend an action plan instead of a simple pass/fail?",
+      hint: "Present options: minor upgrades, operating procedures, monitoring, staged investments." },
+    { id: "adv-23", sectionId: "advanced", difficulty: "expert",
+      q: "How would you explain voltage stability and collapse risk to a non-engineering audience?",
+      hint: "Use intuitive analogies (water pressure), focus on ‘how close to the edge’ and consequences." },
+    { id: "adv-24", sectionId: "advanced", difficulty: "expert",
+      q: "How do you maintain your own checks-and-balances to avoid cognitive bias in planning decisions?",
+      hint: "Actively seek counterexamples, peer review, test alternative scenarios, challenge assumptions." },
+    { id: "adv-25", sectionId: "advanced", difficulty: "expert",
+      q: "If you had to build a ‘minimum essential’ planning workflow from scratch at a new utility, what would it include?",
+      hint: "Standardized LF/ACCC, SC, voltage stability, basic stability checks, documentation, and training." },
+    {
+      id: "adv-26",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "When a planning study suggests a huge upgrade but operations experience shows no issues today, how do you reconcile this?",
+      hint: "Explain future conditions vs current; validate assumptions; consider staged or conditional upgrades."
+    },
+    {
+      id: "adv-27",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "How do you avoid ‘model overfitting’ to one critical scenario at the expense of general system robustness?",
+      hint: "Test multiple scenarios, avoid tuning solely for one case, focus on structural solutions not ad-hoc fixes."
+    },
+    {
+      id: "adv-28",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "How do you structure your day-to-day workflow so you regularly catch mistakes early in complex studies?",
+      hint: "Frequent small sanity checks, incremental changes, automated checks, and peer reviews."
+    },
+    {
+      id: "adv-29",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "What are some subtle warning signs in results that make you suspicious even if criteria are technically met?",
+      hint: "Unusual reactive dispatch, odd tap positions, borderline angles, or non-intuitive flows."
+    },
+    {
+      id: "adv-30",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "How do you handle a manager or client pushing for a preferred conclusion that your studies don’t support?",
+      hint: "Present clear evidence, explain risks, suggest alternative options, and document your professional judgement."
+    },
+    {
+      id: "adv-31",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "How do you balance being conservative for reliability vs economical for customers in your planning recommendations?",
+      hint: "Work within codified criteria, highlight cost–benefit tradeoffs, and show incremental options."
+    },
+    {
+      id: "adv-32",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "How do you personally sanity-check a complex GI or planning study before sending it to a reviewer?",
+      hint: "Re-run key cases, spot-check flows and voltages, verify key assumptions and inputs."
+    },
+    {
+      id: "adv-33",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "When mentoring juniors, how do you train their ‘intuition’ about what is a realistic result versus a model bug?",
+      hint: "Have them estimate rough numbers, compare with LF outputs, and walk through real case studies."
+    },
+    {
+      id: "adv-34",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "How do you treat conflicting inputs from different equipment vendors in your models?",
+      hint: "Seek clarification, use more conservative data, or run sensitivity studies to bracket uncertainties."
+    },
+    {
+      id: "adv-35",
+      sectionId: "advanced",
+      difficulty: "expert",
+      q: "What is your process to post-mortem a study that later turned out to be too optimistic or too conservative?",
+      hint: "Review assumptions, compare with actual events, identify gaps, and update internal standards."
+    }
+  ];
+
+  let activeSectionId = null;
+  let activeDifficulty = "all";
+  let searchTerm = "";
+
+  const navTabs = document.getElementById("navTabs");
+  const questionsContainer = document.getElementById("questionsContainer");
+  const sectionTitle = document.getElementById("sectionTitle");
+  const sectionSubtitle = document.getElementById("sectionSubtitle");
+  const sectionCount = document.getElementById("sectionCount");
+  const statTotal = document.getElementById("stat-total");
+  const statSection = document.getElementById("stat-section");
+  const searchInput = document.getElementById("searchInput");
+  const difficultyChips = document.getElementById("difficultyChips");
+
+  function init() {
+    statTotal.textContent = questions.length;
+    renderTabs();
+    attachEvents();
+  }
+
+  function renderTabs() {
+    navTabs.innerHTML = "";
+    sections.forEach((sec, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "nav-btn" + (idx === 0 ? " active" : "");
+      if (idx === 0) activeSectionId = sec.id;
+      btn.dataset.sectionId = sec.id;
+      btn.innerHTML = `
+        <span class="title">${sec.name}</span>
+        <span class="meta">${sec.meta}</span>
+      `;
+      navTabs.appendChild(btn);
+    });
+    updateMainSection();
+  }
+
+  function getFilteredQuestions() {
+    if (!activeSectionId) return [];
+    return questions.filter(q => {
+      if (q.sectionId !== activeSectionId) return false;
+      if (activeDifficulty !== "all" && q.difficulty !== activeDifficulty) return false;
+      if (searchTerm) {
+        const t = searchTerm.toLowerCase();
+        return q.q.toLowerCase().includes(t) || (q.hint || "").toLowerCase().includes(t);
+      }
+      return true;
+    });
+  }
+
+  function updateMainSection() {
+    const sec = sections.find(s => s.id === activeSectionId);
+    if (!sec) return;
+    sectionTitle.textContent = sec.name;
+    sectionSubtitle.textContent = sec.subtitle;
+    statSection.textContent = sec.name;
+
+    const filtered = getFilteredQuestions();
+    sectionCount.textContent = `${filtered.length} question${filtered.length === 1 ? "" : "s"}`;
+    questionsContainer.innerHTML = "";
+
+    if (!filtered.length) {
+      const div = document.createElement("div");
+      div.className = "empty-state";
+      div.innerHTML = "No questions match your filters here. Try relaxing difficulty or clearing the search.";
+      questionsContainer.appendChild(div);
+      return;
+    }
+
+    filtered.forEach((q, idx) => {
+      const card = document.createElement("article");
+      card.className = "question-card";
+      const difficultyLabel = { foundation: "Foundation", core: "Core", expert: "Expert" }[q.difficulty] || "Core";
+      card.innerHTML = `
+        <div class="question-meta">
+          <span>#${idx + 1}</span>
+          <span class="difficulty">${difficultyLabel}</span>
+        </div>
+        <div class="question-text">${q.q}</div>
+        ${q.hint ? `<div class="question-hint"><em>Hint: ${q.hint}</em></div>` : ""}
+      `;
+      questionsContainer.appendChild(card);
+    });
+  }
+
+  function attachEvents() {
+    navTabs.addEventListener("click", (e) => {
+      const btn = e.target.closest(".nav-btn");
+      if (!btn) return;
+      activeSectionId = btn.dataset.sectionId;
+      navTabs.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      updateMainSection();
+    });
+
+    difficultyChips.addEventListener("click", (e) => {
+      const chip = e.target.closest(".chip");
+      if (!chip) return;
+      activeDifficulty = chip.dataset.diff;
+      difficultyChips.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      updateMainSection();
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      searchTerm = e.target.value.trim();
+      updateMainSection();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+    });
+  }
+
+  init();
+</script>
+</body>
+</html>
